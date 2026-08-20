@@ -1,43 +1,40 @@
 "use strict"
 
-const projects = [];
-
-class Project {
-  constructor(name) {
-    this.name = name;
-  }
-
-  todos = [];
-}
+const todosList = [];
 
 class Todo {
-  constructor(title, description, dueDate, priority) {
+  constructor(title, description, dueDate, priority, project) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
+    this.project = project;
   }
-
-  id = crypto.randomUUID();
 }
 
-function createProject(name) {
-  projects.push(new Project(name));
+const addNewTodo = (newTodoInstance) => { todosList.push(newTodoInstance) };
+
+const getTodoListFromProject = (projectName) => {
+  const projectTodoList = todosList.filter(todo => todo.project === projectName);
+
+  return projectTodoList;
 };
 
-function createTodo(todo, projectName) {
-  const project = projects.find(project => project.name === projectName);
+// Test todos
+// addNewTodo(new Todo("Work", "work all day", "Today", "normal", "Work"));
+// addNewTodo(new Todo("Meeting", "team sync", "Tomorrow", "high", "Work"));
+// addNewTodo(new Todo("Grocery", "buy milk and bread", "Tomorrow", "normal", "Home"));
+// addNewTodo(new Todo("Code review", "review PR", "Today", "high", "Work"));
+// addNewTodo(new Todo("Laundry", "wash clothes", "Tomorrow", "low", "Home"));
+// addNewTodo(new Todo("Lunch", "meal prep", "Today", "normal", "Home"));
+// addNewTodo(new Todo("Report", "weekly report", "Friday", "high", "Work"));
+// addNewTodo(new Todo("Exercise", "gym session", "Today", "normal", "Default"));
+// addNewTodo(new Todo("Clean", "tidy up", "Saturday", "low", "Home"));
+// addNewTodo(new Todo("Deploy", "release to prod", "Today", "high", "Work"));
+// addNewTodo(new Todo("Reading", "finish chapter", "This week", "low", "Default"));
 
-  project.todos.push(todo);
-}
+// console.table(todosList);
 
-createProject(("defaultProject"));
-createProject(("Work"));
-createTodo(new Todo("Work", "work on project", "Today", "high"), "Work");
-createTodo(new Todo("Dance", "Dance all night", "Today", "low"), "defaultProject");
-
-//Log projects list
-console.log(projects)
-
-//Log project todos
-console.log(projects.find(project => project.name === "Work").todos);
+// console.table(getTodoListFromProject("Default"));
+// console.table(getTodoListFromProject("Work"));
+// console.table(getTodoListFromProject("Home"));
