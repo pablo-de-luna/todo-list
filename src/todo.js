@@ -1,7 +1,5 @@
 "use strict"
 
-// Hierarchy: List > Projects > Todos
-
 class TodosList {
   #todosArr = [];
 
@@ -33,11 +31,18 @@ class Todo {
     this.priority = priority;
     this.project = project;
   }
+  
+  #id = crypto.randomUUID();
+
+  getId() {
+    return this.#id;
+  }
 }
 
+
+// ↓↓↓↓↓↓↓ Testing, to be deleted ↓↓↓↓↓↓
 const defaultList = new TodosList();
 
-// Test todos
 defaultList.addTodo(new Todo("Meeting", "team sync", "tomorrow", "high", "work"));
 defaultList.addTodo(new Todo("Grocery", "buy milk and bread", "tomorrow", "normal", "home"));
 defaultList.addTodo(new Todo("Code review", "review PR", "today", "high", "work"));
