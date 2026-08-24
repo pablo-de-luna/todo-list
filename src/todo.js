@@ -2,7 +2,28 @@
 
 // Hierarchy: List > Projects > Todos
 
-const mainList = [];
+class TodosList {
+  #todosArr = [];
+
+  addTodo(todo) {
+    return this.#todosArr.push(todo);
+  }
+  getTodos() {
+    return this.#todosArr;
+  }
+  getFilteredTodosByProperty(key, value) {
+    return this.#todosArr.filter(todo => todo[key] === value);
+  }
+};
+
+// const todoModifier = {
+//     // Later to be changed for an id number, 0 for testing
+//   setTodoProperty(id, property, value) {
+//     const todo = this.#todosArr[id]
+
+//     todo[property] = value;
+//   }
+// };
 
 class Todo {
   constructor(title, description, dueDate, priority, project) {
@@ -14,29 +35,20 @@ class Todo {
   }
 }
 
-const addTodoToList = (todo, list = mainList) => { list.push(todo) };
-
-const getProjectTodos = (projectName, list = mainList) => {
-  const projectTodoList = mainList.filter(todo => todo.project === projectName);
-
-  return projectTodoList;
-};
+const defaultList = new TodosList();
 
 // Test todos
-addTodoToList(new Todo("Work", "work all day", "Today", "normal", "Work"));
-addTodoToList(new Todo("Meeting", "team sync", "Tomorrow", "high", "Work"));
-addTodoToList(new Todo("Grocery", "buy milk and bread", "Tomorrow", "normal", "Home"));
-addTodoToList(new Todo("Code review", "review PR", "Today", "high", "Work"));
-addTodoToList(new Todo("Laundry", "wash clothes", "Tomorrow", "low", "Home"));
-addTodoToList(new Todo("Lunch", "meal prep", "Today", "normal", "Home"));
-addTodoToList(new Todo("Report", "weekly report", "Friday", "high", "Work"));
-addTodoToList(new Todo("Exercise", "gym session", "Today", "normal", "Default"));
-addTodoToList(new Todo("Clean", "tidy up", "Saturday", "low", "Home"));
-addTodoToList(new Todo("Deploy", "release to prod", "Today", "high", "Work"));
-addTodoToList(new Todo("Reading", "finish chapter", "This week", "low", "Default"));
+defaultList.addTodo(new Todo("Meeting", "team sync", "tomorrow", "high", "work"));
+defaultList.addTodo(new Todo("Grocery", "buy milk and bread", "tomorrow", "normal", "home"));
+defaultList.addTodo(new Todo("Code review", "review PR", "today", "high", "work"));
+defaultList.addTodo(new Todo("Laundry", "wash clothes", "tomorrow", "low", "home"));
+defaultList.addTodo(new Todo("Lunch", "meal prep", "today", "normal", "home"));
+defaultList.addTodo(new Todo("Report", "weekly report", "friday", "high", "work"));
+defaultList.addTodo(new Todo("Exercise", "gym session", "today", "normal", "default"));
+defaultList.addTodo(new Todo("Clean", "tidy up", "saturday", "low", "home"));
+defaultList.addTodo(new Todo("Deploy", "release to prod", "today", "high", "work"));
+defaultList.addTodo(new Todo("Reading", "finish chapter", "this week", "low", "default"));
 
-console.table(mainList);
+console.table(defaultList.getTodos());
+console.table(defaultList.getFilteredTodosByProperty("project", "work"));
 
-console.table(getProjectTodos("Default"));
-console.table(getProjectTodos("Work"));
-console.table(getProjectTodos("Home"));
