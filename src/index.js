@@ -4,4 +4,4 @@
 
 import "./style.css";
 
-import "./todo.js";
+import "./todos.js";

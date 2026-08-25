@@ -12,16 +12,10 @@ class TodosList {
   getFilteredTodosByProperty(key, value) {
     return this.#todosArr.filter(todo => todo[key] === value);
   }
+  getTodoById(id) {
+    return this.#todosArr.find(todo => todo.getId() === id);
+  }
 };
-
-// const todoModifier = {
-//     // Later to be changed for an id number, 0 for testing
-//   setTodoProperty(id, property, value) {
-//     const todo = this.#todosArr[id]
-
-//     todo[property] = value;
-//   }
-// };
 
 class Todo {
   constructor(title, description, dueDate, priority, project) {
@@ -34,6 +28,13 @@ class Todo {
   
   #id = crypto.randomUUID();
 
+  getTitle() {
+    return this.title
+  }
+  setTitle(value) {
+    if (!value) return;
+    this.title = value;
+  }
   getId() {
     return this.#id;
   }
@@ -57,3 +58,8 @@ defaultList.addTodo(new Todo("Reading", "finish chapter", "this week", "low", "d
 console.table(defaultList.getTodos());
 console.table(defaultList.getFilteredTodosByProperty("project", "work"));
 
+const todoId = defaultList.getTodos()[0].getId();
+
+defaultList.getTodoById(todoId).setTitle("");
+
+console.table(defaultList.getTodos());
