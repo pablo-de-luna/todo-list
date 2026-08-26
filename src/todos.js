@@ -1,42 +1,51 @@
 "use strict"
 
 class TodosList {
-  #todosArr = [];
+  #todos = [];
 
   addTodo(todo) {
-    return this.#todosArr.push(todo);
+    return this.#todos.push(todo);
   }
   getTodos() {
-    return this.#todosArr;
+    return this.#todos;
   }
   getFilteredTodosByProperty(key, value) {
-    return this.#todosArr.filter(todo => todo[key] === value);
+    return this.#todos.filter(todo => todo[key] === value);
   }
   getTodoById(id) {
-    return this.#todosArr.find(todo => todo.getId() === id);
+    return this.#todos.find(todo => todo.id === id);
   }
 };
 
 class Todo {
-  constructor(title, description, dueDate, priority, project) {
+  #title;
+  #id = crypto.randomUUID();
+  #status = false;
+
+  constructor({title, description, dueDate, priority, category}) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.project = project;
+    this.category = category;
   }
-  
-  #id = crypto.randomUUID();
 
-  getTitle() {
-    return this.title
+  get title() { return this.#title }
+  set title(value) {
+    if (value.trim() === "") {
+      this.#title = "Untitled";
+    } else {
+      this.#title = value;
+    }
   }
-  setTitle(value) {
-    if (!value) return;
-    this.title = value;
+
+  get id() { return this.#id; }
+
+  get status() {
+    return this.#status;
   }
-  getId() {
-    return this.#id;
+  toggleStatus() {
+    (this.#status) ? this.#status = false : this.#status = true;
   }
 }
 
@@ -44,22 +53,22 @@ class Todo {
 // ↓↓↓↓↓↓↓ Testing, to be deleted ↓↓↓↓↓↓
 const defaultList = new TodosList();
 
-defaultList.addTodo(new Todo("Meeting", "team sync", "tomorrow", "high", "work"));
-defaultList.addTodo(new Todo("Grocery", "buy milk and bread", "tomorrow", "normal", "home"));
-defaultList.addTodo(new Todo("Code review", "review PR", "today", "high", "work"));
-defaultList.addTodo(new Todo("Laundry", "wash clothes", "tomorrow", "low", "home"));
-defaultList.addTodo(new Todo("Lunch", "meal prep", "today", "normal", "home"));
-defaultList.addTodo(new Todo("Report", "weekly report", "friday", "high", "work"));
-defaultList.addTodo(new Todo("Exercise", "gym session", "today", "normal", "default"));
-defaultList.addTodo(new Todo("Clean", "tidy up", "saturday", "low", "home"));
-defaultList.addTodo(new Todo("Deploy", "release to prod", "today", "high", "work"));
-defaultList.addTodo(new Todo("Reading", "finish chapter", "this week", "low", "default"));
+const formInput = {
+  title: "Meeting",
+  description: "team sync",
+  dueDate: "2026-08-23",
+  priority: "high",
+  category: "work",
+}
+
+defaultList.addTodo(new Todo(formInput));
+// defaultList.addTodo(new Todo("Grocery", "buy milk and bread", "2026-08-26", "normal", "home"));
+// defaultList.addTodo(new Todo("Code review", " ", "2026-08-28", "high", "work"));
+// defaultList.addTodo(new Todo("Laundry", "wash clothes", "2026-08-25", "low", "home"));
+// defaultList.addTodo(new Todo("Lunch", "meal prep", "", "normal", "home"));
+// defaultList.addTodo(new Todo("Exercise", "gym session", "", "normal", "default"));
+
+const todoId = defaultList.getTodos()[0].title = "Dance";
 
 console.table(defaultList.getTodos());
-console.table(defaultList.getFilteredTodosByProperty("project", "work"));
 
-const todoId = defaultList.getTodos()[0].getId();
-
-defaultList.getTodoById(todoId).setTitle("");
-
-console.table(defaultList.getTodos());
