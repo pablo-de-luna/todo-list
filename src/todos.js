@@ -17,6 +17,8 @@ class TodosList {
   }
 };
 
+const defaultList = new TodosList();
+
 class Todo {
   #title;
   #id = crypto.randomUUID();
@@ -49,26 +51,4 @@ class Todo {
   }
 }
 
-
-// ↓↓↓↓↓↓↓ Testing, to be deleted ↓↓↓↓↓↓
-const defaultList = new TodosList();
-
-const formInput = {
-  title: "Meeting",
-  description: "team sync",
-  dueDate: "2026-08-23",
-  priority: "high",
-  category: "work",
-}
-
-defaultList.addTodo(new Todo(formInput));
-// defaultList.addTodo(new Todo("Grocery", "buy milk and bread", "2026-08-26", "normal", "home"));
-// defaultList.addTodo(new Todo("Code review", " ", "2026-08-28", "high", "work"));
-// defaultList.addTodo(new Todo("Laundry", "wash clothes", "2026-08-25", "low", "home"));
-// defaultList.addTodo(new Todo("Lunch", "meal prep", "", "normal", "home"));
-// defaultList.addTodo(new Todo("Exercise", "gym session", "", "normal", "default"));
-
-const todoId = defaultList.getTodos()[0].title = "Dance";
-
-console.table(defaultList.getTodos());
-
+export { defaultList, Todo }

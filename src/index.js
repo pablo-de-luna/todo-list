@@ -3,5 +3,8 @@
 "use strict"
 
 import "./style.css";
+import { defaultList } from "./todos.js";
+import addExampleTodos from "./example-todos.js";
 
-import "./todos.js";
+addExampleTodos();
+console.table(defaultList.getTodos());
