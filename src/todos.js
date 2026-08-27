@@ -20,8 +20,6 @@ class TodosList {
 class Todo {
   #title;
   #description;
-  #priority;
-  #category;
   #id = crypto.randomUUID();
   #status = false;
 
@@ -29,32 +27,25 @@ class Todo {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
-    this.priority = priority;
-    this.category = category;
+    this.priority = priority || "normal";
+    this.category = category || "default";
   }
 
-  get title() { return this.#title }
+  get title() {
+    return this.#title
+  }
   set title(val) {
     this.#title = (!val || val.trim() === "") ? "Untitled" : val;
   }
-
-  get description() { return this.#description }
+  get description() {
+    return this.#description
+  }
   set description(val) {
     this.#description = (!val || val.trim() === "") ? "No description" : val;
   }
-
-  get priority() { return this.#priority }
-  set priority(val) {
-    this.#priority = (!val) ? "normal" : val;
+  get id() {
+    return this.#id;
   }
-
-  get category() { return this.#category }
-  set category(val) {
-    this.#category = (!val) ? "default" : val;
-  }
-
-  get id() { return this.#id; }
-
   get status() {
     return this.#status;
   }
