@@ -9,18 +9,19 @@ class TodosList {
   getTodos() {
     return this.#todos;
   }
-  getFilteredTodosByProperty(key, value) {
-    return this.#todos.filter(todo => todo[key] === value);
+  getFilteredTodosByProperty(key, val) {
+    return this.#todos.filter(todo => todo[key] === val);
   }
   getTodoById(id) {
     return this.#todos.find(todo => todo.id === id);
   }
 };
 
-const defaultList = new TodosList();
-
 class Todo {
   #title;
+  #description;
+  #priority;
+  #category;
   #id = crypto.randomUUID();
   #status = false;
 
@@ -33,12 +34,23 @@ class Todo {
   }
 
   get title() { return this.#title }
-  set title(value) {
-    if (value.trim() === "") {
-      this.#title = "Untitled";
-    } else {
-      this.#title = value;
-    }
+  set title(val) {
+    this.#title = (!val || val.trim() === "") ? "Untitled" : val;
+  }
+
+  get description() { return this.#description }
+  set description(val) {
+    this.#description = (!val || val.trim() === "") ? "No description" : val;
+  }
+
+  get priority() { return this.#priority }
+  set priority(val) {
+    this.#priority = (!val) ? "normal" : val;
+  }
+
+  get category() { return this.#category }
+  set category(val) {
+    this.#category = (!val) ? "default" : val;
   }
 
   get id() { return this.#id; }
@@ -50,5 +62,7 @@ class Todo {
     (this.#status) ? this.#status = false : this.#status = true;
   }
 }
+
+const defaultList = new TodosList();
 
 export { defaultList, Todo }

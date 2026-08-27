@@ -5,17 +5,14 @@ import { defaultList, Todo } from "./todos.js";
 const todoExamples = [
   {
     title: "Buy groceries",
-      description: "pick up fruit and coffee",
-      dueDate: "2026-09-02",
-      priority: "medium",
-      category: "home",
+    description: "pick up fruit and coffee",
+    dueDate: "2026-09-02",
+    category: "home",
   },
   {
     title: "Read book",
-    description: "finish two chapters",
-    dueDate: "2026-09-05",
+    description: " ",
     priority: "low",
-    category: "default",
   },
   {
     title: "Plan trip",
@@ -30,6 +27,35 @@ const todoExamples = [
     dueDate: "2026-08-23",
     priority: "high",
     category: "work",
+  },
+  {
+    title: "Walk dog",
+  },
+  {
+    title: "Laundry",
+    description: "only reds",
+    category: "home",
+  },
+  {
+    title: "Plan son's birthday party",
+    description: "buy a cake, candles, some balloons, and send invitations to friends and family",
+    dueDate: "2026-08-30",
+    priority: "high",
+    category: "home",
+  },
+  {
+    title: "Send project",
+    dueDate: "2026-08-29",
+    priority: "high",
+    category: "work",
+  },
+  {
+    title: " ",
+  },
+  {
+    title: "Organize desk drawer",
+    priority: "low",
+    category: "home",
   },
 ];
 
