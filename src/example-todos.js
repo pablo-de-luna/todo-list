@@ -1,6 +1,6 @@
 "use strict"
 
-import { defaultList, Todo } from "./todos.js";
+import { Todo } from "./todos.js";
 
 const todoExamples = [
   {
@@ -59,6 +59,8 @@ const todoExamples = [
   },
 ];
 
-export default function addExampleTodos() {
-  todoExamples.forEach(todo => defaultList.addTodo(new Todo(todo)))
+const addExampleTodos = (list) => {
+  todoExamples.forEach(todo => list.addTodo(new Todo(todo)))
 }
+
+export default addExampleTodos;

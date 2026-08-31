@@ -1,5 +1,7 @@
 "use strict"
 
+import addExampleTodos from "./example-todos.js";
+
 class TodosList {
   #todos = [];
 
@@ -55,5 +57,6 @@ class Todo {
 }
 
 const defaultList = new TodosList();
+addExampleTodos(defaultList);
 
 export { defaultList, Todo }
