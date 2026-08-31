@@ -5,11 +5,11 @@ import addExampleTodos from "./example-todos.js";
 class TodosList {
   #todos = [];
 
+  get todos() {
+    return this.#todos;
+  }
   addTodo(todo) {
     return this.#todos.push(todo);
-  }
-  getTodos() {
-    return this.#todos;
   }
   getFilteredTodosByProperty(key, val) {
     return this.#todos.filter(todo => todo[key] === val);
@@ -22,14 +22,15 @@ class TodosList {
 class Todo {
   #title;
   #description;
-  #id = crypto.randomUUID();
+  #priority;
   #status = false;
+  #id = crypto.randomUUID();
 
   constructor({title, description, dueDate, priority, category}) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
-    this.priority = priority || "normal";
+    this.priority = priority;
     this.category = category || "default";
   }
 
@@ -52,7 +53,16 @@ class Todo {
     return this.#status;
   }
   toggleStatus() {
-    (this.#status) ? this.#status = false : this.#status = true;
+    this.#status = !this.#status;
+  }
+  get priority() {
+    return this.#priority;
+  }
+  set priority(val) {
+    this.#priority = val || "normal";
+  }
+  togglePriority() {
+    this.#priority = (this.#priority === "normal") ? "important" : "normal";
   }
 }
 

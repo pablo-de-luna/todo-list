@@ -12,20 +12,19 @@ const todoExamples = [
   {
     title: "Read book",
     description: " ",
-    priority: "low",
   },
   {
     title: "Plan trip",
     description: "compare travel options",
     dueDate: "2026-09-10",
-    priority: "high",
+    priority: "important",
     category: "default",
   },
   {
     title: "Meeting",
     description: "team sync",
     dueDate: "2026-08-23",
-    priority: "high",
+    priority: "important",
     category: "work",
   },
   {
@@ -40,13 +39,13 @@ const todoExamples = [
     title: "Plan son's birthday party",
     description: "buy a cake, candles, some balloons, and send invitations to friends and family",
     dueDate: "2026-08-30",
-    priority: "high",
+    priority: "important",
     category: "home",
   },
   {
     title: "Send project",
     dueDate: "2026-08-29",
-    priority: "high",
+    priority: "important",
     category: "work",
   },
   {
@@ -54,7 +53,6 @@ const todoExamples = [
   },
   {
     title: "Organize desk drawer",
-    priority: "low",
     category: "home",
   },
 ];
