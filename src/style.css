@@ -48,8 +48,8 @@ h1, h2, h3, h4, h5, h6 {
 /* End of custom reset */
 
 /* Just for visualization, to be deleted */
-body > div > * {
-  border: 1px solid gray;
+body * {
+  border: 1px dotted gray;
 }
 
 /* LIGHT test */
@@ -82,4 +82,13 @@ nav {
 
 main {
   grid-area: 2 / 2 / 3 / 3;
+}
+
+.todo-card {
+  background-color: #535251;
+  margin: 10px;
+}
+
+.todo-card.priority-important {
+  background-color: #783737;
 }
