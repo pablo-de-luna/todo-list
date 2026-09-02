@@ -68,5 +68,6 @@ class Todo {
 
 const defaultList = new TodosList();
 addExampleTodos(defaultList);
+console.table(defaultList.todos)
 
 export { defaultList, Todo }

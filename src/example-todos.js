@@ -1,12 +1,22 @@
 "use strict"
 
 import { Todo } from "./todos.js";
+import { format, addDays } from "date-fns";
+
+// Date for testing
+const todayDate = format(new Date(), "yyyy-MM-dd");
+
+// today date plus random number of days (between 2 and 7) for testing
+const getRandomInt = () => Math.floor(Math.random() * 6 + 2);
+const getRandomUpcomingDate = () => {
+  return format(addDays(todayDate, getRandomInt()), "yyyy-MM-dd");
+};
 
 const todoExamples = [
   {
     title: "Buy groceries",
     description: "pick up fruit and coffee",
-    dueDate: "2026-09-01",
+    dueDate: todayDate,
     category: "home",
   },
   {
@@ -16,14 +26,14 @@ const todoExamples = [
   {
     title: "Plan trip",
     description: "compare travel options",
-    dueDate: "2026-09-10",
+    dueDate: getRandomUpcomingDate(),
     priority: "important",
     category: "default",
   },
   {
     title: "Meeting",
     description: "team sync",
-    dueDate: "2026-09-23",
+    dueDate: getRandomUpcomingDate(),
     priority: "important",
     category: "work",
   },
@@ -33,18 +43,19 @@ const todoExamples = [
   {
     title: "Laundry",
     description: "only reds",
+    dueDate: todayDate,
     category: "home",
   },
   {
     title: "Plan son's birthday party",
     description: "buy a cake, candles, some balloons, and send invitations to friends and family",
-    dueDate: "2026-09-01",
+    dueDate: todayDate,
     priority: "important",
     category: "home",
   },
   {
     title: "Send project",
-    dueDate: "2026-09-29",
+    dueDate: getRandomUpcomingDate(),
     priority: "important",
     category: "work",
   },

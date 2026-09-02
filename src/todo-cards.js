@@ -5,6 +5,8 @@ import { defaultList } from "./todos.js"
 
 const cardsContainer = document.querySelector("#cards-container");
 
+const currentDate = format(new Date(), "yyyy-MM-dd");
+
 // ↓↓↓ TODO functions ↓↓↓
   // EXPAND Card
   // EDIT Card
@@ -40,25 +42,17 @@ const addAllTodoCards = (list) => {
 };
 
 const addTodayTodoCards = (list) => {
-  const currentDateFormatted = format(new Date(), "yyyy-MM-dd");
-
   list.todos.forEach(todo => {
-    if (todo.dueDate === currentDateFormatted) {
+    if (todo.dueDate === currentDate) {
       createTodoCard(todo);
     }
   })
 };
 
-// TODO
 const addUpcomingTodoCards = (list) => {
   list.todos.forEach(todo => {
-    const dueDate = todo.dueDate
-    const dateIsAfter = isAfter(tododuedate, new Date())
-
-    if (!todo.dueDate || todo.dueDate) return
+    if (isAfter(todo.dueDate, currentDate)) {
+      createTodoCard(todo);
+    }
   });
 };
-
-addTodayTodoCards(defaultList);
-
-console.log(new Date(2026, 8, 1))
