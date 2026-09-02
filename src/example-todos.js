@@ -6,7 +6,7 @@ const todoExamples = [
   {
     title: "Buy groceries",
     description: "pick up fruit and coffee",
-    dueDate: "2026-09-02",
+    dueDate: "2026-09-01",
     category: "home",
   },
   {
@@ -23,7 +23,7 @@ const todoExamples = [
   {
     title: "Meeting",
     description: "team sync",
-    dueDate: "2026-08-23",
+    dueDate: "2026-09-23",
     priority: "important",
     category: "work",
   },
@@ -38,13 +38,13 @@ const todoExamples = [
   {
     title: "Plan son's birthday party",
     description: "buy a cake, candles, some balloons, and send invitations to friends and family",
-    dueDate: "2026-08-30",
+    dueDate: "2026-09-01",
     priority: "important",
     category: "home",
   },
   {
     title: "Send project",
-    dueDate: "2026-08-29",
+    dueDate: "2026-09-29",
     priority: "important",
     category: "work",
   },

@@ -47,19 +47,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 /* End of custom reset */
 
-/* Just for visualization, to be deleted */
+/* JUST FOR VISUALIZATION, TO BE DELETED */
 body * {
   border: 1px dotted gray;
 }
 
-/* LIGHT test */
+/* LIGHT TEST */
 /* body {
   background-color: #e4e0db;
   color: #62584f;
   font-family: 'Helvetica Neue', sans-serif, system-ui, -apple-system;
 } */
 
-/* DARK test */
+/* DARK TEST */
 body {
   background-color: #1c1c1c;
   color: #e3deda;
@@ -84,11 +84,13 @@ main {
   grid-area: 2 / 2 / 3 / 3;
 }
 
+/* CARD TEST */
 .todo-card {
   background-color: #535251;
   margin: 10px;
 }
 
+/* PRIORITY COLOR TEST */
 .todo-card.priority-important {
   background-color: #783737;
 }

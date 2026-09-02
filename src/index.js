@@ -4,5 +4,5 @@
 
 import "./style.css";
 
-// CHANGE this, import required only
+// TEST IMPORT, TO BE CHANGED 
 import "./todo-cards.js";

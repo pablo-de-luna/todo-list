@@ -1,19 +1,14 @@
 "use strict"
 
+import { format, isAfter } from "date-fns"
 import { defaultList } from "./todos.js"
 
 const cardsContainer = document.querySelector("#cards-container");
 
-// CREATE Card
-  // Title
-  // Category
-  // Date
-  // Status checkbox
-  // Priority tag
-
-// EXPAND Card
-// EDIT Card
-// DELETE Card
+// ↓↓↓ TODO functions ↓↓↓
+  // EXPAND Card
+  // EDIT Card
+  // DELETE Card
 
 const createTodoCard = (todo) => {
   const card = document.createElement("div");
@@ -40,9 +35,30 @@ const createTodoCard = (todo) => {
   cardsContainer.appendChild(card);
 }
 
-const createTodoCardsFromList = (list) => { 
-  defaultList.todos.forEach(todo => createTodoCard(todo));
+const addAllTodoCards = (list) => { 
+  list.todos.forEach(todo => createTodoCard(todo));
 };
-createTodoCardsFromList();
 
+const addTodayTodoCards = (list) => {
+  const currentDateFormatted = format(new Date(), "yyyy-MM-dd");
 
+  list.todos.forEach(todo => {
+    if (todo.dueDate === currentDateFormatted) {
+      createTodoCard(todo);
+    }
+  })
+};
+
+// TODO
+const addUpcomingTodoCards = (list) => {
+  list.todos.forEach(todo => {
+    const dueDate = todo.dueDate
+    const dateIsAfter = isAfter(tododuedate, new Date())
+
+    if (!todo.dueDate || todo.dueDate) return
+  });
+};
+
+addTodayTodoCards(defaultList);
+
+console.log(new Date(2026, 8, 1))
