@@ -69,10 +69,20 @@ const renderNoDateTodoCards = (list) => {
   });
 }
 
+const renderImportantTodoCards = (list) => {
+  clearTodoCards();
+  list.todos.forEach(todo => {
+    if (todo.priority === "important") {
+      createTodoCard(todo);
+    }
+  });
+}
+
 export { 
   createTodoCard,
   renderAllTodoCards,
   renderTodayTodoCards,
   renderUpcomingTodoCards,
   renderNoDateTodoCards,
+  renderImportantTodoCards,
 }

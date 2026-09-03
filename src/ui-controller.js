@@ -6,6 +6,7 @@ import {
   renderTodayTodoCards,
   renderUpcomingTodoCards,
   renderNoDateTodoCards,
+  renderImportantTodoCards,
 } from "./todo-cards.js"
 
 const currentList = defaultList;
@@ -17,6 +18,7 @@ const mainBtnsHandler = () => {
     "today-btn": renderTodayTodoCards,
     "upcoming-btn": renderUpcomingTodoCards,
     "anyday-btn": renderNoDateTodoCards,
+    "important-btn": renderImportantTodoCards,
   };
 
   mainBtns.forEach(btn => btn.addEventListener("click", () => {
