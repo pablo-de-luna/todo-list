@@ -5,4 +5,4 @@
 import "./style.css";
 
 // TEST IMPORT, TO BE CHANGED 
-import "./todo-cards.js";
+import "./ui-controller.js";

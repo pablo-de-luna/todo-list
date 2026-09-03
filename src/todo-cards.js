@@ -1,10 +1,8 @@
 "use strict"
 
 import { format, isAfter } from "date-fns"
-import { defaultList } from "./todos.js"
 
 const cardsContainer = document.querySelector("#cards-container");
-
 const currentDate = format(new Date(), "yyyy-MM-dd");
 
 // ↓↓↓ TODO functions ↓↓↓
@@ -37,11 +35,15 @@ const createTodoCard = (todo) => {
   cardsContainer.appendChild(card);
 }
 
-const addAllTodoCards = (list) => { 
+const clearTodoCards = () => { cardsContainer.textContent = "" };
+
+const renderAllTodoCards = (list) => { 
+  clearTodoCards();
   list.todos.forEach(todo => createTodoCard(todo));
 };
 
-const addTodayTodoCards = (list) => {
+const renderTodayTodoCards = (list) => {
+  clearTodoCards();
   list.todos.forEach(todo => {
     if (todo.dueDate === currentDate) {
       createTodoCard(todo);
@@ -49,10 +51,28 @@ const addTodayTodoCards = (list) => {
   })
 };
 
-const addUpcomingTodoCards = (list) => {
+const renderUpcomingTodoCards = (list) => {
+  clearTodoCards();
   list.todos.forEach(todo => {
     if (isAfter(todo.dueDate, currentDate)) {
       createTodoCard(todo);
     }
   });
 };
+
+const renderNoDateTodoCards = (list) => {
+  clearTodoCards();
+  list.todos.forEach(todo => {
+    if (!todo.dueDate) {
+      createTodoCard(todo);
+    }
+  });
+}
+
+export { 
+  createTodoCard,
+  renderAllTodoCards,
+  renderTodayTodoCards,
+  renderUpcomingTodoCards,
+  renderNoDateTodoCards,
+}

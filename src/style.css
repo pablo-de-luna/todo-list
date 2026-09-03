@@ -52,14 +52,7 @@ body * {
   border: 1px dotted gray;
 }
 
-/* LIGHT TEST */
-/* body {
-  background-color: #e4e0db;
-  color: #62584f;
-  font-family: 'Helvetica Neue', sans-serif, system-ui, -apple-system;
-} */
-
-/* DARK TEST */
+/* TO BE CHANGED */
 body {
   background-color: #1c1c1c;
   color: #e3deda;

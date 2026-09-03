@@ -33,7 +33,7 @@ const todoExamples = [
   {
     title: "Meeting",
     description: "team sync",
-    dueDate: getRandomUpcomingDate(),
+    dueDate: todayDate,
     priority: "important",
     category: "work",
   },
@@ -49,13 +49,13 @@ const todoExamples = [
   {
     title: "Plan son's birthday party",
     description: "buy a cake, candles, some balloons, and send invitations to friends and family",
-    dueDate: todayDate,
+    dueDate: getRandomUpcomingDate(),
     priority: "important",
     category: "home",
   },
   {
     title: "Send project",
-    dueDate: getRandomUpcomingDate(),
+    dueDate: todayDate,
     priority: "important",
     category: "work",
   },
