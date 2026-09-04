@@ -1,9 +1,9 @@
 "use strict"
 
-import { format, isAfter } from "date-fns"
+import { isAfter } from "date-fns";
+import { currentDate } from "./dates.js";
 
 const cardsContainer = document.querySelector("#cards-container");
-const currentDate = format(new Date(), "yyyy-MM-dd");
 
 // ↓↓↓ TODO functions ↓↓↓
   // EXPAND Card
@@ -36,6 +36,9 @@ const createTodoCard = (todo) => {
 }
 
 const clearTodoCards = () => { cardsContainer.textContent = "" };
+
+// TODO Make all this render functions methods of an Object
+// ↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 const renderAllTodoCards = (list) => { 
   clearTodoCards();
