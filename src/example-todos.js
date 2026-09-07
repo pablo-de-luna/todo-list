@@ -45,6 +45,11 @@ const todoExamples = [
     category: "home",
   },
   {
+    title: "Buy lego",
+    description: "Lego technic Liebherr R 9800",
+    dueDate: "2026-08-12",
+  },
+  {
     title: "Send project",
     dueDate: currentDate,
     priority: "important",

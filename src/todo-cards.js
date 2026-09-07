@@ -1,14 +1,9 @@
 "use strict"
 
 import { isAfter } from "date-fns";
-import { currentDate } from "./dates.js";
+import { currentDate, formatToRelativeDate } from "./dates.js";
 
 const cardsContainer = document.querySelector("#cards-container");
-
-// ↓↓↓ TODO functions ↓↓↓
-  // EXPAND Card
-  // EDIT Card
-  // DELETE Card
 
 const createTodoCard = (todo) => {
   const card = document.createElement("div");
@@ -26,7 +21,8 @@ const createTodoCard = (todo) => {
   category.textContent = todo.category;
 
   const dueDate = document.createElement("div");
-  dueDate.textContent = todo.dueDate;
+  const relativeDate = formatToRelativeDate(todo.dueDate);
+  dueDate.textContent = relativeDate;
 
   [statusCheckbox, title, category, dueDate].forEach(element => {
     card.appendChild(element);
@@ -36,9 +32,6 @@ const createTodoCard = (todo) => {
 }
 
 const clearTodoCards = () => { cardsContainer.textContent = "" };
-
-// TODO Make all this render functions methods of an Object
-// ↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 const renderAllTodoCards = (list) => { 
   clearTodoCards();
@@ -63,6 +56,8 @@ const renderUpcomingTodoCards = (list) => {
   });
 };
 
+// TODO Render overdue cards
+
 const renderNoDateTodoCards = (list) => {
   clearTodoCards();
   list.todos.forEach(todo => {
@@ -81,11 +76,12 @@ const renderImportantTodoCards = (list) => {
   });
 }
 
-export { 
-  createTodoCard,
+const todoCardsRenderer = {
   renderAllTodoCards,
   renderTodayTodoCards,
   renderUpcomingTodoCards,
   renderNoDateTodoCards,
   renderImportantTodoCards,
 }
+
+export { createTodoCard, todoCardsRenderer }

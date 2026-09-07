@@ -1,6 +1,6 @@
 "use strict"
 
-import { format, addDays } from "date-fns";
+import { format, addDays, isTomorrow, isPast, isToday } from "date-fns";
 
 const currentDate = format(new Date(), "yyyy-MM-dd");
 
@@ -11,6 +11,25 @@ const getRandomUpcomingDate = () => {
   return format(addDays(currentDate, getRandomInt()), "yyyy-MM-dd");
 };
 
-// TODO make functions to get dates formated as "Today", "Tomorrow"...
+const dateStrToDateInstance = (dateStr) => {
+  const dateArr = dateStr.split("-");
+  const year = dateArr[0]
+  const month = parseInt(dateArr[1]) - 1;
+  const day = parseInt(dateArr[2]);
 
-export { currentDate, getRandomUpcomingDate };
+  return new Date(year, month, day);
+};
+
+const formatToRelativeDate = (dateStr) => {
+  if (!dateStr) return;
+
+  const date = dateStrToDateInstance(dateStr);
+
+  if (isToday(date)) return "Today";
+  if (isTomorrow(date)) return "Tomorrow";
+  if (isPast(date)) return "Overdue"
+
+  return format(date, "PP");
+};
+
+export { currentDate, getRandomUpcomingDate, formatToRelativeDate };

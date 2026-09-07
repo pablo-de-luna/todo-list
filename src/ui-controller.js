@@ -1,24 +1,18 @@
 "use strict"
 
 import { defaultList } from "./todos.js";
-import {
-  renderAllTodoCards,
-  renderTodayTodoCards,
-  renderUpcomingTodoCards,
-  renderNoDateTodoCards,
-  renderImportantTodoCards,
-} from "./todo-cards.js"
+import { todoCardsRenderer } from "./todo-cards.js"
 
 const currentList = defaultList;
 const mainBtns = document.querySelectorAll("#main-btns > li > button")
 
 const mainBtnsHandler = () => {
   const cardRenderers = {
-    "all-btn": renderAllTodoCards,
-    "today-btn": renderTodayTodoCards,
-    "upcoming-btn": renderUpcomingTodoCards,
-    "anyday-btn": renderNoDateTodoCards,
-    "important-btn": renderImportantTodoCards,
+    "all-btn": todoCardsRenderer.renderAllTodoCards,
+    "today-btn": todoCardsRenderer.renderTodayTodoCards,
+    "upcoming-btn": todoCardsRenderer.renderUpcomingTodoCards,
+    "anyday-btn": todoCardsRenderer.renderNoDateTodoCards,
+    "important-btn": todoCardsRenderer.renderImportantTodoCards,
   };
 
   mainBtns.forEach(btn => btn.addEventListener("click", () => {

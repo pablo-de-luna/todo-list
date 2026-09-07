@@ -69,4 +69,7 @@ class Todo {
 const defaultList = new TodosList();
 addExampleTodos(defaultList);
 
+// feature to implement: private Todo list for password protected private todos
+// const privateList = new TodosList();
+
 export { defaultList, Todo }
