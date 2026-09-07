@@ -11,6 +11,7 @@ const mainBtnsHandler = () => {
     "all-btn": todoCardsRenderer.renderAllTodoCards,
     "today-btn": todoCardsRenderer.renderTodayTodoCards,
     "upcoming-btn": todoCardsRenderer.renderUpcomingTodoCards,
+    "overdue-btn": todoCardsRenderer.renderOverdueTodoCards,
     "anyday-btn": todoCardsRenderer.renderNoDateTodoCards,
     "important-btn": todoCardsRenderer.renderImportantTodoCards,
   };

@@ -1,7 +1,7 @@
 "use strict"
 
-import { isAfter } from "date-fns";
-import { currentDate, formatToRelativeDate } from "./dates.js";
+import { isAfter, isBefore } from "date-fns";
+import { currentDate, formatToRelativeDate, dateStrToDateInstance } from "./dates.js";
 
 const cardsContainer = document.querySelector("#cards-container");
 
@@ -29,7 +29,7 @@ const createTodoCard = (todo) => {
   });
   
   cardsContainer.appendChild(card);
-}
+};
 
 const clearTodoCards = () => { cardsContainer.textContent = "" };
 
@@ -44,7 +44,7 @@ const renderTodayTodoCards = (list) => {
     if (todo.dueDate === currentDate) {
       createTodoCard(todo);
     }
-  })
+  });
 };
 
 const renderUpcomingTodoCards = (list) => {
@@ -56,7 +56,14 @@ const renderUpcomingTodoCards = (list) => {
   });
 };
 
-// TODO Render overdue cards
+const renderOverdueTodoCards = (list) => {
+  clearTodoCards();
+  list.todos.forEach(todo => {
+    if (isBefore(todo.dueDate, currentDate)) {
+      createTodoCard(todo);
+    }
+  });
+};
 
 const renderNoDateTodoCards = (list) => {
   clearTodoCards();
@@ -65,7 +72,7 @@ const renderNoDateTodoCards = (list) => {
       createTodoCard(todo);
     }
   });
-}
+};
 
 const renderImportantTodoCards = (list) => {
   clearTodoCards();
@@ -74,14 +81,15 @@ const renderImportantTodoCards = (list) => {
       createTodoCard(todo);
     }
   });
-}
+};
 
 const todoCardsRenderer = {
   renderAllTodoCards,
   renderTodayTodoCards,
   renderUpcomingTodoCards,
+  renderOverdueTodoCards,
   renderNoDateTodoCards,
   renderImportantTodoCards,
-}
+};
 
-export { createTodoCard, todoCardsRenderer }
+export { createTodoCard, todoCardsRenderer };

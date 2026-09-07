@@ -2,16 +2,16 @@
 
 import { format, addDays, isTomorrow, isPast, isToday } from "date-fns";
 
-const currentDate = format(new Date(), "yyyy-MM-dd");
+export const currentDate = format(new Date(), "yyyy-MM-dd");
 
 // today date plus random number of days (between 2 and 7) for example todos
-const getRandomUpcomingDate = () => {
+export const getRandomUpcomingDate = () => {
   const getRandomInt = () => Math.floor(Math.random() * 6 + 2);
 
   return format(addDays(currentDate, getRandomInt()), "yyyy-MM-dd");
 };
 
-const dateStrToDateInstance = (dateStr) => {
+export const dateStrToDateInstance = (dateStr) => {
   const dateArr = dateStr.split("-");
   const year = dateArr[0]
   const month = parseInt(dateArr[1]) - 1;
@@ -20,7 +20,7 @@ const dateStrToDateInstance = (dateStr) => {
   return new Date(year, month, day);
 };
 
-const formatToRelativeDate = (dateStr) => {
+export const formatToRelativeDate = (dateStr) => {
   if (!dateStr) return;
 
   const date = dateStrToDateInstance(dateStr);
@@ -31,5 +31,3 @@ const formatToRelativeDate = (dateStr) => {
 
   return format(date, "PP");
 };
-
-export { currentDate, getRandomUpcomingDate, formatToRelativeDate };
