@@ -1,7 +1,7 @@
 "use strict"
 
 import { defaultList, getTodoCategories } from "./todos.js";
-import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./todo-cards.js"
+import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./cards.js"
 
 const currentList = defaultList;
 

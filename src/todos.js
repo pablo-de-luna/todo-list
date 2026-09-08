@@ -1,6 +1,6 @@
 "use strict"
 
-import addExampleTodos from "./example-todos.js";
+import addExampleTodos from "./examples.js";
 
 class TodosList {
   #todos = [];

@@ -92,9 +92,8 @@ const handleStatusCheckbox = (list) => {
 
     checkbox.addEventListener("click", () => {
       todo.toggleStatus();
-      console.log(todo)
     });
   });
 };
 
-export { createTodoCard, todoCardsRenderer, clearTodoCards, handleStatusCheckbox };
+export { todoCardsRenderer, clearTodoCards, handleStatusCheckbox };
