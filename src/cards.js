@@ -17,14 +17,14 @@ const createTodoCard = (todo) => {
   const title = document.createElement("div");
   title.textContent = todo.title;
 
-  const category = document.createElement("div");
-  category.textContent = todo.category;
+  const project = document.createElement("div");
+  project.textContent = todo.project;
 
   const dueDate = document.createElement("div");
   const relativeDate = formatToRelativeDate(todo.dueDate);
   dueDate.textContent = relativeDate;
 
-  [statusCheckbox, title, category, dueDate].forEach(element => {
+  [statusCheckbox, title, project, dueDate].forEach(element => {
     card.appendChild(element);
   });
   
@@ -65,9 +65,9 @@ const renderImportantTodoCards = (list) => {
     .forEach(todo => createTodoCard(todo));
 };
 
-const renderCategoryTodoCards = (list, category) => {
+const renderProjectTodoCards = (list, project) => {
   list.todos
-    .filter(todo => todo.category === category)
+    .filter(todo => todo.project === project)
     .forEach(todo => createTodoCard(todo));
 };
 
@@ -78,7 +78,7 @@ const todoCardsRenderer = {
   renderOverdueTodoCards,
   renderNoDateTodoCards,
   renderImportantTodoCards,
-  renderCategoryTodoCards,
+  renderProjectTodoCards,
 };
 
 const handleStatusCheckbox = (list) => {

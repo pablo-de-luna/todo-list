@@ -1,6 +1,6 @@
 "use strict"
 
-import { defaultList, getTodoCategories } from "./todos.js";
+import { defaultList, getTodoProjects } from "./todos.js";
 import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./cards.js"
 
 const currentList = defaultList;
@@ -25,36 +25,36 @@ const filterBtnsHandler = () => {
   }));
 };
 
-const renderCategoryBtns = () => {
-  const categories = getTodoCategories(currentList);
-  const categoriesBtns = document.querySelector("#nav-categories-btns");
+const renderProjectBtns = () => {
+  const projects = getTodoProjects(currentList);
+  const projectsBtns = document.querySelector("#nav-projects-btns");
   
-  categories.forEach(category => {
-    const categoryListItem = document.createElement("li");
-    const categoryBtn = document.createElement("button");
-    categoryBtn.dataset.category = category;
-    categoryBtn.className = "category-btn";
-    categoryBtn.setAttribute("type", "button");
-    categoryBtn.textContent = `${category}`;
+  projects.forEach(project => {
+    const projectListItem = document.createElement("li");
+    const projectBtn = document.createElement("button");
+    projectBtn.dataset.project = project;
+    projectBtn.className = "project-btn";
+    projectBtn.setAttribute("type", "button");
+    projectBtn.textContent = `${project}`;
   
-    categoriesBtns.appendChild(categoryListItem);
-    categoryListItem.appendChild(categoryBtn);
+    projectsBtns.appendChild(projectListItem);
+    projectListItem.appendChild(projectBtn);
   })
 };
 
-const categoryBtnsHandler = () => {
-  const categoryBtns = document.querySelectorAll(".category-btn"); 
+const projectBtnsHandler = () => {
+  const projectBtns = document.querySelectorAll(".project-btn"); 
 
-  categoryBtns.forEach(btn => btn.addEventListener("click", () => {
-    const category = btn.dataset.category;
+  projectBtns.forEach(btn => btn.addEventListener("click", () => {
+    const project = btn.dataset.project;
 
     clearTodoCards();
-    todoCardsRenderer.renderCategoryTodoCards(currentList, category);
+    todoCardsRenderer.renderProjectTodoCards(currentList, project);
     handleStatusCheckbox(currentList);
   }));
 };
 
 
 filterBtnsHandler();
-renderCategoryBtns();
-categoryBtnsHandler();
+renderProjectBtns();
+projectBtnsHandler();

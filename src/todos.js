@@ -26,12 +26,12 @@ class Todo {
   #status = false;
   #id = crypto.randomUUID();
 
-  constructor({title, description, dueDate, priority, category}) {
+  constructor({title, description, dueDate, priority, project}) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.category = category || "Default";
+    this.project = project || "Default";
   }
 
   get title() {
@@ -69,14 +69,14 @@ class Todo {
 const defaultList = new TodosList();
 addExampleTodos(defaultList);
 
-const getTodoCategories = (list) => {
-  const categories = list.todos.map(todo => todo.category);
-  const uniqueCategories = [...new Set(categories)];
+const getTodoProjects = (list) => {
+  const projects = list.todos.map(todo => todo.project);
+  const uniqueProjects = [...new Set(projects)];
 
-  return uniqueCategories;
+  return uniqueProjects;
 }
 
 // feature to implement: private Todo list for password protected private todos
 // const privateList = new TodosList();
 
-export { defaultList, Todo, getTodoCategories }
+export { defaultList, Todo, getTodoProjects }
