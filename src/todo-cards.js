@@ -81,4 +81,20 @@ const todoCardsRenderer = {
   renderCategoryTodoCards,
 };
 
-export { createTodoCard, todoCardsRenderer, clearTodoCards };
+const handleStatusCheckbox = (list) => {
+  const todoCards = document.querySelectorAll(".todo-card");
+
+  todoCards.forEach(todoCard => {
+    const checkbox = todoCard.querySelector("input");
+    const todo = list.todos.find(todo => todo.id === todoCard.dataset.id);
+
+    checkbox.checked = todo.status;
+
+    checkbox.addEventListener("click", () => {
+      todo.toggleStatus();
+      console.log(todo)
+    });
+  });
+};
+
+export { createTodoCard, todoCardsRenderer, clearTodoCards, handleStatusCheckbox };

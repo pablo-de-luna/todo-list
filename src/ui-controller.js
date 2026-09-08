@@ -1,7 +1,7 @@
 "use strict"
 
 import { defaultList, getTodoCategories } from "./todos.js";
-import { todoCardsRenderer, clearTodoCards } from "./todo-cards.js"
+import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./todo-cards.js"
 
 const currentList = defaultList;
 
@@ -18,10 +18,10 @@ const filterBtnsHandler = () => {
 
   filterBtns.forEach(btn => btn.addEventListener("click", () => {
     const renderCards = cardRenderers[btn.dataset.filter];
-    if (!renderCards) return;
 
     clearTodoCards();
     renderCards(currentList);
+    handleStatusCheckbox(currentList);
   }));
 };
 
@@ -50,10 +50,11 @@ const categoryBtnsHandler = () => {
 
     clearTodoCards();
     todoCardsRenderer.renderCategoryTodoCards(currentList, category);
+    handleStatusCheckbox(currentList);
   }));
 };
 
 
 filterBtnsHandler();
-renderCategoryBtns()
+renderCategoryBtns();
 categoryBtnsHandler();

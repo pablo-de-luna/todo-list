@@ -48,9 +48,9 @@ h1, h2, h3, h4, h5, h6 {
 /* End of custom reset */
 
 /* JUST FOR VISUALIZATION, TO BE DELETED */
-body * {
-  border: 1px dotted gray;
-}
+/* body * {
+  border: 1px solid gray;
+} */
 
 /* TO BE CHANGED */
 body {
