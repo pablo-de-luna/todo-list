@@ -12,19 +12,18 @@
     </header>
     <nav>
       <div>
-        <ul id="main-btns">
-          <li><button id="all-btn" type="button">All</button></li>
-          <li><button id="today-btn" type="button">Today</button></li>
-          <li><button id="upcoming-btn" type="button">Upcoming</button></li>
-          <li><button id="overdue-btn" type="button">Overdue</button></li>
-          <li><button id="important-btn" type="button">Important</button></li>
-          <li><button id="anyday-btn" type="button">Any Day</button></li>
+        <ul>
+          <li><button class="filter-btn" data-filter="all" type="button">All</button></li>
+          <li><button class="filter-btn" data-filter="today" type="button">Today</button></li>
+          <li><button class="filter-btn" data-filter="upcoming" type="button">Upcoming</button></li>
+          <li><button class="filter-btn" data-filter="overdue" type="button">Overdue</button></li>
+          <li><button class="filter-btn" data-filter="important" type="button">Important</button></li>
+          <li><button class="filter-btn" data-filter="anyday" type="button">Any Day</button></li>
         </ul>
       </div>
       <div>
         <div>Categories</div>
-        <ul id="categories-btns">
-        </ul>
+        <ul id="nav-categories-btns"></ul>
       </div>
     </nav>
     <main>

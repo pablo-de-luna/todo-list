@@ -18,7 +18,6 @@ const todoExamples = [
     title: "Plan trip",
     description: "compare travel options",
     dueDate: getRandomUpcomingDate(),
-    category: "default",
   },
   {
     title: "Meeting",

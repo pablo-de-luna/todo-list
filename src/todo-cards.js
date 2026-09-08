@@ -12,7 +12,7 @@ const createTodoCard = (todo) => {
   card.dataset.id = todo.id;
 
   const statusCheckbox = document.createElement("input");
-  statusCheckbox.setAttribute("type", "checkbox")
+  statusCheckbox.setAttribute("type", "checkbox");
 
   const title = document.createElement("div");
   title.textContent = todo.title;
@@ -67,8 +67,8 @@ const renderImportantTodoCards = (list) => {
 
 const renderCategoryTodoCards = (list, category) => {
   list.todos
-  .filter(todo => todo.category === category)
-  .forEach(todo => createTodoCard(todo));
+    .filter(todo => todo.category === category)
+    .forEach(todo => createTodoCard(todo));
 };
 
 const todoCardsRenderer = {

@@ -31,7 +31,7 @@ class Todo {
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.category = category || "default";
+    this.category = category || "Default";
   }
 
   get title() {
