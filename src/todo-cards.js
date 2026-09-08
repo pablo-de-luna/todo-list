@@ -1,7 +1,7 @@
 "use strict"
 
 import { isAfter, isBefore } from "date-fns";
-import { currentDate, formatToRelativeDate, dateStrToDateInstance } from "./dates.js";
+import { currentDate, formatToRelativeDate } from "./dates.js";
 
 const cardsContainer = document.querySelector("#cards-container");
 
@@ -34,53 +34,41 @@ const createTodoCard = (todo) => {
 const clearTodoCards = () => { cardsContainer.textContent = "" };
 
 const renderAllTodoCards = (list) => { 
-  clearTodoCards();
   list.todos.forEach(todo => createTodoCard(todo));
 };
 
 const renderTodayTodoCards = (list) => {
-  clearTodoCards();
-  list.todos.forEach(todo => {
-    if (todo.dueDate === currentDate) {
-      createTodoCard(todo);
-    }
-  });
+  list.todos
+    .filter(todo => todo.dueDate && todo.dueDate === currentDate)
+    .forEach(todo => createTodoCard(todo));
 };
 
 const renderUpcomingTodoCards = (list) => {
-  clearTodoCards();
-  list.todos.forEach(todo => {
-    if (isAfter(todo.dueDate, currentDate)) {
-      createTodoCard(todo);
-    }
-  });
+  list.todos
+    .filter(todo => todo.dueDate && isAfter(todo.dueDate, currentDate))
+    .forEach(todo => createTodoCard(todo));
 };
 
 const renderOverdueTodoCards = (list) => {
-  clearTodoCards();
-  list.todos.forEach(todo => {
-    if (isBefore(todo.dueDate, currentDate)) {
-      createTodoCard(todo);
-    }
-  });
+  list.todos
+    .filter(todo => todo.dueDate && isBefore(todo.dueDate, currentDate))
+    .forEach(todo => createTodoCard(todo));
 };
 
 const renderNoDateTodoCards = (list) => {
-  clearTodoCards();
-  list.todos.forEach(todo => {
-    if (!todo.dueDate) {
-      createTodoCard(todo);
-    }
-  });
+  list.todos.filter(todo => !todo.dueDate).forEach(todo => createTodoCard(todo));
 };
 
 const renderImportantTodoCards = (list) => {
-  clearTodoCards();
-  list.todos.forEach(todo => {
-    if (todo.priority === "important") {
-      createTodoCard(todo);
-    }
-  });
+  list.todos
+    .filter(todo => todo.priority === "important")
+    .forEach(todo => createTodoCard(todo));
+};
+
+const renderCategoryTodoCards = (list, category) => {
+  list.todos
+  .filter(todo => todo.category === category)
+  .forEach(todo => createTodoCard(todo));
 };
 
 const todoCardsRenderer = {
@@ -90,6 +78,7 @@ const todoCardsRenderer = {
   renderOverdueTodoCards,
   renderNoDateTodoCards,
   renderImportantTodoCards,
+  renderCategoryTodoCards,
 };
 
-export { createTodoCard, todoCardsRenderer };
+export { createTodoCard, todoCardsRenderer, clearTodoCards };

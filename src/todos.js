@@ -69,7 +69,14 @@ class Todo {
 const defaultList = new TodosList();
 addExampleTodos(defaultList);
 
+const getTodoCategories = (list) => {
+  const categories = list.todos.map(todo => todo.category);
+  const uniqueCategories = [...new Set(categories)];
+
+  return uniqueCategories;
+}
+
 // feature to implement: private Todo list for password protected private todos
 // const privateList = new TodosList();
 
-export { defaultList, Todo }
+export { defaultList, Todo, getTodoCategories }
