@@ -6,3 +6,4 @@ import "./style.css";
 
 // TEST IMPORT, TO BE CHANGED 
 import "./ui-controller.js";
+import "./form.js";
