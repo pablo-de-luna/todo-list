@@ -1,9 +1,10 @@
 "use strict"
 
-import addExampleTodos from "./examples.js";
+import { addExampleTodos, projectExamples } from "./examples.js";
 
 class TodosList {
   #todos = [];
+  #projects = ["default"]
 
   get todos() {
     return this.#todos;
@@ -16,6 +17,12 @@ class TodosList {
   }
   getTodoById(id) {
     return this.#todos.find(todo => todo.id === id);
+  }
+  get projectNames() {
+    return this.#projects;
+  }
+  addProject(...project) {
+    this.#projects.push(...project);
   }
 };
 
@@ -31,7 +38,7 @@ class Todo {
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.project = project || "Default";
+    this.project = project || "default";
   }
 
   get title() {
@@ -68,15 +75,10 @@ class Todo {
 
 const defaultList = new TodosList();
 addExampleTodos(defaultList);
-
-const getTodoProjects = (list) => {
-  const projects = list.todos.map(todo => todo.project);
-  const uniqueProjects = [...new Set(projects)];
-
-  return uniqueProjects;
-}
+defaultList.addProject(...projectExamples);
+// Append example projects to default list 
 
 // feature to implement: private Todo list for password protected private todos
 // const privateList = new TodosList();
 
-export { defaultList, Todo, getTodoProjects }
+export { defaultList, Todo }

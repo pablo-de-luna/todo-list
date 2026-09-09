@@ -1,8 +1,10 @@
 "use strict"
 
-import { defaultList, getTodoProjects } from "./todos.js";
+import { defaultList } from "./todos.js";
 import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./cards.js"
 
+/* If I made the private todos section, I should make a function so user can
+switch between lists. for now, currentList is defaultList */
 const currentList = defaultList;
 
 const filterBtnsHandler = () => {
@@ -26,10 +28,12 @@ const filterBtnsHandler = () => {
 };
 
 const renderProjectBtns = () => {
-  const projects = getTodoProjects(currentList);
+  const projects = currentList.projectNames;
   const projectsBtns = document.querySelector("#nav-projects-btns");
   
   projects.forEach(project => {
+    if (project.toLowerCase() === "default") return;
+
     const projectListItem = document.createElement("li");
     const projectBtn = document.createElement("button");
     projectBtn.dataset.project = project;

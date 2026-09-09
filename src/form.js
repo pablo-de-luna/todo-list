@@ -1,24 +1,25 @@
 "use strict"
 
-import { currentDate, getRandomUpcomingDate } from "./dates.js";
-import { defaultList, getTodoProjects } from "./todos.js";
+import { currentDate, } from "./dates.js";
+import { defaultList } from "./todos.js";
 
 const currentList = defaultList;
 
 const createProjectSelectOptions = (selectParent) => {
-  const projectsNames = getTodoProjects(currentList);
+  const projects = currentList.projectNames;
 
-  projectsNames.forEach(project => {
-    // TODO get rid of "toLowerCase()"
-    if (project.toLowerCase() === "default") return;
+  projects.forEach(project => {
     const option = document.createElement("option");
+
+    if (project.toLowerCase() === "default") {
+      project = "Select project";
+      option.setAttribute("selected", "");
+    };
+
     option.value = project.toLowerCase();
     option.textContent = project;
 
     selectParent.appendChild(option);
-
-    // TODO Default list as selected
-    // Also maybe rename "default" in UI
   });
 };
 
