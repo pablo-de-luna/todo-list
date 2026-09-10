@@ -3,9 +3,14 @@
 import { currentList } from "./todos.js";
 import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./cards.js"
 
-//TODO Add main title "Today", "All"....
+const updateMainHeader = (name) => {
+  const mainHeader = document.querySelector("#main-header");
+  const nameCapitalized = name[0].toUpperCase() + name.slice(1).toLowerCase();
 
-const filterBtnsHandler = () => {
+  mainHeader.textContent = nameCapitalized;
+};
+
+const handleFilterBtns = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
   const cardRenderers = {
     "all": todoCardsRenderer.renderAllTodoCards,
@@ -17,9 +22,11 @@ const filterBtnsHandler = () => {
   };
 
   filterBtns.forEach(btn => btn.addEventListener("click", () => {
-    const renderCards = cardRenderers[btn.dataset.filter];
-
+    const filter = btn.dataset.filter;
+    const renderCards = cardRenderers[filter];
+    
     clearTodoCards();
+    updateMainHeader(filter)
     renderCards(currentList);
     handleStatusCheckbox(currentList);
   }));
@@ -44,13 +51,14 @@ const renderProjectBtns = () => {
   })
 };
 
-const projectBtnsHandler = () => {
+const handleProjectBtns = () => {
   const projectBtns = document.querySelectorAll(".project-btn"); 
 
   projectBtns.forEach(btn => btn.addEventListener("click", () => {
     const project = btn.dataset.project;
 
     clearTodoCards();
+    updateMainHeader(project);
     todoCardsRenderer.renderProjectTodoCards(currentList, project);
     handleStatusCheckbox(currentList);
   }));
@@ -58,6 +66,6 @@ const projectBtnsHandler = () => {
 
 
 
-filterBtnsHandler();
+handleFilterBtns();
 renderProjectBtns();
-projectBtnsHandler();
+handleProjectBtns();
