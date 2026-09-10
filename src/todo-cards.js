@@ -24,11 +24,7 @@ const createTodoCard = (todo) => {
   const relativeDate = formatToRelativeDate(todo.dueDate);
   dueDate.textContent = relativeDate;
 
-  card.appendChild(statusCheckbox);
-  card.appendChild(title);
-  card.appendChild(project);
-  card.appendChild(dueDate);
-  
+  card.append(statusCheckbox, title, project, dueDate);
   cardsContainer.appendChild(card);
 };
 

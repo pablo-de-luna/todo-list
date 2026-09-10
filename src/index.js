@@ -4,10 +4,12 @@
 
 import "./style.css";
 
-import { handleStatusCheckbox, todoCardsRenderer } from "./cards.js";
+import { handleStatusCheckbox, todoCardsRenderer } from "./todo-cards.js";
 import { currentList } from "./todos.js";
-// TODO Import only necessary things ⬇⬇⬇⬇⬇⬇    
-import "./ui-controller.js";
+import { renderProjectBtns, initBtnsHandlers } from "./ui-controller.js";
+
+renderProjectBtns();
+initBtnsHandlers();
 
 todoCardsRenderer.renderTodayTodoCards(currentList);
 handleStatusCheckbox(currentList);

@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid gray;
 } */
 
-/* TO BE CHANGED */
+/* PROVISIONAL */
 body {
   background-color: #1c1c1c;
   color: #e3deda;
@@ -77,13 +77,14 @@ main {
   grid-area: 2 / 2 / 3 / 3;
 }
 
-/* CARD TEST */
-.todo-card {
+/* CARDS PROVISIONAL */
+.todo-card,
+#new-todo-card {
   background-color: #535251;
   margin: 10px;
 }
 
-/* PRIORITY COLOR TEST */
+/* PRIORITY COLOR PROVISIONAL */
 .todo-card.priority-important {
   background-color: #783737;
 }

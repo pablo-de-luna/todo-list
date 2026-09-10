@@ -3,8 +3,6 @@
 import { currentDate } from "./dates.js";
 import { currentList } from "./todos.js";
 
-const currentList = defaultList;
-
 const createProjectSelectOptions = (selectParent) => {
   const projects = currentList.projectNames;
 
@@ -24,7 +22,7 @@ const createProjectSelectOptions = (selectParent) => {
   });
 };
 
-const createTodoForm = () => {
+const createTodoForm = (elementBefore) => {
   const form = document.createElement("form");
   form.id = "todo-form";
   form.action = "#";
@@ -41,8 +39,7 @@ const createTodoForm = () => {
       titleInput.name = "title";
       titleInput.setAttribute("required", "");
 
-    titleContainer.appendChild(titleLabel);
-    titleContainer.appendChild(titleInput);
+    titleContainer.append(titleLabel, titleInput);
 
   const descriptionContainer = document.createElement("div");
     const descriptionLabel = document.createElement("label");
@@ -54,8 +51,7 @@ const createTodoForm = () => {
       descriptionInput.id = "description-input"; 
       descriptionInput.name = "description";
 
-    descriptionContainer.appendChild(descriptionLabel);
-    descriptionContainer.appendChild(descriptionInput);
+    descriptionContainer.append(descriptionLabel, descriptionInput);
 
   const dueDateContainer = document.createElement("div");
     const dueDateLabel = document.createElement("label");
@@ -68,8 +64,7 @@ const createTodoForm = () => {
       dueDateInput.name = "dueDate";
       dueDateInput.min = currentDate;
 
-    dueDateContainer.appendChild(dueDateLabel);
-    dueDateContainer.appendChild(dueDateInput);
+    dueDateContainer.append(dueDateLabel, dueDateInput);
 
   const priorityContainer = document.createElement("div");
     const priorityLabel = document.createElement("label");
@@ -81,8 +76,7 @@ const createTodoForm = () => {
       priorityCheckbox.id = "priority-input";
       priorityCheckbox.name = "priority";
 
-    priorityContainer.appendChild(priorityLabel);
-    priorityContainer.appendChild(priorityCheckbox);
+    priorityContainer.append(priorityLabel, priorityCheckbox);
 
   const projectContainer = document.createElement("div");
     const projectLabel = document.createElement("label");
@@ -94,24 +88,22 @@ const createTodoForm = () => {
       projectSelect.name = "project";
       createProjectSelectOptions(projectSelect); 
 
-    projectContainer.appendChild(projectLabel);
-    projectContainer.appendChild(projectSelect);
+    projectContainer.append(projectLabel, projectSelect);
 
   const submitBtn = document.createElement("button");
     submitBtn.type = "submit";
     submitBtn.textContent = "Create todo";
 
-  [
-    titleContainer,
-    descriptionContainer,
-    dueDateContainer,
-    priorityContainer,
-    projectContainer,
-    submitBtn
-  ].forEach(elem => form.appendChild(elem));
+    form.append(
+      titleContainer,
+      descriptionContainer,
+      dueDateContainer,
+      priorityContainer,
+      projectContainer,
+      submitBtn
+    );
 
-  // CHANGE when done ⬇⬇⬇⬇⬇⬇⬇⬇
-  document.querySelector("#cards-container").appendChild(form);
+  elementBefore.after(form);
 };
 
 // TODO ⬇⬇⬇⬇⬇⬇⬇⬇

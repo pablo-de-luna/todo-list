@@ -1,7 +1,8 @@
 "use strict"
 
 import { currentList } from "./todos.js";
-import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./cards.js"
+import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./todo-cards.js"
+import { createTodoForm } from "./form.js";
 
 const updateMainHeader = (name) => {
   const mainHeader = document.querySelector("#main-header");
@@ -9,6 +10,23 @@ const updateMainHeader = (name) => {
 
   mainHeader.textContent = nameCapitalized;
 };
+
+const handleNewTodoCard = () => {
+  const main = document.querySelector("main");
+  const newTodoCard = document.querySelector("#new-todo-card");
+
+  newTodoCard.addEventListener("click", () => {
+    const form = document.querySelector("#todo-form")
+
+    if (main.contains(document.querySelector("#todo-form"))) {
+      form.remove();
+      return;
+    }
+
+    createTodoForm(newTodoCard);
+  });
+};
+handleNewTodoCard();
 
 const handleFilterBtns = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
@@ -64,8 +82,9 @@ const handleProjectBtns = () => {
   }));
 };
 
+const initBtnsHandlers = () => {
+  handleFilterBtns();
+  handleProjectBtns();
+};
 
-
-handleFilterBtns();
-renderProjectBtns();
-handleProjectBtns();
+export { renderProjectBtns, initBtnsHandlers };
