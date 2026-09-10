@@ -1,11 +1,9 @@
 "use strict"
 
-import { defaultList } from "./todos.js";
+import { currentList } from "./todos.js";
 import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./cards.js"
 
-/* If I made the private todos section, I should make a function so user can
-switch between lists. for now, currentList is defaultList */
-const currentList = defaultList;
+//TODO Add main title "Today", "All"....
 
 const filterBtnsHandler = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
@@ -57,6 +55,7 @@ const projectBtnsHandler = () => {
     handleStatusCheckbox(currentList);
   }));
 };
+
 
 
 filterBtnsHandler();

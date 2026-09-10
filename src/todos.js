@@ -66,19 +66,20 @@ class Todo {
     return this.#priority;
   }
   set priority(val) {
-    this.#priority = val || "normal";
+    this.#priority = (val) ? "important" : "normal";
   }
   togglePriority() {
     this.#priority = (this.#priority === "normal") ? "important" : "normal";
   }
 }
 
+// Set default list with examples
 const defaultList = new TodosList();
 addExampleTodos(defaultList);
 defaultList.addProject(...projectExamples);
-// Append example projects to default list 
 
-// feature to implement: private Todo list for password protected private todos
-// const privateList = new TodosList();
+/* If I made other list, I should make a function so user can
+switch between lists. for now, currentList is defaultList */
+const currentList = defaultList;
 
-export { defaultList, Todo }
+export { currentList, Todo }

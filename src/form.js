@@ -1,7 +1,7 @@
 "use strict"
 
-import { currentDate, } from "./dates.js";
-import { defaultList } from "./todos.js";
+import { currentDate } from "./dates.js";
+import { currentList } from "./todos.js";
 
 const currentList = defaultList;
 
@@ -11,13 +11,14 @@ const createProjectSelectOptions = (selectParent) => {
   projects.forEach(project => {
     const option = document.createElement("option");
 
-    if (project.toLowerCase() === "default") {
-      project = "Select project";
-      option.setAttribute("selected", "");
-    };
 
     option.value = project.toLowerCase();
-    option.textContent = project;
+
+    if (project === "default") { 
+      option.textContent = "No Project"
+    } else {
+      option.textContent = project;
+    }
 
     selectParent.appendChild(option);
   });
@@ -25,6 +26,9 @@ const createProjectSelectOptions = (selectParent) => {
 
 const createTodoForm = () => {
   const form = document.createElement("form");
+  form.id = "todo-form";
+  form.action = "#";
+  form.method = "post";
 
   const titleContainer = document.createElement("div");
     const titleLabel = document.createElement("label");
@@ -93,13 +97,34 @@ const createTodoForm = () => {
     projectContainer.appendChild(projectLabel);
     projectContainer.appendChild(projectSelect);
 
-  form.appendChild(titleContainer);
-  form.appendChild(descriptionContainer);
-  form.appendChild(dueDateContainer);
-  form.appendChild(priorityContainer);
-  form.appendChild(projectContainer);
+  const submitBtn = document.createElement("button");
+    submitBtn.type = "submit";
+    submitBtn.textContent = "Create todo";
 
+  [
+    titleContainer,
+    descriptionContainer,
+    dueDateContainer,
+    priorityContainer,
+    projectContainer,
+    submitBtn
+  ].forEach(elem => form.appendChild(elem));
+
+  // CHANGE when done ⬇⬇⬇⬇⬇⬇⬇⬇
   document.querySelector("#cards-container").appendChild(form);
 };
 
-createTodoForm();
+// TODO ⬇⬇⬇⬇⬇⬇⬇⬇
+
+// const getFormValuesObj = () => {
+//   const form = document.querySelector("#todo-form");
+
+//   form.addEventListener("submit", (e) => {
+//     e.preventDefault();
+//     const formData = new FormData(form);
+//     const formValuesObj = Object.fromEntries(formData);
+//     return formValuesObj;
+//   });
+// };
+
+export { createTodoForm };

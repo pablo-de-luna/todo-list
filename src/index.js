@@ -4,6 +4,9 @@
 
 import "./style.css";
 
-// TEST IMPORT, TO BE CHANGED 
+import { todoCardsRenderer } from "./cards.js";
+import { currentList } from "./todos.js";
+// TODO Import only necessary things ⬇⬇⬇⬇⬇⬇    
 import "./ui-controller.js";
-import "./form.js";
+
+todoCardsRenderer.renderTodayTodoCards(currentList);
