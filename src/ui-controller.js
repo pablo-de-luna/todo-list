@@ -1,8 +1,12 @@
 "use strict"
 
 import { currentList } from "./todos.js";
-import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./todo-cards.js"
 import { createTodoForm, handleFormSubmit } from "./form.js";
+import {
+  clearTodoCards,
+  renderTodoCardsByFilter,
+  renderTodoCardsByProject,
+  handleStatusCheckbox } from "./todo-cards.js"
 
 const handleNewTodoCard = () => {
   const main = document.querySelector("main");
@@ -34,23 +38,15 @@ const updateCardsContainerDatasetFilter = (filter) => {
 
 const handleFilterBtns = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
-  const cardRenderers = {
-    "all": todoCardsRenderer.renderAllTodoCards,
-    "today": todoCardsRenderer.renderTodayTodoCards,
-    "upcoming": todoCardsRenderer.renderUpcomingTodoCards,
-    "overdue": todoCardsRenderer.renderOverdueTodoCards,
-    "anyday": todoCardsRenderer.renderNoDateTodoCards,
-    "important": todoCardsRenderer.renderImportantTodoCards,
-  };
 
   filterBtns.forEach(btn => btn.addEventListener("click", () => {
     const filter = btn.dataset.filter;
-    const renderCards = cardRenderers[filter];
     
-    clearTodoCards();
     updateMainHeader(filter);
     updateCardsContainerDatasetFilter(filter);
-    renderCards(currentList);
+
+    clearTodoCards();
+    renderTodoCardsByFilter(currentList, filter);
     handleStatusCheckbox(currentList);
   }));
 };
@@ -60,7 +56,7 @@ const renderProjectBtns = () => {
   const projectsBtns = document.querySelector("#nav-projects-btns");
   
   projects.forEach(project => {
-    if (project.toLowerCase() === "default") return;
+    if (project === "default") return;
 
     const projectListItem = document.createElement("li");
     const projectBtn = document.createElement("button");
@@ -80,10 +76,11 @@ const handleProjectBtns = () => {
   projectBtns.forEach(btn => btn.addEventListener("click", () => {
     const project = btn.dataset.project;
 
-    clearTodoCards();
     updateMainHeader(project);
     updateCardsContainerDatasetFilter(project);
-    todoCardsRenderer.renderProjectTodoCards(currentList, project);
+
+    clearTodoCards();
+    renderTodoCardsByProject(currentList, project);
     handleStatusCheckbox(currentList);
   }));
 };
