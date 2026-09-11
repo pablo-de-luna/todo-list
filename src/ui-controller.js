@@ -2,33 +2,35 @@
 
 import { currentList } from "./todos.js";
 import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./todo-cards.js"
-import { createTodoForm, handleFormSubmitAndReturnData } from "./form.js";
-
-const updateMainHeader = (name) => {
-  const mainHeader = document.querySelector("#main-header");
-  const nameCapitalized = name[0].toUpperCase() + name.slice(1).toLowerCase();
-
-  mainHeader.textContent = nameCapitalized;
-};
+import { createTodoForm, handleFormSubmit } from "./form.js";
 
 const handleNewTodoCard = () => {
   const main = document.querySelector("main");
   const newTodoCard = document.querySelector("#new-todo-card");
 
   newTodoCard.addEventListener("click", () => {
-    const form = document.querySelector("#todo-form");
-
-    if (main.contains(form)) {
-      main.removeChild(form);
+    if (main.contains(document.querySelector("#todo-form"))) {
+      main.removeChild(document.querySelector("#todo-form"));
     } else {
       createTodoForm(newTodoCard);
-      
-      handleFormSubmitAndReturnData(document.querySelector("#todo-form"));
+      const form = document.querySelector("#todo-form");
+      handleFormSubmit(form, currentList);
     }
   });
 };
-handleNewTodoCard();
 
+const updateMainHeader = (filter) => {
+  const mainHeader = document.querySelector("#main-header");
+  const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
+
+  mainHeader.textContent = nameCapitalized;
+};
+
+const updateCardsContainerDatasetFilter = (filter) => {
+  const cardsContainer = document.querySelector("#cards-container");
+
+  cardsContainer.dataset.filter = filter;
+};
 
 const handleFilterBtns = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
@@ -46,7 +48,8 @@ const handleFilterBtns = () => {
     const renderCards = cardRenderers[filter];
     
     clearTodoCards();
-    updateMainHeader(filter)
+    updateMainHeader(filter);
+    updateCardsContainerDatasetFilter(filter);
     renderCards(currentList);
     handleStatusCheckbox(currentList);
   }));
@@ -79,14 +82,16 @@ const handleProjectBtns = () => {
 
     clearTodoCards();
     updateMainHeader(project);
+    updateCardsContainerDatasetFilter(project);
     todoCardsRenderer.renderProjectTodoCards(currentList, project);
     handleStatusCheckbox(currentList);
   }));
 };
 
-const initBtnsHandlers = () => {
+const initEventHandlers = () => {
   handleFilterBtns();
   handleProjectBtns();
+  handleNewTodoCard();
 };
 
-export { renderProjectBtns, initBtnsHandlers };
+export { renderProjectBtns, initEventHandlers };

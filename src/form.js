@@ -1,7 +1,7 @@
 "use strict"
 
 import { currentDate } from "./dates.js";
-import { currentList } from "./todos.js";
+import { Todo, currentList } from "./todos.js";
 
 const createProjectSelectOptions = (selectParent) => {
   const projects = currentList.projectNames;
@@ -106,18 +106,19 @@ const createTodoForm = (elementBefore) => {
   elementBefore.after(form);
 };
 
-const handleFormSubmitAndReturnData = (form) => {
-
+const handleFormSubmit = (form, list) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    
+    // Use the FormData API to get all input names and values at once
+    // fromEntries method of Object get and object with that data as keys/values 
+    const formData = Object.fromEntries(new FormData(form));
+    const newTodo = new Todo(formData);
 
-    const formData = new FormData(form);
-    const formDataObj = Object.fromEntries(formData);
+    list.addTodo(newTodo);
 
     form.remove();
-
-    return formDataObj;
   });
 };
 
-export { createTodoForm, handleFormSubmitAndReturnData };
+export { createTodoForm, handleFormSubmit };

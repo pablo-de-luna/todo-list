@@ -6,10 +6,11 @@ import "./style.css";
 
 import { handleStatusCheckbox, todoCardsRenderer } from "./todo-cards.js";
 import { currentList } from "./todos.js";
-import { renderProjectBtns, initBtnsHandlers } from "./ui-controller.js";
+import { renderProjectBtns, initEventHandlers } from "./ui-controller.js";
 
 renderProjectBtns();
-initBtnsHandlers();
+initEventHandlers();
 
 todoCardsRenderer.renderTodayTodoCards(currentList);
 handleStatusCheckbox(currentList);
+
