@@ -2,7 +2,7 @@
 
 import { currentList } from "./todos.js";
 import { todoCardsRenderer, clearTodoCards, handleStatusCheckbox } from "./todo-cards.js"
-import { createTodoForm } from "./form.js";
+import { createTodoForm, handleFormSubmitAndReturnData } from "./form.js";
 
 const updateMainHeader = (name) => {
   const mainHeader = document.querySelector("#main-header");
@@ -16,17 +16,19 @@ const handleNewTodoCard = () => {
   const newTodoCard = document.querySelector("#new-todo-card");
 
   newTodoCard.addEventListener("click", () => {
-    const form = document.querySelector("#todo-form")
+    const form = document.querySelector("#todo-form");
 
-    if (main.contains(document.querySelector("#todo-form"))) {
-      form.remove();
-      return;
+    if (main.contains(form)) {
+      main.removeChild(form);
+    } else {
+      createTodoForm(newTodoCard);
+      
+      handleFormSubmitAndReturnData(document.querySelector("#todo-form"));
     }
-
-    createTodoForm(newTodoCard);
   });
 };
 handleNewTodoCard();
+
 
 const handleFilterBtns = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
