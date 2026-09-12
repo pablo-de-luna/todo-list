@@ -2,11 +2,7 @@
 
 import { currentList } from "./todos.js";
 import { createTodoForm, handleFormSubmit } from "./form.js";
-import {
-  clearTodoCards,
-  renderTodoCardsByFilter,
-  renderTodoCardsByProject,
-  handleStatusCheckbox } from "./todo-cards.js"
+import { clearTodoCards, renderTodoCardsByFilter, handleStatusCheckbox } from "./todo-cards.js"
 
 const handleNewTodoCard = () => {
   const main = document.querySelector("main");
@@ -36,7 +32,26 @@ const updateCardsContainerDatasetFilter = (filter) => {
   cardsContainer.dataset.filter = filter;
 };
 
-const handleFilterBtns = () => {
+const renderProjectBtns = () => {
+  const projects = currentList.projectNames;
+  const projectsBtns = document.querySelector("#nav-projects-btns");
+  
+  projects.forEach(project => {
+    if (project === "default") return;
+
+    const projectListItem = document.createElement("li");
+    const projectBtn = document.createElement("button");
+    projectBtn.dataset.filter = project;
+    projectBtn.className = "filter-btn";
+    projectBtn.setAttribute("type", "button");
+    projectBtn.textContent = `${project}`;
+  
+    projectsBtns.appendChild(projectListItem);
+    projectListItem.appendChild(projectBtn);
+  })
+};
+
+const handleNavFilterBtns = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
 
   filterBtns.forEach(btn => btn.addEventListener("click", () => {
@@ -51,43 +66,8 @@ const handleFilterBtns = () => {
   }));
 };
 
-const renderProjectBtns = () => {
-  const projects = currentList.projectNames;
-  const projectsBtns = document.querySelector("#nav-projects-btns");
-  
-  projects.forEach(project => {
-    if (project === "default") return;
-
-    const projectListItem = document.createElement("li");
-    const projectBtn = document.createElement("button");
-    projectBtn.dataset.project = project;
-    projectBtn.className = "project-btn";
-    projectBtn.setAttribute("type", "button");
-    projectBtn.textContent = `${project}`;
-  
-    projectsBtns.appendChild(projectListItem);
-    projectListItem.appendChild(projectBtn);
-  })
-};
-
-const handleProjectBtns = () => {
-  const projectBtns = document.querySelectorAll(".project-btn"); 
-
-  projectBtns.forEach(btn => btn.addEventListener("click", () => {
-    const project = btn.dataset.project;
-
-    updateMainHeader(project);
-    updateCardsContainerDatasetFilter(project);
-
-    clearTodoCards();
-    renderTodoCardsByProject(currentList, project);
-    handleStatusCheckbox(currentList);
-  }));
-};
-
 const initEventHandlers = () => {
-  handleFilterBtns();
-  handleProjectBtns();
+  handleNavFilterBtns();
   handleNewTodoCard();
 };
 

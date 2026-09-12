@@ -4,7 +4,7 @@ import { format, addDays, isTomorrow, isPast, isToday } from "date-fns";
 
 const currentDate = format(new Date(), "yyyy-MM-dd");
 
-// today date plus random number of days (between 2 and 7) for example todos
+// current date plus random number of days (between 2 and 7) for example todos
 const getRandomUpcomingDate = () => {
   const getRandomInt = () => Math.floor(Math.random() * 6 + 2);
 

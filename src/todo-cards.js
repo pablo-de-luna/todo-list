@@ -2,6 +2,7 @@
 
 import { isAfter } from "date-fns";
 import { currentDate, formatToRelativeDate } from "./dates.js";
+import { currentList } from "./todos.js";
 
 const cardsContainer = document.querySelector("#cards-container");
 
@@ -33,6 +34,12 @@ const clearTodoCards = () => { cardsContainer.textContent = "" };
 const renderTodoCardsByFilter = (list, filter) => {
   let todos = list.todos;
 
+  if (currentList.projectNames.includes(filter)) {
+    todos = list.todos.filter(todo => todo.project === filter);
+    todos.forEach(todo => createTodoCard(todo));
+    return;
+  }
+
   switch (filter) {
     case "all":
       break;
@@ -49,14 +56,7 @@ const renderTodoCardsByFilter = (list, filter) => {
       todos = list.todos.filter(todo => todo.priority === "important");
       break;
   }
-
   todos.forEach(todo => createTodoCard(todo));
-};
-
-const renderTodoCardsByProject = (list, project) => {
-  list.todos
-    .filter(todo => todo.project === project)
-    .forEach(todo => createTodoCard(todo));
 };
 
 const handleStatusCheckbox = (list) => {
@@ -77,6 +77,5 @@ const handleStatusCheckbox = (list) => {
 export {
   clearTodoCards,
   renderTodoCardsByFilter,
-  renderTodoCardsByProject, 
   handleStatusCheckbox
 };

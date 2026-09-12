@@ -117,8 +117,11 @@ const handleFormSubmit = (form, list) => {
 
     list.addTodo(newTodo);
 
+    console.table(newTodo);
     form.remove();
   });
 };
+
+
 
 export { createTodoForm, handleFormSubmit };

@@ -79,7 +79,7 @@ addExampleTodos(defaultList);
 defaultList.addProject(...projectExamples);
 
 /* If I made other list, I should make a function so user can
-switch between lists. for now, currentList is defaultList */
+switch between lists. For now, currentList is defaultList */
 const currentList = defaultList;
 
 export { currentList, Todo }
