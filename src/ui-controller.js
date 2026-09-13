@@ -4,26 +4,17 @@ import { currentList } from "./todos.js";
 import { createTodoForm, handleFormSubmit } from "./form.js";
 import { clearTodoCards, renderTodoCardsByFilter, handleStatusCheckbox } from "./todo-cards.js"
 
-const handleNewTodoCard = () => {
-  const main = document.querySelector("main");
-  const newTodoCard = document.querySelector("#new-todo-card");
-
-  newTodoCard.addEventListener("click", () => {
-    if (main.contains(document.querySelector("#todo-form"))) {
-      main.removeChild(document.querySelector("#todo-form"));
-    } else {
-      createTodoForm(newTodoCard);
-      const form = document.querySelector("#todo-form");
-      handleFormSubmit(form, currentList);
-    }
-  });
-};
-
 const updateMainHeader = (filter) => {
   const mainHeader = document.querySelector("#main-header");
   const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
 
   mainHeader.textContent = nameCapitalized;
+};
+
+const updateTodoCards = (list, filter) => {
+  clearTodoCards();
+  renderTodoCardsByFilter(list, filter);
+  handleStatusCheckbox(list);
 };
 
 const updateCardsContainerDatasetFilter = (filter) => {
@@ -51,7 +42,7 @@ const renderProjectBtns = () => {
   })
 };
 
-const handleNavFilterBtns = () => {
+const handleFilterBtns = () => {
   const filterBtns = document.querySelectorAll(".filter-btn")
 
   filterBtns.forEach(btn => btn.addEventListener("click", () => {
@@ -59,16 +50,32 @@ const handleNavFilterBtns = () => {
     
     updateMainHeader(filter);
     updateCardsContainerDatasetFilter(filter);
-
-    clearTodoCards();
-    renderTodoCardsByFilter(currentList, filter);
-    handleStatusCheckbox(currentList);
+    updateTodoCards(currentList, filter);
   }));
 };
 
+const handleNewTodoBtnCard = () => {
+  const NewCardBtn = document.querySelector("#new-todo-card");
+  const currentFilter = document.querySelector("#cards-container").dataset.filter;
+
+  NewCardBtn.addEventListener("click", () => {
+    let form = document.querySelector("#todo-form");
+
+    if (form) {
+      form.remove();
+      return;
+    }
+
+    createTodoForm(NewCardBtn);
+    form = document.querySelector("#todo-form");
+    handleFormSubmit(form, currentList);
+    form.addEventListener("submit", () => { updateTodoCards(currentList, currentFilter)});
+  })
+};
+
 const initEventHandlers = () => {
-  handleNavFilterBtns();
-  handleNewTodoCard();
+  handleFilterBtns();
+  handleNewTodoBtnCard();
 };
 
 export { renderProjectBtns, initEventHandlers };

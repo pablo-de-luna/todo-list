@@ -31,6 +31,21 @@ const createTodoCard = (todo) => {
 
 const clearTodoCards = () => { cardsContainer.textContent = "" };
 
+const handleStatusCheckbox = (list) => {
+  const todoCards = document.querySelectorAll(".todo-card");
+
+  todoCards.forEach(todoCard => {
+    const checkbox = todoCard.querySelector("input");
+    const todo = list.todos.find(todo => todo.id === todoCard.dataset.id);
+
+    checkbox.checked = todo.status;
+
+    checkbox.addEventListener("click", () => {
+      todo.toggleStatus();
+    });
+  });
+};
+
 const renderTodoCardsByFilter = (list, filter) => {
   let todos = list.todos;
 
@@ -59,23 +74,4 @@ const renderTodoCardsByFilter = (list, filter) => {
   todos.forEach(todo => createTodoCard(todo));
 };
 
-const handleStatusCheckbox = (list) => {
-  const todoCards = document.querySelectorAll(".todo-card");
-
-  todoCards.forEach(todoCard => {
-    const checkbox = todoCard.querySelector("input");
-    const todo = list.todos.find(todo => todo.id === todoCard.dataset.id);
-
-    checkbox.checked = todo.status;
-
-    checkbox.addEventListener("click", () => {
-      todo.toggleStatus();
-    });
-  });
-};
-
-export {
-  clearTodoCards,
-  renderTodoCardsByFilter,
-  handleStatusCheckbox
-};
+export { clearTodoCards, renderTodoCardsByFilter, handleStatusCheckbox };
