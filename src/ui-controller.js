@@ -1,7 +1,7 @@
 "use strict"
 
 import { currentList } from "./todos.js";
-import { createTodoForm, handleFormSubmit } from "./form.js";
+import { addTodoDataToFormValues, createTodoForm, handleEditTodoSubmit, handleNewTodoSubmit} from "./form.js";
 import { clearTodoCards, renderTodoCardsByFilter, handleStatusCheckbox } from "./todo-cards.js"
 
 const updateMainHeader = (filter) => {
@@ -68,7 +68,7 @@ const handleNewTodoBtnCard = () => {
 
     createTodoForm(NewCardBtn);
     form = document.querySelector("#todo-form");
-    handleFormSubmit(form, currentList);
+    handleNewTodoSubmit(form, currentList);
     form.addEventListener("submit", () => { updateTodoCards(currentList, currentFilter)});
   })
 };

@@ -106,21 +106,56 @@ const createTodoForm = (elementBefore) => {
   elementBefore.after(form);
 };
 
-const handleFormSubmit = (form, list) => {
+const addTodoDataToFormValues = (todoId, list) => {
+  const todo = list.todos.find(todo => todo.id === todoId);
+
+  const titleInput = document.querySelector("#title-input");
+  const descriptionInput = document.querySelector("#description-input");
+  const dateInput = document.querySelector("#date-input");
+  const priorityInput = document.querySelector("#priority-input");
+  const projectSelect = document.querySelector("#project-select");
+
+  titleInput.value = todo.title;
+  descriptionInput.value = todo.description;
+  dateInput.value = todo.dueDate;
+  if (todo.priority === "important") priorityInput.checked = true;
+  projectSelect.value = todo.project;
+};
+
+// Use the FormData API to get all input names and values at once
+// fromEntries method of Object get and object with that data as keys/values 
+const getFormData = (form) => Object.fromEntries(new FormData(form));
+
+const addTodoFromFormData = (formData, list) => {
+  list.addTodo(new Todo(formData));
+}
+
+const handleEditTodoSubmit = (form, list, todoId) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    // Use the FormData API to get all input names and values at once
-    // fromEntries method of Object get and object with that data as keys/values 
-    const formData = Object.fromEntries(new FormData(form));
-    const newTodo = new Todo(formData);
 
-    list.addTodo(newTodo);
+    const formData = getFormData(form);
+    const todo = list.todos.find(todo => todo.id === todoId);
+
+    todo.title = formData.title;
+    todo.description = formData.description;
+    todo.dueDate = formData.dueDate;
+    todo.priority = formData.priority;
+    todo.project = formData.project;
 
     form.remove();
   });
 };
 
+const handleNewTodoSubmit = (form, list) => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    const formData = getFormData(form);
+    addTodoFromFormData(formData, list);
 
+    form.remove();
+  });
+};
 
-export { createTodoForm, handleFormSubmit };
+export { createTodoForm, handleNewTodoSubmit, handleEditTodoSubmit, addTodoDataToFormValues };
