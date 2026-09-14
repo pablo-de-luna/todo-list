@@ -54,11 +54,16 @@ const handleFilterBtns = () => {
   }));
 };
 
-const handleNewTodoBtnCard = () => {
-  const NewCardBtn = document.querySelector("#new-todo-card");
-  const currentFilter = document.querySelector("#cards-container").dataset.filter;
+  const updateTodoCardsOnSubmit = (form) => {
+    const currentFilter = document.querySelector("#cards-container").dataset.filter;
 
-  NewCardBtn.addEventListener("click", () => {
+    form.addEventListener("submit", () => { updateTodoCards(currentList, currentFilter)});
+  };
+
+const handleNewTodoBtnCard = () => {
+  const newCardBtn = document.querySelector("#new-todo-card");
+
+  newCardBtn.addEventListener("click", () => {
     let form = document.querySelector("#todo-form");
 
     if (form) {
@@ -66,16 +71,21 @@ const handleNewTodoBtnCard = () => {
       return;
     }
 
-    createTodoForm(NewCardBtn);
+    createTodoForm(newCardBtn);
     form = document.querySelector("#todo-form");
     handleNewTodoSubmit(form, currentList);
-    form.addEventListener("submit", () => { updateTodoCards(currentList, currentFilter)});
+    updateTodoCardsOnSubmit(form);
   })
+};
+
+const handleTodoEdition = () => {
+
 };
 
 const initEventHandlers = () => {
   handleFilterBtns();
   handleNewTodoBtnCard();
+  handleTodoEdition();
 };
 
 export { renderProjectBtns, initEventHandlers };
