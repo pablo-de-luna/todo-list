@@ -12,6 +12,11 @@ class TodosList {
   addTodo(todo) {
     return this.#todos.push(todo);
   }
+  deleteTodo(todoId) {
+    const todoIndex = this.#todos.indexOf(this.#todos.find(todo => todo.id === todoId))
+
+    this.#todos.splice(todoIndex, 1);
+  }
   getFilteredTodosByProperty(key, val) {
     return this.#todos.filter(todo => todo[key] === val);
   }

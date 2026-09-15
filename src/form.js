@@ -8,8 +8,6 @@ const createProjectSelectOptions = (selectParent) => {
 
   projects.forEach(project => {
     const option = document.createElement("option");
-
-
     option.value = project.toLowerCase();
 
     if (project === "default") { 
@@ -93,7 +91,6 @@ const createTodoForm = (elementBefore) => {
 
   const submitBtn = document.createElement("button");
     submitBtn.type = "submit";
-    submitBtn.textContent = "Create todo";
 
     form.append(
       titleContainer,
@@ -103,6 +100,18 @@ const createTodoForm = (elementBefore) => {
       projectContainer,
       submitBtn
     );
+
+  if (elementBefore.matches("#new-todo-card")) {
+    submitBtn.textContent = "Create todo";
+  } else {
+    const deleteTodoBtn = document.createElement("button");
+      deleteTodoBtn.type = "button";
+      deleteTodoBtn.id = "delete-todo-btn";
+      deleteTodoBtn.textContent = "Delete todo";
+      
+    form.append(deleteTodoBtn);
+    submitBtn.textContent = "Update todo";
+  } 
 
   elementBefore.after(form);
 };
@@ -159,4 +168,20 @@ const handleNewTodoSubmit = (form, list) => {
   });
 };
 
-export { createTodoForm, handleNewTodoSubmit, handleEditTodoSubmit, addTodoDataToFormValues };
+const handleDeleteTodoBtn = (list, todoId) => {
+  const deleteBtn = document.querySelector("#delete-todo-btn");
+ 
+  deleteBtn.addEventListener("click", () => {
+    console.log("delete button clicked");
+
+    list.deleteTodo(todoId);
+  });
+};
+
+export {
+  createTodoForm,
+  addTodoDataToFormValues,
+  handleNewTodoSubmit,
+  handleEditTodoSubmit,
+  handleDeleteTodoBtn
+};

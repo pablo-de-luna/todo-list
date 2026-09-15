@@ -1,7 +1,7 @@
 "use strict"
 
 import { currentList } from "./todos.js";
-import { addTodoDataToFormValues, createTodoForm, handleEditTodoSubmit, handleNewTodoSubmit} from "./form.js";
+import { addTodoDataToFormValues, createTodoForm, handleDeleteTodoBtn, handleEditTodoSubmit, handleNewTodoSubmit} from "./form.js";
 import { clearTodoCards, renderTodoCardsByFilter } from "./todo-cards.js"
 
 const renderProjectBtns = () => {
@@ -82,6 +82,7 @@ const handleNewTodoBtnCard = () => {
 
 const handleTodoEdition = () => {
   const cardsContainer = document.querySelector("#cards-container");
+  const mainElem = document.querySelector("main");
 
   cardsContainer.addEventListener("click", (e) => {
     const card = e.target.closest(".todo-card");
@@ -90,7 +91,7 @@ const handleTodoEdition = () => {
     
     if (!card) return;
 
-    if (cardsContainer.contains(document.querySelector("#todo-form"))) {
+    if (mainElem.contains(document.querySelector("#todo-form"))) {
       document.querySelector("#todo-form").remove();
       return;
     }
@@ -102,7 +103,10 @@ const handleTodoEdition = () => {
     
     addTodoDataToFormValues(currentList, todoId);
     handleEditTodoSubmit(form, currentList, todoId);
+    handleDeleteTodoBtn(currentList, todoId);
     updateTodoCardsOnSubmit(form);
+    //CHANGE updateTodoCards and updateTodoCardsOnSubmit, the delete this ⬇⬇⬇⬇⬇
+    document.querySelector("#delete-todo-btn").addEventListener("click", () => {updateTodoCards(currentList, "today")})
   });
 };
 
