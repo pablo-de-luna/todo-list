@@ -53,60 +53,65 @@ const handleFilterBtns = () => {
   }));
 };
 
-  const updateTodoCardsOnSubmit = (form) => {
+  const updateTodoCardsByCurrentFilter = () => {
     const currentFilter = document.querySelector("#cards-container").dataset.filter;
 
-    form.addEventListener("submit", () => { updateTodoCards(currentList, currentFilter)});
+    updateTodoCards(currentList, currentFilter);
   };
+
+const toggleTodoForm = () => {
+  const main = document.querySelector("main");
+  const form = document.querySelector("#todo-form");
+
+  if (main.contains(form)) {
+    form.remove();
+    return true;
+  } else {
+    return false; 
+  }
+};
+
+const updateTodoCardsOnSubmit = () => {
+  const form = document.querySelector("#todo-form");
+
+  form.addEventListener("submit", () => { updateTodoCardsByCurrentFilter()});
+}
 
 const handleNewTodoBtnCard = () => {
   const newCardBtn = document.querySelector("#new-todo-card");
-  const mainElem = document.querySelector("main");
 
   newCardBtn.addEventListener("click", () => {
-    let form;
-
-    if (mainElem.contains(document.querySelector("#todo-form"))) {
-      document.querySelector("#todo-form").remove();
-      return;
-    }
+    if (toggleTodoForm()) return;
 
     createTodoForm(newCardBtn);
-
-    form = document.querySelector("#todo-form");
-
-    handleNewTodoSubmit(form, currentList);
-    updateTodoCardsOnSubmit(form);
+    handleNewTodoSubmit(currentList);
+    updateTodoCardsOnSubmit();
   })
 };
 
+const updateTodoCardsOnDelete = () => {
+  const deleteBtn = document.querySelector("#delete-todo-btn");
+
+  deleteBtn.addEventListener("click", () => {updateTodoCardsByCurrentFilter()})
+}
+
 const handleTodoEdition = () => {
   const cardsContainer = document.querySelector("#cards-container");
-  const mainElem = document.querySelector("main");
 
   cardsContainer.addEventListener("click", (e) => {
     const card = e.target.closest(".todo-card");
-    let todoId;
-    let form;
-    
-    if (!card) return;
 
-    if (mainElem.contains(document.querySelector("#todo-form"))) {
-      document.querySelector("#todo-form").remove();
-      return;
-    }
+    if (!card) return;
+    if (toggleTodoForm()) return;
+
+    const todoId = card.dataset.id;
 
     createTodoForm(card);
-
-    todoId = card.dataset.id;
-    form = document.querySelector("#todo-form");
-    
     addTodoDataToFormValues(currentList, todoId);
-    handleEditTodoSubmit(form, currentList, todoId);
+    handleEditTodoSubmit(currentList, todoId);
     handleDeleteTodoBtn(currentList, todoId);
-    updateTodoCardsOnSubmit(form);
-    //CHANGE updateTodoCards and updateTodoCardsOnSubmit, the delete this ⬇⬇⬇⬇⬇
-    document.querySelector("#delete-todo-btn").addEventListener("click", () => {updateTodoCards(currentList, "today")})
+    updateTodoCardsOnSubmit();
+    updateTodoCardsOnDelete();
   });
 };
 

@@ -140,7 +140,9 @@ const addTodoFromFormData = (formData, list) => {
   list.addTodo(new Todo(formData));
 }
 
-const handleEditTodoSubmit = (form, list, todoId) => {
+const handleEditTodoSubmit = (list, todoId) => {
+  const form = document.querySelector("#todo-form")
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -157,7 +159,9 @@ const handleEditTodoSubmit = (form, list, todoId) => {
   });
 };
 
-const handleNewTodoSubmit = (form, list) => {
+const handleNewTodoSubmit = (list) => {
+  const form = document.querySelector("#todo-form")
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     
@@ -171,11 +175,7 @@ const handleNewTodoSubmit = (form, list) => {
 const handleDeleteTodoBtn = (list, todoId) => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
  
-  deleteBtn.addEventListener("click", () => {
-    console.log("delete button clicked");
-
-    list.deleteTodo(todoId);
-  });
+  deleteBtn.addEventListener("click", () => { list.deleteTodo(todoId) });
 };
 
 export {
