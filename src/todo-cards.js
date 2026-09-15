@@ -40,7 +40,9 @@ const handleStatusCheckbox = (list) => {
 
     checkbox.checked = todo.status;
 
-    checkbox.addEventListener("click", () => {
+    checkbox.addEventListener("click", (e) => {
+      e.stopPropagation();
+
       todo.toggleStatus();
     });
   });
@@ -52,6 +54,7 @@ const renderTodoCardsByFilter = (list, filter) => {
   if (currentList.projectNames.includes(filter)) {
     todos = list.todos.filter(todo => todo.project === filter);
     todos.forEach(todo => createTodoCard(todo));
+    handleStatusCheckbox(list);
     return;
   }
 
@@ -72,6 +75,8 @@ const renderTodoCardsByFilter = (list, filter) => {
       break;
   }
   todos.forEach(todo => createTodoCard(todo));
+
+  handleStatusCheckbox(list);
 };
 
 export { clearTodoCards, renderTodoCardsByFilter, handleStatusCheckbox };

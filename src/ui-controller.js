@@ -2,26 +2,7 @@
 
 import { currentList } from "./todos.js";
 import { addTodoDataToFormValues, createTodoForm, handleEditTodoSubmit, handleNewTodoSubmit} from "./form.js";
-import { clearTodoCards, renderTodoCardsByFilter, handleStatusCheckbox } from "./todo-cards.js"
-
-const updateMainHeader = (filter) => {
-  const mainHeader = document.querySelector("#main-header");
-  const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
-
-  mainHeader.textContent = nameCapitalized;
-};
-
-const updateTodoCards = (list, filter) => {
-  clearTodoCards();
-  renderTodoCardsByFilter(list, filter);
-  handleStatusCheckbox(list);
-};
-
-const updateCardsContainerDatasetFilter = (filter) => {
-  const cardsContainer = document.querySelector("#cards-container");
-
-  cardsContainer.dataset.filter = filter;
-};
+import { clearTodoCards, renderTodoCardsByFilter } from "./todo-cards.js"
 
 const renderProjectBtns = () => {
   const projects = currentList.projectNames;
@@ -40,6 +21,24 @@ const renderProjectBtns = () => {
     projectsBtns.appendChild(projectListItem);
     projectListItem.appendChild(projectBtn);
   })
+};
+
+const updateMainHeader = (filter) => {
+  const mainHeader = document.querySelector("#main-header");
+  const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
+
+  mainHeader.textContent = nameCapitalized;
+};
+
+const updateCardsContainerDatasetFilter = (filter) => {
+  const cardsContainer = document.querySelector("#cards-container");
+
+  cardsContainer.dataset.filter = filter;
+};
+
+const updateTodoCards = (list, filter) => {
+  clearTodoCards();
+  renderTodoCardsByFilter(list, filter);
 };
 
 const handleFilterBtns = () => {
@@ -62,24 +61,49 @@ const handleFilterBtns = () => {
 
 const handleNewTodoBtnCard = () => {
   const newCardBtn = document.querySelector("#new-todo-card");
+  const mainElem = document.querySelector("main");
 
   newCardBtn.addEventListener("click", () => {
-    let form = document.querySelector("#todo-form");
+    let form;
 
-    if (form) {
-      form.remove();
+    if (mainElem.contains(document.querySelector("#todo-form"))) {
+      document.querySelector("#todo-form").remove();
       return;
     }
 
     createTodoForm(newCardBtn);
+
     form = document.querySelector("#todo-form");
+
     handleNewTodoSubmit(form, currentList);
     updateTodoCardsOnSubmit(form);
   })
 };
 
 const handleTodoEdition = () => {
+  const cardsContainer = document.querySelector("#cards-container");
 
+  cardsContainer.addEventListener("click", (e) => {
+    const card = e.target.closest(".todo-card");
+    let todoId;
+    let form;
+    
+    if (!card) return;
+
+    if (cardsContainer.contains(document.querySelector("#todo-form"))) {
+      document.querySelector("#todo-form").remove();
+      return;
+    }
+
+    createTodoForm(card);
+
+    todoId = card.dataset.id;
+    form = document.querySelector("#todo-form");
+    
+    addTodoDataToFormValues(currentList, todoId);
+    handleEditTodoSubmit(form, currentList, todoId);
+    updateTodoCardsOnSubmit(form);
+  });
 };
 
 const initEventHandlers = () => {

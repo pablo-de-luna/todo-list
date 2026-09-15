@@ -46,10 +46,11 @@ const createTodoForm = (elementBefore) => {
       descriptionLabel.setAttribute("for", "description-input");
       descriptionLabel.textContent = "Description";
 
-    const descriptionInput = document.createElement("input");
-      descriptionInput.type = "text";
+    const descriptionInput = document.createElement("textarea");
       descriptionInput.id = "description-input"; 
       descriptionInput.name = "description";
+      descriptionInput.cols = "30";
+      descriptionInput.rows = "3";
 
     descriptionContainer.append(descriptionLabel, descriptionInput);
 
@@ -106,7 +107,7 @@ const createTodoForm = (elementBefore) => {
   elementBefore.after(form);
 };
 
-const addTodoDataToFormValues = (todoId, list) => {
+const addTodoDataToFormValues = (list, todoId) => {
   const todo = list.todos.find(todo => todo.id === todoId);
 
   const titleInput = document.querySelector("#title-input");
