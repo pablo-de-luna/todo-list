@@ -23,6 +23,17 @@ const renderProjectBtns = () => {
   })
 };
 
+const updateProjectBtns = () => {
+  const projectsBtns = document.querySelector("#nav-projects-btns");
+
+  projectsBtns.textContent = "";
+
+  renderNewProjectBtn();
+  toggleNewProjectBtn();
+  renderProjectBtns();
+  handleFilterBtns();
+};
+
 const updateMainHeader = (filter) => {
   const mainHeader = document.querySelector("#main-header");
   const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
@@ -51,6 +62,64 @@ const handleFilterBtns = () => {
     updateCardsContainerDatasetFilter(filter);
     updateTodoCards(currentList, filter);
   }));
+};
+
+const renderNewProjectForm = () => {
+  const btnParent = document.querySelector("#new-project-btn").parentElement;
+  const listItem = document.createElement("li");
+  const input = document.createElement("input");
+  const addBtn = document.createElement("button");
+
+  listItem.id = "new-project-form";
+  input.type = "text";
+  addBtn.type = "button";
+  addBtn.textContent = "Add";
+
+  listItem.append(input, addBtn);
+  btnParent.after(listItem);
+};
+
+const handleAddProjectBtn = (list) => {
+  const newProjectBtn = document.querySelector("#new-project-btn");
+  const addBtn = document.querySelector("#new-project-form button");
+  const input = document.querySelector("#new-project-form input");
+  
+  addBtn.addEventListener("click", () => {
+    if (!input.value || input.value.trim() === "") return;
+
+    currentList.addProject(input.value.toLowerCase());
+    updateProjectBtns();
+  });
+};
+
+const renderNewProjectBtn = () => {
+  const navProjectsBtns = document.querySelector("#nav-projects-btns");
+  const listItem = document.createElement("li");
+  const button = document.createElement("button");
+
+  button.id = "new-project-btn";
+  button.type = "button";
+  button.textContent = "+ New project"
+
+  listItem.append(button);
+  navProjectsBtns.append(listItem);
+};
+
+const toggleNewProjectBtn = () => {
+  const btn = document.querySelector("#new-project-btn");
+
+  btn.addEventListener("click", () => {
+    const newProjectForm = document.querySelector("#new-project-form");
+
+    if (newProjectForm) {
+      btn.textContent = "+ New project";
+      newProjectForm.remove();
+    } else {
+      btn.textContent = "Close";
+      renderNewProjectForm();
+      handleAddProjectBtn();
+    }
+  });
 };
 
   const updateTodoCardsByCurrentFilter = () => {
@@ -117,8 +186,14 @@ const handleTodoEdition = () => {
 
 const initEventHandlers = () => {
   handleFilterBtns();
+  toggleNewProjectBtn();
   handleNewTodoBtnCard();
   handleTodoEdition();
 };
 
-export { renderProjectBtns, initEventHandlers };
+const renderNavBtns = () => {
+  renderNewProjectBtn();
+  renderProjectBtns();
+}
+
+export { renderNavBtns, initEventHandlers };

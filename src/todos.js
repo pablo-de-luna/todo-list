@@ -26,8 +26,10 @@ class TodosList {
   get projectNames() {
     return this.#projects;
   }
-  addProject(...project) {
-    this.#projects.push(...project);
+  addProject(project) {
+    const projectLowCase = project.toLowerCase();
+
+    this.#projects.push(projectLowCase);
   }
 };
 
@@ -78,10 +80,10 @@ class Todo {
   }
 }
 
-// Set default list with examples
+// Set default list with example todos and projects
 const defaultList = new TodosList();
 addExampleTodos(defaultList);
-defaultList.addProject(...projectExamples);
+projectExamples.forEach(project => defaultList.addProject(project));
 
 /* If I made other list, I should make a function so user can
 switch between lists. For now, currentList is defaultList */
