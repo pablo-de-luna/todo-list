@@ -38,7 +38,6 @@ const updateProjectBtns = () => {
   renderNewProjectBtn();
   toggleNewProjectBtn();
   renderProjectBtns();
-  handleFilterBtns();
 };
 
 const updateMainHeader = (filter) => {
@@ -60,18 +59,23 @@ const updateTodoCards = (filter) => {
 };
 
 const handleFilterBtns = () => {
-  const filterBtns = document.querySelectorAll(".filter-btn")
+  const nav = document.querySelector("#nav-btns");
 
-  filterBtns.forEach(btn => btn.addEventListener("click", () => {
-    const filter = btn.dataset.filter;
+  nav.addEventListener("click", (e) => {
+    const filterBtn = e.target.closest(".filter-btn");
     
+    if (!filterBtn) return;
+    
+    const filter = filterBtn.dataset.filter;
+
+    console.log("HELLO WORLD")
     updateMainHeader(filter);
     updateCardsContainerDatasetFilter(filter);
     updateTodoCards(filter);
-  }));
+  });
 };
 
-// ---- PROJECT CREATION -------------------------------------------------------
+// ---- PROJECTS MANIPULATION --------------------------------------------------
 
 const renderNewProjectForm = () => {
   const btnParent = document.querySelector("#new-project-btn").parentElement;
@@ -172,7 +176,7 @@ const updateTodoCardsOnDelete = () => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
 
   deleteBtn.addEventListener("click", updateTodoCardsByCurrentFilter)
-}
+};
 
 const handleTodoEdition = () => {
   const cardsContainer = document.querySelector("#cards-container");
