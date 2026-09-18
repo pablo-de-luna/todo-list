@@ -1,8 +1,15 @@
 "use strict"
 
 import { currentList } from "./todos.js";
-import { addTodoDataToFormValues, createTodoForm, handleDeleteTodoBtn, handleEditTodoSubmit, handleNewTodoSubmit} from "./form.js";
+import {
+  addTodoDataToFormValues,
+  createTodoForm,
+  handleDeleteTodoBtn,
+  handleEditTodoSubmit,
+  handleNewTodoSubmit} from "./form.js";
 import { clearTodoCards, renderTodoCardsByFilter } from "./todo-cards.js"
+
+// ---- FILTERS ----------------------------------------------------------------
 
 const renderProjectBtns = () => {
   const projects = currentList.projectNames;
@@ -47,9 +54,9 @@ const updateCardsContainerDatasetFilter = (filter) => {
   cardsContainer.dataset.filter = filter;
 };
 
-const updateTodoCards = (list, filter) => {
+const updateTodoCards = (filter) => {
   clearTodoCards();
-  renderTodoCardsByFilter(list, filter);
+  renderTodoCardsByFilter(currentList, filter);
 };
 
 const handleFilterBtns = () => {
@@ -60,9 +67,11 @@ const handleFilterBtns = () => {
     
     updateMainHeader(filter);
     updateCardsContainerDatasetFilter(filter);
-    updateTodoCards(currentList, filter);
+    updateTodoCards(filter);
   }));
 };
+
+// ---- PROJECT CREATION -------------------------------------------------------
 
 const renderNewProjectForm = () => {
   const btnParent = document.querySelector("#new-project-btn").parentElement;
@@ -79,8 +88,7 @@ const renderNewProjectForm = () => {
   btnParent.after(listItem);
 };
 
-const handleAddProjectBtn = (list) => {
-  const newProjectBtn = document.querySelector("#new-project-btn");
+const handleAddProjectBtn = () => {
   const addBtn = document.querySelector("#new-project-form button");
   const input = document.querySelector("#new-project-form input");
   
@@ -122,11 +130,7 @@ const toggleNewProjectBtn = () => {
   });
 };
 
-  const updateTodoCardsByCurrentFilter = () => {
-    const currentFilter = document.querySelector("#cards-container").dataset.filter;
-
-    updateTodoCards(currentList, currentFilter);
-  };
+// ---- TODO CREATION / FORM ---------------------------------------------------
 
 const toggleTodoForm = () => {
   const main = document.querySelector("main");
@@ -140,10 +144,16 @@ const toggleTodoForm = () => {
   }
 };
 
+const updateTodoCardsByCurrentFilter = () => {
+  const currentFilter = document.querySelector("#cards-container").dataset.filter;
+
+  updateTodoCards(currentFilter);
+};
+
 const updateTodoCardsOnSubmit = () => {
   const form = document.querySelector("#todo-form");
 
-  form.addEventListener("submit", () => { updateTodoCardsByCurrentFilter()});
+  form.addEventListener("submit", updateTodoCardsByCurrentFilter);
 }
 
 const handleNewTodoBtnCard = () => {
@@ -161,7 +171,7 @@ const handleNewTodoBtnCard = () => {
 const updateTodoCardsOnDelete = () => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
 
-  deleteBtn.addEventListener("click", () => {updateTodoCardsByCurrentFilter()})
+  deleteBtn.addEventListener("click", updateTodoCardsByCurrentFilter)
 }
 
 const handleTodoEdition = () => {
@@ -183,6 +193,8 @@ const handleTodoEdition = () => {
     updateTodoCardsOnDelete();
   });
 };
+
+// ---- INITIALIZATION ---------------------------------------------------------
 
 const initEventHandlers = () => {
   handleFilterBtns();
