@@ -1,7 +1,5 @@
 // THE LORD IS MY SHEPHERD, I LACK NOTHING
 
-"use strict"
-
 import "./style.css";
 
 import { renderTodoCardsByFilter } from "./todo-cards.js";

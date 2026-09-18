@@ -1,5 +1,3 @@
-"use strict"
-
 import { currentDate } from "./dates.js";
 import { Todo, currentList } from "./todos.js";
 

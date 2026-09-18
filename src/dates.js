@@ -1,5 +1,3 @@
-"use strict"
-
 import { format, addDays, isTomorrow, isPast, isToday } from "date-fns";
 
 const currentDate = format(new Date(), "yyyy-MM-dd");

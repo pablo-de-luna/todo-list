@@ -1,5 +1,3 @@
-"use strict"
-
 import { addExampleTodos, projectExamples } from "./examples.js";
 
 class TodosList {

@@ -1,5 +1,3 @@
-"use strict"
-
 import { Todo } from "./todos.js";
 import { currentDate, getRandomUpcomingDate } from "./dates.js";
 

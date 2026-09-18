@@ -1,5 +1,3 @@
-"use strict"
-
 import { isAfter } from "date-fns";
 import { currentDate, formatToRelativeDate } from "./dates.js";
 import { currentList } from "./todos.js";
