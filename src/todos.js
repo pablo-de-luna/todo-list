@@ -31,7 +31,7 @@ class TodosList {
   }
 };
 
-class Todo {
+export class Todo {
   #title;
   #description;
   #priority;
@@ -78,13 +78,13 @@ class Todo {
   }
 }
 
-// Set default list with example todos and projects
-const defaultList = new TodosList();
-addExampleTodos(defaultList);
-projectExamples.forEach(project => defaultList.addProject(project));
+const setDefaultListWithExamples = () => {
+  const defaultList = new TodosList();
 
-/* If I made other list, I should make a function so user can
-switch between lists. For now, currentList is defaultList */
-const currentList = defaultList;
+  addExampleTodos(defaultList);
+  projectExamples.forEach(project => defaultList.addProject(project));
 
-export { currentList, Todo }
+  return defaultList;
+};
+
+export const currentList = setDefaultListWithExamples();

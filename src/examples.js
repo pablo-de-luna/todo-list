@@ -1,13 +1,13 @@
 import { Todo } from "./todos.js";
-import { currentDate, getRandomUpcomingDate } from "./dates.js";
+import { getCurrentDate, getRandomUpcomingDate } from "./dates.js";
 
-const projectExamples = ["work", "home"];
+export const projectExamples = ["work", "home"];
 
 const todoExamples = [
   {
     title: "Buy groceries",
     description: "pick up fruit and coffee",
-    dueDate: currentDate,
+    dueDate: getCurrentDate(),
     project: "home",
   },
   {
@@ -28,12 +28,12 @@ const todoExamples = [
   },
   {
     title: "Walk dog",
-    dueDate: currentDate,
+    dueDate: getCurrentDate(),
   },
   {
     title: "Laundry",
     description: "only reds",
-    dueDate: currentDate,
+    dueDate: getCurrentDate(),
     project: "home",
   },
   {
@@ -50,7 +50,7 @@ const todoExamples = [
   },
   {
     title: "Send project",
-    dueDate: currentDate,
+    dueDate: getCurrentDate(),
     priority: "important",
     project: "work",
   },
@@ -63,8 +63,6 @@ const todoExamples = [
   },
 ];
 
-const addExampleTodos = (list) => {
+export const addExampleTodos = (list) => {
   todoExamples.forEach(todo => list.addTodo(new Todo(todo)))
 }
-
-export { addExampleTodos, projectExamples};

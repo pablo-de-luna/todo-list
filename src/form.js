@@ -1,4 +1,4 @@
-import { currentDate } from "./dates.js";
+import { getCurrentDate } from "./dates.js";
 import { Todo, currentList } from "./todos.js";
 
 const createProjectSelectOptions = (selectParent) => {
@@ -18,7 +18,7 @@ const createProjectSelectOptions = (selectParent) => {
   });
 };
 
-const createTodoForm = (elementBefore) => {
+export const createTodoForm = (elementBefore) => {
   const form = document.createElement("form");
   form.id = "todo-form";
   form.action = "#";
@@ -59,7 +59,7 @@ const createTodoForm = (elementBefore) => {
       dueDateInput.type = "date";
       dueDateInput.id = "date-input";
       dueDateInput.name = "dueDate";
-      dueDateInput.min = currentDate;
+      dueDateInput.getCurrentDate = getCurrentDate();
 
     dueDateContainer.append(dueDateLabel, dueDateInput);
 
@@ -114,7 +114,7 @@ const createTodoForm = (elementBefore) => {
   elementBefore.after(form);
 };
 
-const addTodoDataToFormValues = (list, todoId) => {
+export const addTodoDataToFormValues = (list, todoId) => {
   const todo = list.todos.find(todo => todo.id === todoId);
 
   const titleInput = document.querySelector("#title-input");
@@ -134,11 +134,7 @@ const addTodoDataToFormValues = (list, todoId) => {
 // fromEntries method of Object get and object with that data as keys/values 
 const getFormData = (form) => Object.fromEntries(new FormData(form));
 
-const addTodoFromFormData = (formData, list) => {
-  list.addTodo(new Todo(formData));
-}
-
-const handleEditTodoSubmit = (list, todoId) => {
+export const handleEditTodoSubmit = (list, todoId) => {
   const form = document.querySelector("#todo-form")
 
   form.addEventListener("submit", (e) => {
@@ -157,7 +153,9 @@ const handleEditTodoSubmit = (list, todoId) => {
   });
 };
 
-const handleNewTodoSubmit = (list) => {
+const addTodoFromFormData = (formData, list) => { list.addTodo(new Todo(formData)) }
+
+export const handleNewTodoSubmit = (list) => {
   const form = document.querySelector("#todo-form")
 
   form.addEventListener("submit", (e) => {
@@ -170,16 +168,8 @@ const handleNewTodoSubmit = (list) => {
   });
 };
 
-const handleDeleteTodoBtn = (list, todoId) => {
+export const handleDeleteTodoBtn = (list, todoId) => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
  
   deleteBtn.addEventListener("click", () => { list.deleteTodo(todoId) });
-};
-
-export {
-  createTodoForm,
-  addTodoDataToFormValues,
-  handleNewTodoSubmit,
-  handleEditTodoSubmit,
-  handleDeleteTodoBtn
 };
