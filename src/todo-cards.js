@@ -42,7 +42,7 @@ const handleStatusCheckbox = (list) => {
       todo.toggleStatus();
     });
   });
-}
+};
 
 export const renderTodoCardsByFilter = (list, filter) => {
   let todos = list.todos;
@@ -73,6 +73,6 @@ export const renderTodoCardsByFilter = (list, filter) => {
   todos.forEach(todo => renderTodoCard(todo));
 
   handleStatusCheckbox(list);
-}
+};
 
 export const clearTodoCards = () => { cardsContainer.textContent = "" };

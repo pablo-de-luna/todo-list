@@ -5,9 +5,48 @@ import {
   handleDeleteTodoBtn,
   handleEditTodoSubmit,
   handleNewTodoSubmit} from "./form.js";
-import { clearTodoCards, renderTodoCardsByFilter } from "./todo-cards.js"
+import { clearTodoCards, renderTodoCardsByFilter } from "./todo-cards.js";
 
-// ---- FILTERS ----------------------------------------------------------------
+let currentFilter = "today";
+
+const updateTodoCards = () => {
+  clearTodoCards();
+  renderTodoCardsByFilter(currentList, currentFilter);
+};
+
+const renderProjectBtn = (projectName) => {
+  const navBtnsList = document.querySelector("#nav-projects-btns");
+
+  const projectListItem = document.createElement("li");
+  const projectBtn = document.createElement("button");
+  projectBtn.dataset.filter = projectName;
+  projectBtn.className = "filter-btn";
+  projectBtn.setAttribute("type", "button");
+  projectBtn.textContent = projectName;
+
+  projectListItem.appendChild(projectBtn);
+  navBtnsList.appendChild(projectListItem);
+};
+
+// ---- NAV BUTTONS ------------------------------------------------------------
+
+const renderFilterByProjectBtns = () => {
+  const projects = currentList.projectNames;
+  
+  projects.forEach(project => {
+    if (project === "default") return;
+    renderProjectBtn(project);
+  })
+};
+
+const updateCurrentFilter = (filter) => { currentFilter = filter };
+
+const updateMainHeader = (filter) => {
+  const mainHeader = document.querySelector("#main-header");
+  const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
+
+  mainHeader.textContent = nameCapitalized;
+};
 
 const handleFilterBtns = () => {
   const nav = document.querySelector("#nav-btns");
@@ -19,90 +58,11 @@ const handleFilterBtns = () => {
     
     const filter = filterBtn.dataset.filter;
 
-    updateMainHeader(filter);
-    updateCardsContainerDatasetFilter(filter);
-    updateTodoCards(filter);
+    updateCurrentFilter(filter);
+    updateMainHeader(currentFilter);
+    updateTodoCards();
   });
-}
-
-const renderProjectBtns = () => {
-  const projects = currentList.projectNames;
-  const projectsBtns = document.querySelector("#nav-projects-btns");
-  
-  projects.forEach(project => {
-    if (project === "default") return;
-
-    const projectListItem = document.createElement("li");
-    const projectBtn = document.createElement("button");
-    projectBtn.dataset.filter = project;
-    projectBtn.className = "filter-btn";
-    projectBtn.setAttribute("type", "button");
-    projectBtn.textContent = project;
-  
-    projectsBtns.appendChild(projectListItem);
-    projectListItem.appendChild(projectBtn);
-  })
-}
-
-const updateProjectBtns = () => {
-  const projectsBtns = document.querySelector("#nav-projects-btns");
-
-  projectsBtns.textContent = "";
-
-  renderNewProjectBtn();
-  toggleNewProjectBtn();
-  renderProjectBtns();
-}
-
-const updateMainHeader = (filter) => {
-  const mainHeader = document.querySelector("#main-header");
-  const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
-
-  mainHeader.textContent = nameCapitalized;
-}
-
-const updateCardsContainerDatasetFilter = (filter) => {
-  const cardsContainer = document.querySelector("#cards-container");
-
-  cardsContainer.dataset.filter = filter;
-}
-
-const updateTodoCards = (filter) => {
-  clearTodoCards();
-  renderTodoCardsByFilter(currentList, filter);
-}
-
-// ---- PROJECTS MANIPULATION --------------------------------------------------
-
-const renderNewProjectBtn = () => {
-  const navProjectsBtns = document.querySelector("#nav-projects-btns");
-  const listItem = document.createElement("li");
-  const button = document.createElement("button");
-
-  button.id = "new-project-btn";
-  button.type = "button";
-  button.textContent = "+ New project";
-
-  listItem.append(button);
-  navProjectsBtns.append(listItem);
-}
-
-const toggleNewProjectBtn = () => {
-  const btn = document.querySelector("#new-project-btn");
-
-  btn.addEventListener("click", () => {
-    const newProjectForm = document.querySelector("#new-project-form");
-
-    if (newProjectForm) {
-      btn.textContent = "+ New project";
-      newProjectForm.remove();
-    } else {
-      btn.textContent = "Close";
-      renderNewProjectForm();
-      handleAddProjectBtn();
-    }
-  });
-}
+};
 
 const renderNewProjectForm = () => {
   const btnParent = document.querySelector("#new-project-btn").parentElement;
@@ -117,7 +77,7 @@ const renderNewProjectForm = () => {
 
   listItem.append(input, addBtn);
   btnParent.after(listItem);
-}
+};
 
 const handleAddProjectBtn = () => {
   const addBtn = document.querySelector("#new-project-form button");
@@ -127,11 +87,41 @@ const handleAddProjectBtn = () => {
     if (input.value.trim() === "") return;
 
     currentList.addProject(input.value.toLowerCase());
-    updateProjectBtns();
+    renderProjectBtn(input.value);
   });
-}
+};
 
-// ---- TODO CREATION / FORM ---------------------------------------------------
+const renderNewProjectBtn = () => {
+  const navProjectsBtns = document.querySelector("#nav-projects-btns");
+  const listItem = document.createElement("li");
+  const button = document.createElement("button");
+
+  button.id = "new-project-btn";
+  button.type = "button";
+  button.textContent = "+ New project";
+
+  listItem.append(button);
+  navProjectsBtns.append(listItem);
+};
+
+const handleNewProjectBtn = () => {
+  const btn = document.querySelector("#new-project-btn");
+
+  btn.addEventListener("click", () => {
+    const newProjectForm = document.querySelector("#new-project-form");
+
+    if (newProjectForm) {
+      btn.textContent = "+ New project";
+      newProjectForm.remove();
+    } else {
+      btn.textContent = "Close";
+      renderNewProjectForm();
+      handleAddProjectBtn();
+    }
+  });
+};
+
+// ---- CARDS ------------------------------------------------------------------
 
 const handleNewTodoBtnCard = () => {
   const newCardBtn = document.querySelector("#new-todo-card");
@@ -143,7 +133,7 @@ const handleNewTodoBtnCard = () => {
     handleNewTodoSubmit(currentList);
     updateTodoCardsOnSubmit();
   })
-}
+};
 
 const handleTodoEdition = () => {
   const cardsContainer = document.querySelector("#cards-container");
@@ -163,7 +153,7 @@ const handleTodoEdition = () => {
     updateTodoCardsOnSubmit();
     updateTodoCardsOnDelete();
   });
-}
+};
 
 const closeTodoFormIfOpen = () => {
   const main = document.querySelector("main");
@@ -175,33 +165,31 @@ const closeTodoFormIfOpen = () => {
   } else {
     return false; 
   }
-}
-
-const updateTodoCardsByCurrentFilter = () => {
-  const currentFilter = document.querySelector("#cards-container").dataset.filter;
-
-  updateTodoCards(currentFilter);
-}
+};
 
 const updateTodoCardsOnSubmit = () => {
   const form = document.querySelector("#todo-form");
 
-  form.addEventListener("submit", updateTodoCardsByCurrentFilter);
-}
+  form.addEventListener("submit", () => { updateTodoCards() });
+};
 
 const updateTodoCardsOnDelete = () => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
 
-  deleteBtn.addEventListener("click", updateTodoCardsByCurrentFilter);
-}
+  deleteBtn.addEventListener("click", () => { updateTodoCards() });
+};
 
 // ---- INITIALIZATION ---------------------------------------------------------
 
 export const initUI = () => {
+  renderTodoCardsByFilter(currentList, currentFilter);
+
   renderNewProjectBtn();
-  renderProjectBtns();
+  renderFilterByProjectBtns();
+
   handleFilterBtns();
-  toggleNewProjectBtn();
+  handleNewProjectBtn();
+
   handleNewTodoBtnCard();
   handleTodoEdition();
-}
+};

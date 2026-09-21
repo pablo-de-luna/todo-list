@@ -29,7 +29,7 @@ class TodosList {
 
     this.#projects.push(projectLowCase);
   }
-};
+}
 
 export class Todo {
   #title;
