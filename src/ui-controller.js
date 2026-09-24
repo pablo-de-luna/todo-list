@@ -123,6 +123,30 @@ const handleNewProjectBtn = () => {
 
 // ---- CARDS ------------------------------------------------------------------
 
+const updateTodoCardsOnSubmit = () => {
+  const form = document.querySelector("#todo-form");
+
+  form.addEventListener("submit", () => { updateTodoCards() });
+};
+
+const updateTodoCardsOnDelete = () => {
+  const deleteBtn = document.querySelector("#delete-todo-btn");
+
+  deleteBtn.addEventListener("click", () => { updateTodoCards() });
+};
+
+const closeTodoFormIfOpen = () => {
+  const main = document.querySelector("main");
+  const form = document.querySelector("#todo-form");
+
+  if (main.contains(form)) {
+    form.remove();
+    return true;
+  } else {
+    return false; 
+  }
+};
+
 const handleNewTodoBtnCard = () => {
   const newCardBtn = document.querySelector("#new-todo-card");
 
@@ -153,30 +177,6 @@ const handleTodoEdition = () => {
     updateTodoCardsOnSubmit();
     updateTodoCardsOnDelete();
   });
-};
-
-const closeTodoFormIfOpen = () => {
-  const main = document.querySelector("main");
-  const form = document.querySelector("#todo-form");
-
-  if (main.contains(form)) {
-    form.remove();
-    return true;
-  } else {
-    return false; 
-  }
-};
-
-const updateTodoCardsOnSubmit = () => {
-  const form = document.querySelector("#todo-form");
-
-  form.addEventListener("submit", () => { updateTodoCards() });
-};
-
-const updateTodoCardsOnDelete = () => {
-  const deleteBtn = document.querySelector("#delete-todo-btn");
-
-  deleteBtn.addEventListener("click", () => { updateTodoCards() });
 };
 
 // ---- INITIALIZATION ---------------------------------------------------------
