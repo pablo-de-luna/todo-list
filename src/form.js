@@ -134,7 +134,7 @@ export const addTodoDataToFormValues = (list, todoId) => {
 // fromEntries method of Object get and object with that data as keys/values 
 const getFormData = (form) => Object.fromEntries(new FormData(form));
 
-export const handleEditTodoSubmit = (list, todoId) => {
+export const updateTodoOnFormSubmission = (list, todoId) => {
   const form = document.querySelector("#todo-form")
 
   form.addEventListener("submit", (e) => {
@@ -148,14 +148,12 @@ export const handleEditTodoSubmit = (list, todoId) => {
     todo.dueDate = formData.dueDate;
     todo.priority = formData.priority;
     todo.project = formData.project;
-
-    form.remove();
   });
 };
 
 const addTodoFromFormData = (formData, list) => { list.addTodo(new Todo(formData)) }
 
-export const handleNewTodoSubmit = (list) => {
+export const createTodoOnFormSubmission = (list) => {
   const form = document.querySelector("#todo-form")
 
   form.addEventListener("submit", (e) => {
@@ -163,12 +161,10 @@ export const handleNewTodoSubmit = (list) => {
     
     const formData = getFormData(form);
     addTodoFromFormData(formData, list);
-
-    form.remove();
   });
 };
 
-export const handleDeleteTodoBtn = (list, todoId) => {
+export const deleteTodoOnDeleteBtnClick = (list, todoId) => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
  
   deleteBtn.addEventListener("click", () => { list.deleteTodo(todoId) });

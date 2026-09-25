@@ -2,9 +2,9 @@ import { currentList } from "./todos.js";
 import {
   addTodoDataToFormValues,
   createTodoForm,
-  handleDeleteTodoBtn,
-  handleEditTodoSubmit,
-  handleNewTodoSubmit} from "./form.js";
+  deleteTodoOnDeleteBtnClick,
+  createTodoOnFormSubmission,
+  updateTodoOnFormSubmission} from "./form.js";
 import { clearTodoCards, renderTodoCardsByFilter } from "./todo-cards.js";
 
 let currentFilter = "today";
@@ -123,16 +123,22 @@ const handleNewProjectBtn = () => {
 
 // ---- CARDS ------------------------------------------------------------------
 
-const updateTodoCardsOnSubmit = () => {
+const updateTodoCardsOnFormSubmission = () => {
   const form = document.querySelector("#todo-form");
 
-  form.addEventListener("submit", () => { updateTodoCards() });
+  form.addEventListener("submit", updateTodoCards);
 };
 
-const updateTodoCardsOnDelete = () => {
+const updateTodoCardsOnDeleteBtnClick = () => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
 
-  deleteBtn.addEventListener("click", () => { updateTodoCards() });
+  deleteBtn.addEventListener("click", updateTodoCards);
+};
+
+const removeFormOnSubmission = () => {
+  const form = document.querySelector("#todo-form");
+
+  form.addEventListener("submit", () => form.remove());
 };
 
 const closeTodoFormIfOpen = () => {
@@ -154,8 +160,9 @@ const handleNewTodoBtnCard = () => {
     if (closeTodoFormIfOpen()) return;
 
     createTodoForm(newCardBtn);
-    handleNewTodoSubmit(currentList);
-    updateTodoCardsOnSubmit();
+    createTodoOnFormSubmission(currentList);
+    updateTodoCardsOnFormSubmission();
+    removeFormOnSubmission();
   })
 };
 
@@ -172,10 +179,10 @@ const handleTodoEdition = () => {
 
     createTodoForm(card);
     addTodoDataToFormValues(currentList, todoId);
-    handleEditTodoSubmit(currentList, todoId);
-    handleDeleteTodoBtn(currentList, todoId);
-    updateTodoCardsOnSubmit();
-    updateTodoCardsOnDelete();
+    updateTodoOnFormSubmission(currentList, todoId);
+    updateTodoCardsOnFormSubmission();
+    deleteTodoOnDeleteBtnClick(currentList, todoId);
+    updateTodoCardsOnDeleteBtnClick();
   });
 };
 
@@ -183,13 +190,10 @@ const handleTodoEdition = () => {
 
 export const initUI = () => {
   renderTodoCardsByFilter(currentList, currentFilter);
-
   renderNewProjectBtn();
   renderFilterByProjectBtns();
-
   handleFilterBtns();
   handleNewProjectBtn();
-
   handleNewTodoBtnCard();
   handleTodoEdition();
 };
