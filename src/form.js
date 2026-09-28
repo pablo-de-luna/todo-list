@@ -61,7 +61,6 @@ const createTodoForm = (elementBefore) => {
       dueDateInput.type = "date";
       dueDateInput.id = "date-input";
       dueDateInput.name = "dueDate";
-      dueDateInput.getCurrentDate = getCurrentDate();
 
     dueDateContainer.append(dueDateLabel, dueDateInput);
 
