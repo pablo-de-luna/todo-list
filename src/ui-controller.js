@@ -6,117 +6,21 @@ import {
   createTodoOnFormSubmission,
   updateTodoOnFormSubmission} from "./form.js";
 import { updateTodoCards, renderTodoCardsByFilter } from "./todo-cards.js";
+import { handleSidenav } from "./sidenav.js";
 
 let currentFilter = "today";
 
-const renderProjectBtn = (projectName) => {
-  const navBtnsList = document.querySelector("#nav-projects-btns");
-
-  const projectListItem = document.createElement("li");
-  const projectBtn = document.createElement("button");
-  projectBtn.dataset.filter = projectName;
-  projectBtn.className = "filter-btn";
-  projectBtn.setAttribute("type", "button");
-  projectBtn.textContent = projectName;
-
-  projectListItem.appendChild(projectBtn);
-  navBtnsList.appendChild(projectListItem);
+export const updateCurrentFilter = (filter) => { 
+  currentFilter = filter;
+  console.log("Current filter = " + currentFilter);
 };
 
-// ---- NAV BUTTONS ------------------------------------------------------------
-
-const renderFilterByProjectBtns = () => {
-  const projects = currentList.projectNames;
-  
-  projects.forEach(project => {
-    if (project === "default") return;
-    renderProjectBtn(project);
-  })
-};
-
-const updateCurrentFilter = (filter) => { currentFilter = filter };
-
-const updateMainHeader = (filter) => {
+export const updateMainHeader = (filter) => {
   const mainHeader = document.querySelector("#main-header");
   const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
 
   mainHeader.textContent = nameCapitalized;
 };
-
-const handleFilterBtns = () => {
-  const nav = document.querySelector("#nav-btns");
-
-  nav.addEventListener("click", (e) => {
-    const filterBtn = e.target.closest(".filter-btn");
-    
-    if (!filterBtn) return;
-    
-    const filter = filterBtn.dataset.filter;
-
-    updateCurrentFilter(filter);
-    updateMainHeader(currentFilter);
-    updateTodoCards(currentList, currentFilter);
-  });
-};
-
-const renderNewProjectForm = () => {
-  const btnParent = document.querySelector("#new-project-btn").parentElement;
-  const listItem = document.createElement("li");
-  const input = document.createElement("input");
-  const addBtn = document.createElement("button");
-
-  listItem.id = "new-project-form";
-  input.type = "text";
-  addBtn.type = "button";
-  addBtn.textContent = "Add";
-
-  listItem.append(input, addBtn);
-  btnParent.after(listItem);
-};
-
-const handleAddProjectBtn = () => {
-  const addBtn = document.querySelector("#new-project-form button");
-  const input = document.querySelector("#new-project-form input");
-  
-  addBtn.addEventListener("click", () => {
-    if (input.value.trim() === "") return;
-
-    currentList.addProject(input.value.toLowerCase());
-    renderProjectBtn(input.value);
-  });
-};
-
-const renderNewProjectBtn = () => {
-  const navProjectsBtns = document.querySelector("#nav-projects-btns");
-  const listItem = document.createElement("li");
-  const button = document.createElement("button");
-
-  button.id = "new-project-btn";
-  button.type = "button";
-  button.textContent = "+ New project";
-
-  listItem.append(button);
-  navProjectsBtns.append(listItem);
-};
-
-const handleNewProjectBtn = () => {
-  const btn = document.querySelector("#new-project-btn");
-
-  btn.addEventListener("click", () => {
-    const newProjectForm = document.querySelector("#new-project-form");
-
-    if (newProjectForm) {
-      btn.textContent = "+ New project";
-      newProjectForm.remove();
-    } else {
-      btn.textContent = "Close";
-      renderNewProjectForm();
-      handleAddProjectBtn();
-    }
-  });
-};
-
-// ---- CARDS ------------------------------------------------------------------
 
 const updateTodoCardsOnFormSubmission = () => {
   const form = document.querySelector("#todo-form");
@@ -181,14 +85,9 @@ const handleTodoEdition = () => {
   });
 };
 
-// ---- INITIALIZATION ---------------------------------------------------------
-
 export const initUI = () => {
+  handleSidenav();
   renderTodoCardsByFilter(currentList, currentFilter);
-  renderNewProjectBtn();
-  renderFilterByProjectBtns();
-  handleFilterBtns();
-  handleNewProjectBtn();
   handleNewTodoBtnCard();
   handleTodoEdition();
 };
