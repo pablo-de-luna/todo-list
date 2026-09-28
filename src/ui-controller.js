@@ -5,14 +5,9 @@ import {
   deleteTodoOnDeleteBtnClick,
   createTodoOnFormSubmission,
   updateTodoOnFormSubmission} from "./form.js";
-import { clearTodoCards, renderTodoCardsByFilter } from "./todo-cards.js";
+import { updateTodoCards, renderTodoCardsByFilter } from "./todo-cards.js";
 
 let currentFilter = "today";
-
-const updateTodoCards = () => {
-  clearTodoCards();
-  renderTodoCardsByFilter(currentList, currentFilter);
-};
 
 const renderProjectBtn = (projectName) => {
   const navBtnsList = document.querySelector("#nav-projects-btns");
@@ -60,7 +55,7 @@ const handleFilterBtns = () => {
 
     updateCurrentFilter(filter);
     updateMainHeader(currentFilter);
-    updateTodoCards();
+    updateTodoCards(currentList, currentFilter);
   });
 };
 
@@ -126,13 +121,13 @@ const handleNewProjectBtn = () => {
 const updateTodoCardsOnFormSubmission = () => {
   const form = document.querySelector("#todo-form");
 
-  form.addEventListener("submit", updateTodoCards);
+  form.addEventListener("submit", () => updateTodoCards(currentList, currentFilter));
 };
 
 const updateTodoCardsOnDeleteBtnClick = () => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
 
-  deleteBtn.addEventListener("click", updateTodoCards);
+  deleteBtn.addEventListener("click", () => updateTodoCards(currentList, currentFilter));
 };
 
 const removeFormOnSubmission = () => {

@@ -75,4 +75,9 @@ export const renderTodoCardsByFilter = (list, filter) => {
   handleStatusCheckbox(list);
 };
 
-export const clearTodoCards = () => { cardsContainer.textContent = "" };
+const clearTodoCards = () => { cardsContainer.textContent = "" };
+
+export const updateTodoCards = (list, filter) => {
+  clearTodoCards();
+  renderTodoCardsByFilter(list, filter);
+};
