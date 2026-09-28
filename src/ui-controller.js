@@ -1,11 +1,6 @@
 import { currentList } from "./todos.js";
-import {
-  addTodoDataToFormValues,
-  createTodoForm,
-  createTodoCreationForm,
-  deleteTodoOnDeleteBtnClick,
-  updateTodoOnFormSubmission} from "./form.js";
-import { updateTodoCards, renderTodoCardsByFilter } from "./todo-cards.js";
+import { createTodoCreationForm, createTodoEditionForm} from "./form.js";
+import { renderTodoCardsByFilter } from "./todo-cards.js";
 import { handleSidenav } from "./sidenav.js";
 
 let currentFilter = "today";
@@ -23,8 +18,6 @@ export const updateMainHeader = (filter) => {
 
   mainHeader.textContent = nameCapitalized;
 };
-
-// -----------------------------------------------------------------------------
 
 const closeTodoFormIfOpen = () => {
   const main = document.querySelector("main");
@@ -48,15 +41,7 @@ const handleTodoCreationCard = (list) => {
   })
 };
 
-// -----------------------------------------------------------------------------
-
-const updateTodoCardsOnDeleteBtnClick = () => {
-  const deleteBtn = document.querySelector("#delete-todo-btn");
-
-  deleteBtn.addEventListener("click", () => updateTodoCards(currentList, currentFilter));
-};
-
-const handleTodoEdition = () => {
+const handleTodoEdition = (list) => {
   const cardsContainer = document.querySelector("#cards-container");
 
   cardsContainer.addEventListener("click", (e) => {
@@ -65,24 +50,18 @@ const handleTodoEdition = () => {
     if (!card) return;
     if (closeTodoFormIfOpen()) return;
 
-    const todoId = card.dataset.id;
+    const todoID = card.dataset.id;
 
-    createTodoForm(card);
-    addTodoDataToFormValues(currentList, todoId);
-    updateTodoOnFormSubmission(currentList, todoId);
-    updateTodoCardsOnFormSubmission();
-    deleteTodoOnDeleteBtnClick(currentList, todoId);
-    updateTodoCardsOnDeleteBtnClick();
+    createTodoEditionForm(card, list, todoID);
   });
 };
 
-// -----------------------------------------------------------------------------
-
 export const initUI = () => {
+  // Set "today" todo cards when page is loaded
   renderTodoCardsByFilter(currentList, currentFilter);
   
   handleSidenav();
 
-  handleTodoCreationCard(currentList, currentFilter);
-  handleTodoEdition();
+  handleTodoCreationCard(currentList);
+  handleTodoEdition(currentList);
 };

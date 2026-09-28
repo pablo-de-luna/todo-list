@@ -20,7 +20,7 @@ const createSelectProjectOptions = (selectParent) => {
   });
 };
 
-export const createTodoForm = (elementBefore) => {
+const createTodoForm = (elementBefore) => {
   const form = document.createElement("form");
   form.id = "todo-form";
   form.action = "#";
@@ -102,23 +102,30 @@ export const createTodoForm = (elementBefore) => {
       submitBtn
     );
 
-  // if (elementBefore.matches("#new-todo-card")) {
-  //   submitBtn.textContent = "Create todo";
-  // } else {
-  //   const deleteTodoBtn = document.createElement("button");
-  //     deleteTodoBtn.type = "button";
-  //     deleteTodoBtn.id = "delete-todo-btn";
-  //     deleteTodoBtn.textContent = "Delete todo";
-      
-  //   form.append(deleteTodoBtn);
-  //   submitBtn.textContent = "Update todo";
-  // } 
-
   elementBefore.after(form);
 };
 
-export const addTodoDataToFormValues = (list, todoId) => {
-  const todo = list.todos.find(todo => todo.id === todoId);
+// Use the FormData API to get all input names and values at once
+// fromEntries method of Object get and object with that data as keys/values 
+const getFormData = (form) => Object.fromEntries(new FormData(form));
+
+// ---- TODO EDITION FORM ------------------------------------------------------
+
+const createTodoEditionFormBtns = () => {
+  const form = document.querySelector("#todo-form");
+  const submitBtn = document.querySelector(`#todo-form > button[type="submit"]`);
+    submitBtn.textContent = "Update todo";
+
+  const deleteTodoBtn = document.createElement("button");
+    deleteTodoBtn.type = "button";
+    deleteTodoBtn.id = "delete-todo-btn";
+    deleteTodoBtn.textContent = "Delete todo";
+    
+  form.append(deleteTodoBtn);
+};
+
+const addTodoDataToFormValues = (list, todoID) => {
+  const todo = list.todos.find(todo => todo.id === todoID);
 
   const titleInput = document.querySelector("#title-input");
   const descriptionInput = document.querySelector("#description-input");
@@ -133,32 +140,47 @@ export const addTodoDataToFormValues = (list, todoId) => {
   projectSelect.value = todo.project;
 };
 
-// Use the FormData API to get all input names and values at once
-// fromEntries method of Object get and object with that data as keys/values 
-const getFormData = (form) => Object.fromEntries(new FormData(form));
-
-export const updateTodoOnFormSubmission = (list, todoId) => {
-  const form = document.querySelector("#todo-form")
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
+const updateTodoOnFormSubmission = (form, list, todoID) => {
     const formData = getFormData(form);
-    const todo = list.todos.find(todo => todo.id === todoId);
+    const todo = list.todos.find(todo => todo.id === todoID);
 
     todo.title = formData.title;
     todo.description = formData.description;
     todo.dueDate = formData.dueDate;
     todo.priority = formData.priority;
     todo.project = formData.project;
+};
+
+const handleTodoEditionFormDeleteBtn = (list, todoID) => {
+  const deleteBtn = document.querySelector("#delete-todo-btn");
+
+  deleteBtn.addEventListener("click", () => {
+    list.deleteTodo(todoID);
+    updateTodoCards(list, getCurrentFilter());
   });
 };
 
-export const deleteTodoOnDeleteBtnClick = (list, todoId) => {
-  const deleteBtn = document.querySelector("#delete-todo-btn");
- 
-  deleteBtn.addEventListener("click", () => { list.deleteTodo(todoId) });
+const handleTodoEditionFormSubmission = (list, todoID) => {
+  const form = document.querySelector("#todo-form");
+  
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    updateTodoOnFormSubmission(form, list, todoID);
+    updateTodoCards(list, getCurrentFilter());
+    form.remove();
+  });
+}; 
+
+export const createTodoEditionForm = (elementBefore, list, todoID) => {
+  createTodoForm(elementBefore);
+  createTodoEditionFormBtns();
+  addTodoDataToFormValues(list, todoID);
+  handleTodoEditionFormSubmission(list, todoID);
+  handleTodoEditionFormDeleteBtn(list, todoID);
 };
+
+// ---- TODO CREATION FORM -----------------------------------------------------
 
 const createTodoWithFormData = (form, list) => {
     const formData = getFormData(form);
