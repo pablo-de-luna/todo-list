@@ -56,6 +56,7 @@ const renderNewProjectForm = () => {
   btnParent.after(listItem);
 };
 
+// TODO: Make form disappear when Add button is clicked
 const handleAddProjectBtn = (list) => {
   const addBtn = document.querySelector("#new-project-form button");
   const input = document.querySelector("#new-project-form input");

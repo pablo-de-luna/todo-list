@@ -1,6 +1,5 @@
 import { isAfter } from "date-fns";
 import { getCurrentDate, formatToRelativeDate } from "./dates.js";
-import { currentList } from "./todos.js";
 
 const cardsContainer = document.querySelector("#cards-container");
 
@@ -47,7 +46,7 @@ const handleStatusCheckbox = (list) => {
 export const renderTodoCardsByFilter = (list, filter) => {
   let todos = list.todos;
 
-  if (currentList.projectNames.includes(filter)) {
+  if (list.projectNames.includes(filter)) {
     todos = list.todos.filter(todo => todo.project === filter);
     todos.forEach(todo => renderTodoCard(todo));
     handleStatusCheckbox(list);

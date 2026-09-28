@@ -1,7 +1,9 @@
 import { getCurrentDate } from "./dates.js";
 import { Todo, currentList } from "./todos.js";
+import { updateTodoCards } from "./todo-cards.js";
+import { getCurrentFilter } from "./ui-controller.js";
 
-const createProjectSelectOptions = (selectParent) => {
+const createSelectProjectOptions = (selectParent) => {
   const projects = currentList.projectNames;
 
   projects.forEach(project => {
@@ -83,12 +85,13 @@ export const createTodoForm = (elementBefore) => {
     const projectSelect = document.createElement("select");
       projectSelect.id = "project-select";
       projectSelect.name = "project";
-      createProjectSelectOptions(projectSelect); 
+      createSelectProjectOptions(projectSelect); 
 
     projectContainer.append(projectLabel, projectSelect);
 
   const submitBtn = document.createElement("button");
     submitBtn.type = "submit";
+    submitBtn.textContent = "Submit";
 
     form.append(
       titleContainer,
@@ -99,17 +102,17 @@ export const createTodoForm = (elementBefore) => {
       submitBtn
     );
 
-  if (elementBefore.matches("#new-todo-card")) {
-    submitBtn.textContent = "Create todo";
-  } else {
-    const deleteTodoBtn = document.createElement("button");
-      deleteTodoBtn.type = "button";
-      deleteTodoBtn.id = "delete-todo-btn";
-      deleteTodoBtn.textContent = "Delete todo";
+  // if (elementBefore.matches("#new-todo-card")) {
+  //   submitBtn.textContent = "Create todo";
+  // } else {
+  //   const deleteTodoBtn = document.createElement("button");
+  //     deleteTodoBtn.type = "button";
+  //     deleteTodoBtn.id = "delete-todo-btn";
+  //     deleteTodoBtn.textContent = "Delete todo";
       
-    form.append(deleteTodoBtn);
-    submitBtn.textContent = "Update todo";
-  } 
+  //   form.append(deleteTodoBtn);
+  //   submitBtn.textContent = "Update todo";
+  // } 
 
   elementBefore.after(form);
 };
@@ -151,21 +154,34 @@ export const updateTodoOnFormSubmission = (list, todoId) => {
   });
 };
 
-const addTodoFromFormData = (formData, list) => { list.addTodo(new Todo(formData)) }
-
-export const createTodoOnFormSubmission = (list) => {
-  const form = document.querySelector("#todo-form")
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    const formData = getFormData(form);
-    addTodoFromFormData(formData, list);
-  });
-};
-
 export const deleteTodoOnDeleteBtnClick = (list, todoId) => {
   const deleteBtn = document.querySelector("#delete-todo-btn");
  
   deleteBtn.addEventListener("click", () => { list.deleteTodo(todoId) });
+};
+
+const createTodoWithFormData = (form, list) => {
+    const formData = getFormData(form);
+    list.addTodo(new Todo(formData))
+};
+
+const handleTodoCreationFormSubmission = (list) => {
+  const form = document.querySelector("#todo-form");
+  
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    createTodoWithFormData(form, list)
+    updateTodoCards(list, getCurrentFilter());
+    form.remove();
+  });
+};
+
+export const createTodoCreationForm = (elementBefore, list) => {
+  createTodoForm(elementBefore);
+
+  const submitBtn = document.querySelector(`#todo-form > button[type="submit"]`);
+  submitBtn.textContent = "Create Todo";
+
+  handleTodoCreationFormSubmission(list);
 };

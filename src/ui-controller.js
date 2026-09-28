@@ -2,13 +2,15 @@ import { currentList } from "./todos.js";
 import {
   addTodoDataToFormValues,
   createTodoForm,
+  createTodoCreationForm,
   deleteTodoOnDeleteBtnClick,
-  createTodoOnFormSubmission,
   updateTodoOnFormSubmission} from "./form.js";
 import { updateTodoCards, renderTodoCardsByFilter } from "./todo-cards.js";
 import { handleSidenav } from "./sidenav.js";
 
 let currentFilter = "today";
+
+export const getCurrentFilter = () => currentFilter;
 
 export const updateCurrentFilter = (filter) => { 
   currentFilter = filter;
@@ -22,23 +24,7 @@ export const updateMainHeader = (filter) => {
   mainHeader.textContent = nameCapitalized;
 };
 
-const updateTodoCardsOnFormSubmission = () => {
-  const form = document.querySelector("#todo-form");
-
-  form.addEventListener("submit", () => updateTodoCards(currentList, currentFilter));
-};
-
-const updateTodoCardsOnDeleteBtnClick = () => {
-  const deleteBtn = document.querySelector("#delete-todo-btn");
-
-  deleteBtn.addEventListener("click", () => updateTodoCards(currentList, currentFilter));
-};
-
-const removeFormOnSubmission = () => {
-  const form = document.querySelector("#todo-form");
-
-  form.addEventListener("submit", () => form.remove());
-};
+// -----------------------------------------------------------------------------
 
 const closeTodoFormIfOpen = () => {
   const main = document.querySelector("main");
@@ -52,17 +38,22 @@ const closeTodoFormIfOpen = () => {
   }
 };
 
-const handleNewTodoBtnCard = () => {
+const handleTodoCreationCard = (list) => {
   const newCardBtn = document.querySelector("#new-todo-card");
 
   newCardBtn.addEventListener("click", () => {
     if (closeTodoFormIfOpen()) return;
 
-    createTodoForm(newCardBtn);
-    createTodoOnFormSubmission(currentList);
-    updateTodoCardsOnFormSubmission();
-    removeFormOnSubmission();
+    createTodoCreationForm(newCardBtn, list);
   })
+};
+
+// -----------------------------------------------------------------------------
+
+const updateTodoCardsOnDeleteBtnClick = () => {
+  const deleteBtn = document.querySelector("#delete-todo-btn");
+
+  deleteBtn.addEventListener("click", () => updateTodoCards(currentList, currentFilter));
 };
 
 const handleTodoEdition = () => {
@@ -85,9 +76,13 @@ const handleTodoEdition = () => {
   });
 };
 
+// -----------------------------------------------------------------------------
+
 export const initUI = () => {
-  handleSidenav();
   renderTodoCardsByFilter(currentList, currentFilter);
-  handleNewTodoBtnCard();
+  
+  handleSidenav();
+
+  handleTodoCreationCard(currentList, currentFilter);
   handleTodoEdition();
 };
