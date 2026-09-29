@@ -2,26 +2,36 @@ import { currentList } from "./todos.js";
 import { updateCurrentFilter, updateMainHeader } from "./ui-controller.js";
 import { updateTodoCards } from "./todo-cards.js";
 
-const renderNavProjectBtn = (projectName) => {
+const renderNavProjectBtns = (projectName) => {
   const navBtnsList = document.querySelector("#nav-projects-btns");
 
   const projectListItem = document.createElement("li");
   const projectBtn = document.createElement("button");
-  projectBtn.dataset.filter = projectName;
-  projectBtn.className = "filter-btn";
-  projectBtn.setAttribute("type", "button");
-  projectBtn.textContent = projectName;
+    projectBtn.dataset.filter = projectName;
+    projectBtn.className = "filter-btn";
+    projectBtn.setAttribute("type", "button");
+    projectBtn.textContent = projectName;
 
-  projectListItem.appendChild(projectBtn);
+  const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "edit-project-btn";
+    editBtn.textContent = "edit";
+
+  const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "delete-project-btn";
+    deleteBtn.textContent = "delete";
+
+  projectListItem.append(projectBtn, editBtn, deleteBtn);
   navBtnsList.appendChild(projectListItem);
 };
 
-const renderNavProjectBtns = (list) => {
+const renderNavProjectBtnsForEachProject = (list) => {
   const projects = list.projectNames;
   
   projects.forEach(project => {
     if (project === "default") return;
-    renderNavProjectBtn(project);
+    renderNavProjectBtns(project);
   })
 };
 
@@ -39,6 +49,19 @@ const handleNavFilterBtns = (list) => {
     updateMainHeader(filter);
     updateTodoCards(list, filter);
   });
+};
+
+const renderProjectCreationBtn = () => {
+  const navProjectsBtns = document.querySelector("#nav-projects-btns");
+  const listItem = document.createElement("li");
+  const button = document.createElement("button");
+
+  button.id = "new-project-btn";
+  button.type = "button";
+  button.textContent = "+ New project";
+
+  listItem.append(button);
+  navProjectsBtns.append(listItem);
 };
 
 const renderProjectCreationForm = () => {
@@ -66,23 +89,10 @@ const handleProjectCreationFormAddBtn = (list) => {
     if (input.value.trim() === "") return;
 
     list.addProject(input.value.toLowerCase());
-    renderNavProjectBtn(input.value);
+    renderNavProjectBtns(input.value);
     projectCreationForm.remove();
     newProjectBtn.textContent = "+ New project";
   });
-};
-
-const renderProjectCreationBtn = () => {
-  const navProjectsBtns = document.querySelector("#nav-projects-btns");
-  const listItem = document.createElement("li");
-  const button = document.createElement("button");
-
-  button.id = "new-project-btn";
-  button.type = "button";
-  button.textContent = "+ New project";
-
-  listItem.append(button);
-  navProjectsBtns.append(listItem);
 };
 
 const handleProjectCreationBtn = (list) => {
@@ -120,7 +130,7 @@ const handleProjectCreationBtn = (list) => {
 
 export const handleSidenav = () => {
   renderProjectCreationBtn();
-  renderNavProjectBtns(currentList);
+  renderNavProjectBtnsForEachProject(currentList);
 
   handleNavFilterBtns(currentList);
   handleProjectCreationBtn(currentList);
