@@ -56,7 +56,6 @@ const renderProjectCreationForm = () => {
   btnParent.after(listItem);
 };
 
-// TODO: Make form disappear when Add button is clicked
 const handleProjectCreationFormAddBtn = (list) => {
   const newProjectBtn = document.querySelector("#new-project-btn");
   const projectCreationForm = document.querySelector("#project-creation-form");
@@ -102,6 +101,22 @@ const handleProjectCreationBtn = (list) => {
     }
   });
 };
+
+// TODO: Add an "edit" button aside from each project button
+// WHEN "edit" btn clicked
+  // ADD edition form
+    // ADD input for project name edition, with project name as value
+    // ADD "update" btn 
+      // WHEN "update" btn clicked
+        // UPDATE project in projects array
+        // REMOVE edition form
+    // ADD "delete" project btn
+      // WHEN "delete" btn clicked
+        // SHOW confirmation text "todos from this project will be deleted"
+          // IF confirmed
+            // UPDATE todos project to default project
+            // REMOVE project in projects array
+          // ELSE return to form
 
 export const handleSidenav = () => {
   renderProjectCreationBtn();
