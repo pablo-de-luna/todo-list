@@ -1,4 +1,3 @@
-import { getCurrentDate } from "./dates.js";
 import { Todo, currentList } from "./todos.js";
 import { updateTodoCards } from "./todo-cards.js";
 import { getCurrentFilter } from "./ui-controller.js";

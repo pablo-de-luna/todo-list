@@ -2,7 +2,7 @@ import { currentList } from "./todos.js";
 import { updateCurrentFilter, updateMainHeader } from "./ui-controller.js";
 import { updateTodoCards } from "./todo-cards.js";
 
-const renderProjectBtn = (projectName) => {
+const renderNavProjectBtn = (projectName) => {
   const navBtnsList = document.querySelector("#nav-projects-btns");
 
   const projectListItem = document.createElement("li");
@@ -21,7 +21,7 @@ const renderNavProjectBtns = (list) => {
   
   projects.forEach(project => {
     if (project === "default") return;
-    renderProjectBtn(project);
+    renderNavProjectBtn(project);
   })
 };
 
@@ -41,13 +41,13 @@ const handleNavFilterBtns = (list) => {
   });
 };
 
-const renderNewProjectForm = () => {
+const renderProjectCreationForm = () => {
   const btnParent = document.querySelector("#new-project-btn").parentElement;
   const listItem = document.createElement("li");
   const input = document.createElement("input");
   const addBtn = document.createElement("button");
 
-  listItem.id = "new-project-form";
+  listItem.id = "project-creation-form";
   input.type = "text";
   addBtn.type = "button";
   addBtn.textContent = "Add";
@@ -57,15 +57,19 @@ const renderNewProjectForm = () => {
 };
 
 // TODO: Make form disappear when Add button is clicked
-const handleAddProjectBtn = (list) => {
-  const addBtn = document.querySelector("#new-project-form button");
-  const input = document.querySelector("#new-project-form input");
+const handleProjectCreationFormAddBtn = (list) => {
+  const newProjectBtn = document.querySelector("#new-project-btn");
+  const projectCreationForm = document.querySelector("#project-creation-form");
+  const addBtn = document.querySelector("#project-creation-form button");
+  const input = document.querySelector("#project-creation-form input");
   
   addBtn.addEventListener("click", () => {
     if (input.value.trim() === "") return;
 
     list.addProject(input.value.toLowerCase());
-    renderProjectBtn(input.value);
+    renderNavProjectBtn(input.value);
+    projectCreationForm.remove();
+    newProjectBtn.textContent = "+ New project";
   });
 };
 
@@ -86,15 +90,15 @@ const handleProjectCreationBtn = (list) => {
   const btn = document.querySelector("#new-project-btn");
 
   btn.addEventListener("click", () => {
-    const newProjectForm = document.querySelector("#new-project-form");
+    const projectCreationForm = document.querySelector("#project-creation-form");
 
-    if (newProjectForm) {
+    if (projectCreationForm) {
       btn.textContent = "+ New project";
-      newProjectForm.remove();
+      projectCreationForm.remove();
     } else {
       btn.textContent = "Close";
-      renderNewProjectForm();
-      handleAddProjectBtn(list);
+      renderProjectCreationForm();
+      handleProjectCreationFormAddBtn(list);
     }
   });
 };
