@@ -81,6 +81,7 @@ const renderProjectCreationForm = () => {
   btnParent.after(listItem);
 };
 
+// TODO: Make alert user friendly
 const handleProjectCreationFormAddBtn = (list) => {
   const newProjectBtn = document.querySelector("#new-project-btn");
   const projectCreationForm = document.querySelector("#project-creation-form");
@@ -88,10 +89,16 @@ const handleProjectCreationFormAddBtn = (list) => {
   const input = document.querySelector("#project-creation-form input");
   
   addBtn.addEventListener("click", () => {
-    if (input.value.trim() === "") return;
+    const inputValue = input.value.trim().toLowerCase();
 
-    list.addProject(input.value.toLowerCase());
-    renderNavProjectBtns(input.value);
+    if (inputValue === "") return;
+    if (list.projectNames.includes(inputValue)) {
+      alert("PROJECT NAME ALREADY EXISTS");
+      return;
+    }
+
+    list.addProject(inputValue);
+    renderNavProjectBtns(inputValue);
     projectCreationForm.remove();
     newProjectBtn.textContent = "+ New project";
   });
@@ -131,42 +138,51 @@ const createProjectEditionForm = (nextElement, projectName) => {
   nextElement.before(editionForm);
 };
 
-// FIX the edit btn / remove event listener problem
-const closeEditionFormOnOutsideClick = () => {
+// TODO: Update project button and data filter too
+const updateProjectName = (previousName, list) => {
+  const inputValue = document.querySelector("#project-edition-form > input").value;
+  const newName = inputValue.trim().toLowerCase();
+
+  list.updateProject(previousName, newName);
+};
+
+const handleEditionForm = (previousName, list) => {
   const handler = (e) => {
-    const existingEditionForm = document.querySelector("#project-edition-form"); 
-    console.log("window clicked");
+    const projectListItem = document.querySelector("#project-edition-form").parentElement;
+    const editionForm = document.querySelector("#project-edition-form"); 
+    const doneBtnSelector = "#project-edition-form > button";
 
-    if (e.target.matches(".edit-project-btn") || existingEditionForm.contains(e.target)) return;
+    if (!projectListItem.contains(e.target)) {
+      editionForm.remove();
+      window.removeEventListener("click", handler);
+    }
 
-    existingEditionForm.remove();
-    window.removeEventListener("click", handler);
+    if (e.target.matches(doneBtnSelector)) {
+      updateProjectName(previousName, list);
+      editionForm.remove();
+      window.removeEventListener("click", handler);
+    }   
   }
 
   window.addEventListener("click", handler);
 };
 
-const handleProjectEditBtnsClick = () => {
-  const navProjectsBtns = document.querySelector("#nav-projects-btns");
+const handleProjectEditBtns = (list) => {
+  const editBtns = document.querySelectorAll(".edit-project-btn");
 
-  navProjectsBtns.addEventListener("click", (e) => {
-    const editBtn = e.target.closest(".edit-project-btn");
-    if (!editBtn) return;
+  editBtns.forEach(editBtn => editBtn.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
 
     const existingEditionForm = document.querySelector("#project-edition-form");
-    if (existingEditionForm) {
-      existingEditionForm.remove();
-      return;
-    };
+    if (existingEditionForm) return;
 
     const projectBtn = editBtn.parentElement.querySelector(".filter-btn");
     const projectName = projectBtn.dataset.filter;
 
     createProjectEditionForm(projectBtn, projectName);
-    closeEditionFormOnOutsideClick();
-  })
+    handleEditionForm(projectName, list);
+  }));
 };
-handleProjectEditBtnsClick();
 
 // ---- INITIALIZATION ---------------------------------------------------------
 
@@ -176,4 +192,6 @@ export const handleSidenav = () => {
 
   handleNavFilterBtns(currentList);
   handleProjectCreationBtn(currentList);
+
+  handleProjectEditBtns(currentList);
 };

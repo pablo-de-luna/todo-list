@@ -11,7 +11,7 @@ class TodosList {
     return this.#todos.push(todo);
   }
   deleteTodo(todoId) {
-    const todoIndex = this.#todos.indexOf(this.#todos.find(todo => todo.id === todoId))
+    const todoIndex = this.#todos.indexOf(this.#todos.find(todo => todo.id === todoId));
 
     this.#todos.splice(todoIndex, 1);
   }
@@ -28,6 +28,14 @@ class TodosList {
     const projectLowCase = project.toLowerCase();
 
     this.#projects.push(projectLowCase);
+  }
+  updateProject(previousName, newName) {
+    const newNameLowCase = newName.toLowerCase();
+    const projectIndex = this.#projects.indexOf(previousName);
+    console.log(this.#projects[projectIndex]);
+
+    this.#projects.splice(projectIndex, 1, newNameLowCase);
+    console.log(this.#projects)
   }
 }
 
