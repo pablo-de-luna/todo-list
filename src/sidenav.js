@@ -51,6 +51,8 @@ const handleNavFilterBtns = (list) => {
   });
 };
 
+// ---- PROJECT CREATION -------------------------------------------------------
+
 const renderProjectCreationBtn = () => {
   const navProjectsBtns = document.querySelector("#nav-projects-btns");
   const listItem = document.createElement("li");
@@ -112,21 +114,61 @@ const handleProjectCreationBtn = (list) => {
   });
 };
 
-// TODO: Add an "edit" button aside from each project button
-// WHEN "edit" btn clicked
-  // ADD edition form
-    // ADD input for project name edition, with project name as value
-    // ADD "update" btn 
-      // WHEN "update" btn clicked
-        // UPDATE project in projects array
-        // REMOVE edition form
-    // ADD "delete" project btn
-      // WHEN "delete" btn clicked
-        // SHOW confirmation text "todos from this project will be deleted"
-          // IF confirmed
-            // UPDATE todos project to default project
-            // REMOVE project in projects array
-          // ELSE return to form
+// ---- EDIT/DELETE PROJECT ----------------------------------------------------
+
+const createProjectEditionForm = (nextElement, projectName) => {
+  const editionForm = document.createElement("div");
+    editionForm.id = "project-edition-form";
+
+  const input = document.createElement("input");
+    input.type = "text";
+    input.value = projectName;
+  const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Done";
+
+  editionForm.append(input, btn);
+  nextElement.before(editionForm);
+};
+
+// FIX the edit btn / remove event listener problem
+const closeEditionFormOnOutsideClick = () => {
+  const handler = (e) => {
+    const existingEditionForm = document.querySelector("#project-edition-form"); 
+    console.log("window clicked");
+
+    if (e.target.matches(".edit-project-btn") || existingEditionForm.contains(e.target)) return;
+
+    existingEditionForm.remove();
+    window.removeEventListener("click", handler);
+  }
+
+  window.addEventListener("click", handler);
+};
+
+const handleProjectEditBtnsClick = () => {
+  const navProjectsBtns = document.querySelector("#nav-projects-btns");
+
+  navProjectsBtns.addEventListener("click", (e) => {
+    const editBtn = e.target.closest(".edit-project-btn");
+    if (!editBtn) return;
+
+    const existingEditionForm = document.querySelector("#project-edition-form");
+    if (existingEditionForm) {
+      existingEditionForm.remove();
+      return;
+    };
+
+    const projectBtn = editBtn.parentElement.querySelector(".filter-btn");
+    const projectName = projectBtn.dataset.filter;
+
+    createProjectEditionForm(projectBtn, projectName);
+    closeEditionFormOnOutsideClick();
+  })
+};
+handleProjectEditBtnsClick();
+
+// ---- INITIALIZATION ---------------------------------------------------------
 
 export const handleSidenav = () => {
   renderProjectCreationBtn();
