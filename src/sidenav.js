@@ -142,16 +142,16 @@ const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   const inputValue = document.querySelector("#project-edition-form > input").value;
   const newName = inputValue.trim().toLowerCase();
   const filter = (getCurrentFilter() === previousName) ? newName : getCurrentFilter();
-  const mainHeader = document.querySelector("#main-header");
 
-  list.updateProject(previousName, newName);
   projectBtn.dataset.filter = newName;
   projectBtn.textContent = newName;
-  updateTodoCards(list, filter);
-  
-  if (mainHeader.textContent.toLowerCase() === previousName) {
+  list.updateProject(previousName, newName);
+
+  if (getCurrentFilter() === previousName) {
+    updateTodoCards(list, filter);
     updateMainHeader(newName);
-  };
+    updateCurrentFilter(newName);
+  }
 };
 
 const handleEditionForm = (previousName, projectBtn) => {
