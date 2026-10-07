@@ -1,5 +1,5 @@
 import { currentList } from "./todos.js";
-import { updateCurrentFilter, updateMainHeader } from "./ui-controller.js";
+import { getCurrentFilter, updateCurrentFilter, updateMainHeader } from "./ui-controller.js";
 import { updateTodoCards } from "./todo-cards.js";
 
 const renderNavProjectBtns = (projectName) => {
@@ -138,16 +138,19 @@ const createProjectEditionForm = (nextElement, projectName) => {
   nextElement.before(editionForm);
 };
 
-const updateProjectName = (previousName, list, projectBtn) => {
+const updateProjectWhenEditionDone = (previousName, projectBtn, list, currentFilter) => {
   const inputValue = document.querySelector("#project-edition-form > input").value;
   const newName = inputValue.trim().toLowerCase();
+  const filter = (currentFilter() === previousName) ? newName : currentFilter();
 
   list.updateProject(previousName, newName);
   projectBtn.dataset.filter = newName;
   projectBtn.textContent = newName;
+
+  updateTodoCards(list, filter);
 };
 
-const handleEditionForm = (previousName, list, projectBtn) => {
+const handleEditionForm = (previousName, projectBtn) => {
   const handler = (e) => {
     const projectListItem = document.querySelector("#project-edition-form").parentElement;
     const editionForm = document.querySelector("#project-edition-form"); 
@@ -159,7 +162,7 @@ const handleEditionForm = (previousName, list, projectBtn) => {
     }
 
     if (e.target.matches(doneBtnSelector)) {
-      updateProjectName(previousName, list, projectBtn);
+      updateProjectWhenEditionDone(previousName, projectBtn, currentList, getCurrentFilter);
       editionForm.remove();
       window.removeEventListener("click", handler);
     }   
@@ -169,7 +172,7 @@ const handleEditionForm = (previousName, list, projectBtn) => {
 };
 
 // TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
-const handleProjectEditBtns = (list) => {
+const handleProjectEditBtns = () => {
   const editBtns = document.querySelectorAll(".edit-project-btn");
 
   editBtns.forEach(editBtn => editBtn.addEventListener("click", (e) => {
@@ -182,7 +185,7 @@ const handleProjectEditBtns = (list) => {
     const projectName = projectBtn.dataset.filter;
 
     createProjectEditionForm(projectBtn, projectName);
-    handleEditionForm(projectName, list, projectBtn);
+    handleEditionForm(projectName, projectBtn);
   }));
 };
 
@@ -195,5 +198,5 @@ export const handleSidenav = () => {
   handleNavFilterBtns(currentList);
   handleProjectCreationBtn(currentList);
 
-  handleProjectEditBtns(currentList);
+  handleProjectEditBtns();
 };
