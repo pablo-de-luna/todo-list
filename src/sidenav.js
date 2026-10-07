@@ -177,10 +177,12 @@ const handleEditionForm = (previousName, projectBtn) => {
 
 // TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
 const handleProjectEditBtns = () => {
-  const editBtns = document.querySelectorAll(".edit-project-btn");
+  const navProjectsBtns = document.querySelector("#nav-projects-btns");
 
-  editBtns.forEach(editBtn => editBtn.addEventListener("click", (e) => {
-    e.stopImmediatePropagation();
+  navProjectsBtns.addEventListener("click", (e) => {
+    const editBtn = e.target.closest(".edit-project-btn");
+
+    if (!editBtn) return;
 
     const existingEditionForm = document.querySelector("#project-edition-form");
     if (existingEditionForm) return;
@@ -190,7 +192,7 @@ const handleProjectEditBtns = () => {
 
     createProjectEditionForm(projectBtn, projectName);
     handleEditionForm(projectName, projectBtn);
-  }));
+  });
 };
 
 // ---- INITIALIZATION ---------------------------------------------------------
