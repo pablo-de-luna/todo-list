@@ -138,16 +138,20 @@ const createProjectEditionForm = (nextElement, projectName) => {
   nextElement.before(editionForm);
 };
 
-const updateProjectWhenEditionDone = (previousName, projectBtn, list, currentFilter) => {
+const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   const inputValue = document.querySelector("#project-edition-form > input").value;
   const newName = inputValue.trim().toLowerCase();
-  const filter = (currentFilter() === previousName) ? newName : currentFilter();
+  const filter = (getCurrentFilter() === previousName) ? newName : getCurrentFilter();
+  const mainHeader = document.querySelector("#main-header");
 
   list.updateProject(previousName, newName);
   projectBtn.dataset.filter = newName;
   projectBtn.textContent = newName;
-
   updateTodoCards(list, filter);
+  
+  if (mainHeader.textContent.toLowerCase() === previousName) {
+    updateMainHeader(newName);
+  };
 };
 
 const handleEditionForm = (previousName, projectBtn) => {
@@ -162,7 +166,7 @@ const handleEditionForm = (previousName, projectBtn) => {
     }
 
     if (e.target.matches(doneBtnSelector)) {
-      updateProjectWhenEditionDone(previousName, projectBtn, currentList, getCurrentFilter);
+      updateProjectWhenEditionDone(previousName, projectBtn, currentList);
       editionForm.remove();
       window.removeEventListener("click", handler);
     }   
