@@ -138,15 +138,16 @@ const createProjectEditionForm = (nextElement, projectName) => {
   nextElement.before(editionForm);
 };
 
-// TODO: Update project button and data filter too
-const updateProjectName = (previousName, list) => {
+const updateProjectName = (previousName, list, projectBtn) => {
   const inputValue = document.querySelector("#project-edition-form > input").value;
   const newName = inputValue.trim().toLowerCase();
 
   list.updateProject(previousName, newName);
+  projectBtn.dataset.filter = newName;
+  projectBtn.textContent = newName;
 };
 
-const handleEditionForm = (previousName, list) => {
+const handleEditionForm = (previousName, list, projectBtn) => {
   const handler = (e) => {
     const projectListItem = document.querySelector("#project-edition-form").parentElement;
     const editionForm = document.querySelector("#project-edition-form"); 
@@ -158,7 +159,7 @@ const handleEditionForm = (previousName, list) => {
     }
 
     if (e.target.matches(doneBtnSelector)) {
-      updateProjectName(previousName, list);
+      updateProjectName(previousName, list, projectBtn);
       editionForm.remove();
       window.removeEventListener("click", handler);
     }   
@@ -167,6 +168,7 @@ const handleEditionForm = (previousName, list) => {
   window.addEventListener("click", handler);
 };
 
+// TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
 const handleProjectEditBtns = (list) => {
   const editBtns = document.querySelectorAll(".edit-project-btn");
 
@@ -180,7 +182,7 @@ const handleProjectEditBtns = (list) => {
     const projectName = projectBtn.dataset.filter;
 
     createProjectEditionForm(projectBtn, projectName);
-    handleEditionForm(projectName, list);
+    handleEditionForm(projectName, list, projectBtn);
   }));
 };
 

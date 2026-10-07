@@ -32,10 +32,14 @@ class TodosList {
   updateProject(previousName, newName) {
     const newNameLowCase = newName.toLowerCase();
     const projectIndex = this.#projects.indexOf(previousName);
-    console.log(this.#projects[projectIndex]);
 
     this.#projects.splice(projectIndex, 1, newNameLowCase);
-    console.log(this.#projects)
+
+    this.#todos.forEach(todo => {
+      if (todo.project === previousName) {
+        todo.project = newNameLowCase;
+      }
+    });
   }
 }
 
