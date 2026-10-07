@@ -80,11 +80,11 @@ main {
 /* CARDS PROVISIONAL */
 .todo-card,
 #new-todo-card {
-  background-color: #535251;
+  background-color: #444444;
   margin: 10px;
 }
 
 /* PRIORITY COLOR PROVISIONAL */
 .todo-card.priority-important {
-  background-color: #783737;
+  background-color: #563937;
 }

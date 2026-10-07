@@ -31,13 +31,37 @@ const closeTodoFormIfOpen = () => {
   }
 };
 
+const closeWhenClickOutside = () => {
+  const handler = (e) => {
+    const form = document.querySelector("#todo-form");
+
+    console.log("target = " + e.target);
+    console.log("form = " + form);
+
+    if (!form || e.target.closest("#todo-form button")) {
+      window.removeEventListener("click", handler);
+      return;
+    }
+
+    if (!form.contains(e.target)) {
+      form.remove();
+      window.removeEventListener("click", handler);
+    }
+  };
+
+  window.addEventListener("click", handler);
+};
+
 const handleTodoCreationCard = (list) => {
   const newCardBtn = document.querySelector("#new-todo-card");
 
-  newCardBtn.addEventListener("click", () => {
+  newCardBtn.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
+
     if (closeTodoFormIfOpen()) return;
 
     createTodoCreationForm(newCardBtn, list);
+    closeWhenClickOutside();
   })
 };
 
