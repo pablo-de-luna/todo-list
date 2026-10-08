@@ -9,7 +9,6 @@ export const getCurrentFilter = () => currentFilter;
 
 export const updateCurrentFilter = (filter) => { 
   currentFilter = filter;
-  console.log("Current filter = " + currentFilter);
 };
 
 export const updateMainHeader = (filter) => {
@@ -32,21 +31,24 @@ const closeTodoFormIfOpen = () => {
 };
 
 const closeWhenClickOutside = () => {
+  const form = document.querySelector("#todo-form");
+  
   const handler = (e) => {
-    const form = document.querySelector("#todo-form");
-
-    console.log("target = " + e.target);
-    console.log("form = " + form);
-
-    if (!form || e.target.closest("#todo-form button")) {
+    if (!form) {
       window.removeEventListener("click", handler);
       return;
     }
 
-    if (!form.contains(e.target)) {
+    if (!form.contains(e.target) &&
+      !e.target.closest(".todo-card") &&
+      !e.target.closest("#new-todo-card")) {
       form.remove();
       window.removeEventListener("click", handler);
     }
+
+    form.addEventListener("submit", () => {
+      window.removeEventListener("click", handler);
+    }, {once: true});
   };
 
   window.addEventListener("click", handler);
@@ -56,8 +58,6 @@ const handleTodoCreationCard = (list) => {
   const newCardBtn = document.querySelector("#new-todo-card");
 
   newCardBtn.addEventListener("click", (e) => {
-    e.stopImmediatePropagation();
-
     if (closeTodoFormIfOpen()) return;
 
     createTodoCreationForm(newCardBtn, list);
@@ -77,6 +77,7 @@ const handleTodoEdition = (list) => {
     const todoID = card.dataset.id;
 
     createTodoEditionForm(card, list, todoID);
+    closeWhenClickOutside();
   });
 };
 
