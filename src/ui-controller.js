@@ -30,7 +30,7 @@ const closeTodoFormIfOpen = () => {
   }
 };
 
-const closeWhenClickOutside = () => {
+const closeFormOnOutsideClick = () => {
   const form = document.querySelector("#todo-form");
   
   const handler = (e) => {
@@ -61,7 +61,7 @@ const handleTodoCreationCard = (list) => {
     if (closeTodoFormIfOpen()) return;
 
     createTodoCreationForm(newCardBtn, list);
-    closeWhenClickOutside();
+    closeFormOnOutsideClick();
   })
 };
 
@@ -77,7 +77,7 @@ const handleTodoEdition = (list) => {
     const todoID = card.dataset.id;
 
     createTodoEditionForm(card, list, todoID);
-    closeWhenClickOutside();
+    closeFormOnOutsideClick();
   });
 };
 

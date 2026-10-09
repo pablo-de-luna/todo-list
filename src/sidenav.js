@@ -2,6 +2,8 @@ import { currentList } from "./todos.js";
 import { getCurrentFilter, updateCurrentFilter, updateMainHeader } from "./ui-controller.js";
 import { updateTodoCards } from "./todo-cards.js";
 
+const projectCreationBtnText = "+ New Project";
+
 const renderNavProjectBtns = (projectName) => {
   const navBtnsList = document.querySelector("#nav-projects-btns");
 
@@ -26,7 +28,12 @@ const renderNavProjectBtns = (projectName) => {
   navBtnsList.appendChild(projectListItem);
 };
 
-const renderNavProjectBtnsForEachProject = (list) => {
+const updateProjectBtn = (projectBtn, newName) => {
+  projectBtn.dataset.filter = newName;
+  projectBtn.textContent = newName;
+};
+
+const renderBtnsForEachProject = (list) => {
   const projects = list.projectNames;
   
   projects.forEach(project => {
@@ -53,18 +60,25 @@ const handleNavFilterBtns = (list) => {
 
 // ---- PROJECT CREATION -------------------------------------------------------
 
-const renderProjectCreationBtn = () => {
+const renderProjectCreationBtn = (btnText) => {
   const navProjectsBtns = document.querySelector("#nav-projects-btns");
   const listItem = document.createElement("li");
   const button = document.createElement("button");
 
   button.id = "new-project-btn";
   button.type = "button";
-  button.textContent = "+ New project";
+  button.textContent = btnText;
 
   listItem.append(button);
   navProjectsBtns.append(listItem);
 };
+
+const toggleProjectCreationText = (btnText) => {
+  const newProjectBtn = document.querySelector("#new-project-btn");
+  const close = "Close";
+
+  newProjectBtn.textContent = (newProjectBtn.textContent === btnText) ? close : btnText;
+}
 
 const renderProjectCreationForm = () => {
   const btnParent = document.querySelector("#new-project-btn").parentElement;
@@ -82,8 +96,7 @@ const renderProjectCreationForm = () => {
 };
 
 // TODO: Make alert user friendly
-const handleProjectCreationFormAddBtn = (list) => {
-  const newProjectBtn = document.querySelector("#new-project-btn");
+const handleFormAddBtn = (list, btnText) => {
   const projectCreationForm = document.querySelector("#project-creation-form");
   const addBtn = document.querySelector("#project-creation-form button");
   const input = document.querySelector("#project-creation-form input");
@@ -96,28 +109,44 @@ const handleProjectCreationFormAddBtn = (list) => {
       alert("PROJECT NAME ALREADY EXISTS");
       return;
     }
-
+    
     list.addProject(inputValue);
     renderNavProjectBtns(inputValue);
     projectCreationForm.remove();
-    newProjectBtn.textContent = "+ New project";
+    toggleProjectCreationText(btnText);
   });
 };
 
-const handleProjectCreationBtn = (list) => {
-  const btn = document.querySelector("#new-project-btn");
+// FIX: Add and close button not removing window event listener
+const closeFormOnOutsideClick = (btnText) => {
+  const projectCreationForm = document.querySelector("#project-creation-form");
 
-  btn.addEventListener("click", () => {
+  const windowHandler = (e) => {
+    if (!projectCreationForm.contains(e.target) && !e.target.matches("#new-project-btn")) {
+      projectCreationForm.remove();
+      window.removeEventListener("click", windowHandler);
+      toggleProjectCreationText(btnText);
+      console.log("REMOVED");
+    }
+  };
+  window.addEventListener("click", windowHandler), {once: true};
+};
+
+const handleProjectCreationBtn = (list, btnText) => {
+  const newProjectBtn = document.querySelector("#new-project-btn");
+
+  newProjectBtn.addEventListener("click", () => {
     const projectCreationForm = document.querySelector("#project-creation-form");
 
     if (projectCreationForm) {
-      btn.textContent = "+ New project";
       projectCreationForm.remove();
     } else {
-      btn.textContent = "Close";
       renderProjectCreationForm();
-      handleProjectCreationFormAddBtn(list);
+      handleFormAddBtn(list, btnText);
+      closeFormOnOutsideClick(btnText);
     }
+
+    toggleProjectCreationText(btnText);
   });
 };
 
@@ -143,8 +172,7 @@ const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   const newName = inputValue.trim().toLowerCase();
   const filter = (getCurrentFilter() === previousName) ? newName : getCurrentFilter();
 
-  projectBtn.dataset.filter = newName;
-  projectBtn.textContent = newName;
+  updateProjectBtn(projectBtn, newName);
   list.updateProject(previousName, newName);
 
   if (getCurrentFilter() === previousName) {
@@ -198,11 +226,11 @@ const handleProjectEditBtns = () => {
 // ---- INITIALIZATION ---------------------------------------------------------
 
 export const handleSidenav = () => {
-  renderProjectCreationBtn();
-  renderNavProjectBtnsForEachProject(currentList);
+  renderProjectCreationBtn(projectCreationBtnText);
+  renderBtnsForEachProject(currentList);
 
   handleNavFilterBtns(currentList);
-  handleProjectCreationBtn(currentList);
+  handleProjectCreationBtn(currentList, projectCreationBtnText);
 
   handleProjectEditBtns();
 };
