@@ -14,12 +14,12 @@ const renderNavProjectBtns = (projectName) => {
 
   const editBtn = document.createElement("button");
     editBtn.type = "button";
-    editBtn.className = "edit-project-btn";
+    editBtn.classList.add("edit-project-btn", "project-modifier-btn");
     editBtn.textContent = "edit";
 
   const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
-    deleteBtn.className = "delete-project-btn";
+    deleteBtn.classList.add("delete-project-btn", "project-modifier-btn");
     deleteBtn.textContent = "delete";
 
   projectListItem.append(projectBtn, editBtn, deleteBtn);
@@ -210,27 +210,18 @@ const handleEditionForm = (previousName, projectBtn) => {
   window.addEventListener("click", handler);
 };
 
-// TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
-const handleProjectEditBtns = () => {
-  const navProjectsBtns = document.querySelector("#nav-projects-btns");
+const handleEditBtnClick = (event) => {
+  const existingEditionForm = document.querySelector("#project-edition-form");
+  if (existingEditionForm) return;
 
-  navProjectsBtns.addEventListener("click", (e) => {
-    const editBtn = e.target.closest(".edit-project-btn");
+  const projectBtn = event.target.parentElement.querySelector(".filter-btn");
+  const projectName = projectBtn.dataset.filter;
 
-    if (!editBtn) return;
-
-    const existingEditionForm = document.querySelector("#project-edition-form");
-    if (existingEditionForm) return;
-
-    const projectBtn = editBtn.parentElement.querySelector(".filter-btn");
-    const projectName = projectBtn.dataset.filter;
-
-    createProjectEditionForm(projectBtn, projectName);
-    handleEditionForm(projectName, projectBtn);
-  });
+  createProjectEditionForm(projectBtn, projectName);
+  handleEditionForm(projectName, projectBtn);
 };
 
-const handleProjectDeleteBtns = () => {
+const handleDeleteBtnClick = () => {
   // IF button clicked
     // ASK confirmation
       // IF YES 
@@ -238,6 +229,24 @@ const handleProjectDeleteBtns = () => {
         // DELETE project from project list
         // UPDATE Todo Cards
       // IF NO Remove confirmation and do nothing
+      console.log("DELETE BUTTON CLICKED")
+};
+
+// TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
+const handleProjectModifierBtns = () => {
+  const navProjectsBtns = document.querySelector("#nav-projects-btns");
+
+  navProjectsBtns.addEventListener("click", (e) => {
+    const projectModifierBtn = e.target.closest(".project-modifier-btn");
+
+    if (!projectModifierBtn) return;
+    if (projectModifierBtn.classList.contains("edit-project-btn")) {
+      handleEditBtnClick(e);
+    } 
+    if (projectModifierBtn.classList.contains("delete-project-btn")) {
+      handleDeleteBtnClick(e);
+    }
+  });
 };
 
 // ---- INITIALIZATION ---------------------------------------------------------
@@ -245,9 +254,7 @@ const handleProjectDeleteBtns = () => {
 export const handleSidenav = () => {
   renderProjectCreationBtn();
   renderBtnsForEachProject(currentList);
-
   handleNavFilterBtns(currentList);
   handleProjectCreationBtn(currentList);
-
-  handleProjectEditBtns();
+  handleProjectModifierBtns();
 };
