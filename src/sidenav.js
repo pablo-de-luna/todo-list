@@ -14,12 +14,14 @@ const renderNavProjectBtns = (projectName) => {
 
   const editBtn = document.createElement("button");
     editBtn.type = "button";
-    editBtn.classList.add("edit-project-btn", "project-modifier-btn");
+    editBtn.className = "project-modifier-btn";
+    editBtn.dataset.action = "edit";
     editBtn.textContent = "edit";
 
   const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
-    deleteBtn.classList.add("delete-project-btn", "project-modifier-btn");
+    deleteBtn.className = "project-modifier-btn";
+    deleteBtn.dataset.action = "delete";
     deleteBtn.textContent = "delete";
 
   projectListItem.append(projectBtn, editBtn, deleteBtn);
@@ -229,7 +231,7 @@ const handleDeleteBtnClick = () => {
         // DELETE project from project list
         // UPDATE Todo Cards
       // IF NO Remove confirmation and do nothing
-      console.log("DELETE BUTTON CLICKED")
+      console.log("DELETE BUTTON CLICKED");
 };
 
 // TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
@@ -238,14 +240,13 @@ const handleProjectModifierBtns = () => {
 
   navProjectsBtns.addEventListener("click", (e) => {
     const projectModifierBtn = e.target.closest(".project-modifier-btn");
-
-    if (!projectModifierBtn) return;
-    if (projectModifierBtn.classList.contains("edit-project-btn")) {
-      handleEditBtnClick(e);
-    } 
-    if (projectModifierBtn.classList.contains("delete-project-btn")) {
-      handleDeleteBtnClick(e);
+    const handlers = {
+      edit: handleEditBtnClick,
+      delete: handleDeleteBtnClick,
     }
+    if (!projectModifierBtn) return;
+    const action = projectModifierBtn.dataset.action;
+    handlers[action](e);
   });
 };
 
