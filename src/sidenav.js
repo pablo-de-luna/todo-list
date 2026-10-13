@@ -125,7 +125,6 @@ const handleFormCancelBtn = () => {
   });
 };
 
-// FIX: Add and close button not removing window event listener
 const closeFormOnOutsideClick = () => {
   const projectCreationForm = document.querySelector("#project-creation-form");
 
@@ -178,6 +177,8 @@ const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   const newName = inputValue.trim().toLowerCase();
   const filter = (getCurrentFilter() === previousName) ? newName : getCurrentFilter();
 
+  if (newName === "") return;
+
   updateProjectBtn(projectBtn, newName);
   list.updateProject(previousName, newName);
 
@@ -227,6 +228,16 @@ const handleProjectEditBtns = () => {
     createProjectEditionForm(projectBtn, projectName);
     handleEditionForm(projectName, projectBtn);
   });
+};
+
+const handleProjectDeleteBtns = () => {
+  // IF button clicked
+    // ASK confirmation
+      // IF YES 
+        // DELETE All todos from that project
+        // DELETE project from project list
+        // UPDATE Todo Cards
+      // IF NO Remove confirmation and do nothing
 };
 
 // ---- INITIALIZATION ---------------------------------------------------------
