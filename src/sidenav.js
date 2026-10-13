@@ -14,17 +14,10 @@ const renderNavProjectBtns = (projectName) => {
 
   const editBtn = document.createElement("button");
     editBtn.type = "button";
-    editBtn.className = "project-modifier-btn";
-    editBtn.dataset.action = "edit";
+    editBtn.className = "project-edit-btn";
     editBtn.textContent = "edit";
 
-  const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "project-modifier-btn";
-    deleteBtn.dataset.action = "delete";
-    deleteBtn.textContent = "delete";
-
-  projectListItem.append(projectBtn, editBtn, deleteBtn);
+  projectListItem.append(projectBtn, editBtn);
   navBtnsList.appendChild(projectListItem);
 };
 
@@ -212,41 +205,22 @@ const handleEditionForm = (previousName, projectBtn) => {
   window.addEventListener("click", handler);
 };
 
-const handleEditBtnClick = (event) => {
-  const existingEditionForm = document.querySelector("#project-edition-form");
-  if (existingEditionForm) return;
-
-  const projectBtn = event.target.parentElement.querySelector(".filter-btn");
-  const projectName = projectBtn.dataset.filter;
-
-  createProjectEditionForm(projectBtn, projectName);
-  handleEditionForm(projectName, projectBtn);
-};
-
-const handleDeleteBtnClick = () => {
-  // IF button clicked
-    // ASK confirmation
-      // IF YES 
-        // DELETE All todos from that project
-        // DELETE project from project list
-        // UPDATE Todo Cards
-      // IF NO Remove confirmation and do nothing
-      console.log("DELETE BUTTON CLICKED");
-};
-
 // TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
-const handleProjectModifierBtns = () => {
+const handleEditBtns = () => {
   const navProjectsBtns = document.querySelector("#nav-projects-btns");
 
   navProjectsBtns.addEventListener("click", (e) => {
-    const projectModifierBtn = e.target.closest(".project-modifier-btn");
-    const handlers = {
-      edit: handleEditBtnClick,
-      delete: handleDeleteBtnClick,
-    }
-    if (!projectModifierBtn) return;
-    const action = projectModifierBtn.dataset.action;
-    handlers[action](e);
+    const editBtn = e.target.closest(".project-edit-btn");
+    if (!editBtn) return;
+
+    const existingEditionForm = document.querySelector("#project-edition-form");
+    if (existingEditionForm) return;
+
+    const projectBtn = e.target.parentElement.querySelector(".filter-btn");
+    const projectName = projectBtn.dataset.filter;
+
+    createProjectEditionForm(projectBtn, projectName);
+    handleEditionForm(projectName, projectBtn);
   });
 };
 
@@ -257,5 +231,5 @@ export const handleSidenav = () => {
   renderBtnsForEachProject(currentList);
   handleNavFilterBtns(currentList);
   handleProjectCreationBtn(currentList);
-  handleProjectModifierBtns();
+  handleEditBtns();
 };
