@@ -159,11 +159,18 @@ const createProjectEditionForm = (nextElement, projectName) => {
   const input = document.createElement("input");
     input.type = "text";
     input.value = projectName;
-  const btn = document.createElement("button");
-    btn.type = "button";
-    btn.textContent = "Done";
+  const doneBtn = document.createElement("button");
+    doneBtn.className = "editform-action-btn"
+    doneBtn.dataset.action = "done";
+    doneBtn.type = "button";
+    doneBtn.textContent = "Done";
+  const deleteBtn = document.createElement("button");
+    deleteBtn.className = "editform-action-btn"
+    deleteBtn.dataset.action = "delete";
+    deleteBtn.type = "button";
+    deleteBtn.textContent = "Delete";
 
-  editionForm.append(input, btn);
+  editionForm.append(input, doneBtn, deleteBtn);
   nextElement.before(editionForm);
 };
 
@@ -176,30 +183,53 @@ const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
 
   updateProjectBtn(projectBtn, newName);
   list.updateProject(previousName, newName);
+  updateTodoCards(list, filter);
 
   if (getCurrentFilter() === previousName) {
-    updateTodoCards(list, filter);
     updateMainHeader(newName);
     updateCurrentFilter(newName);
   }
 };
 
-const handleEditionForm = (previousName, projectBtn) => {
+// TODO: change the confirm for a nice user friendly modal or something
+const handleProjectDelete = (projectName, projectBtn, list) => {
+  if(!confirm("THIS WILL REMOVE THE PROJECT AND ALL IT'S TODOS, ARE YOU SURE?")) return;
+
+  projectBtn.parentElement.remove();
+  list.deleteProject(projectName);
+
+  if (getCurrentFilter() === projectName) {
+    updateTodoCards(list, "today");
+    updateMainHeader("Today");
+    updateCurrentFilter("today");
+  } else {
+    updateTodoCards(list, getCurrentFilter());
+  }
+};
+
+const handleEditionForm = (projectBtn, projectName) => {
   const handler = (e) => {
     const projectListItem = document.querySelector("#project-edition-form").parentElement;
     const editionForm = document.querySelector("#project-edition-form"); 
-    const doneBtnSelector = "#project-edition-form > button";
 
     if (!projectListItem.contains(e.target)) {
       editionForm.remove();
       window.removeEventListener("click", handler);
+      return;
     }
 
-    if (e.target.matches(doneBtnSelector)) {
-      updateProjectWhenEditionDone(previousName, projectBtn, currentList);
-      editionForm.remove();
-      window.removeEventListener("click", handler);
-    }   
+    switch (e.target.dataset.action) {
+      case "done":
+        updateProjectWhenEditionDone(projectName, projectBtn, currentList);
+        editionForm.remove();
+        window.removeEventListener("click", handler);
+        break;
+      case "delete":
+        handleProjectDelete(projectName, projectBtn, currentList);
+        editionForm.remove();
+        window.removeEventListener("click", handler);
+        break;
+    }
   }
 
   window.addEventListener("click", handler);
@@ -220,7 +250,7 @@ const handleEditBtns = () => {
     const projectName = projectBtn.dataset.filter;
 
     createProjectEditionForm(projectBtn, projectName);
-    handleEditionForm(projectName, projectBtn);
+    handleEditionForm(projectBtn, projectName);
   });
 };
 
