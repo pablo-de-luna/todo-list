@@ -2,8 +2,6 @@ import { currentList } from "./todos.js";
 import { getCurrentFilter, updateCurrentFilter, updateMainHeader } from "./ui-controller.js";
 import { updateTodoCards } from "./todo-cards.js";
 
-const projectCreationBtnText = "+ New Project";
-
 const renderNavProjectBtns = (projectName) => {
   const navBtnsList = document.querySelector("#nav-projects-btns");
 
@@ -60,46 +58,48 @@ const handleNavFilterBtns = (list) => {
 
 // ---- PROJECT CREATION -------------------------------------------------------
 
-const renderProjectCreationBtn = (btnText) => {
+const renderProjectCreationBtn = () => {
   const navProjectsBtns = document.querySelector("#nav-projects-btns");
   const listItem = document.createElement("li");
   const button = document.createElement("button");
 
   button.id = "new-project-btn";
   button.type = "button";
-  button.textContent = btnText;
+  button.textContent = "+ New Project";
 
   listItem.append(button);
   navProjectsBtns.append(listItem);
 };
 
-const toggleProjectCreationText = (btnText) => {
-  const newProjectBtn = document.querySelector("#new-project-btn");
-  const close = "Close";
-
-  newProjectBtn.textContent = (newProjectBtn.textContent === btnText) ? close : btnText;
-}
-
 const renderProjectCreationForm = () => {
   const btnParent = document.querySelector("#new-project-btn").parentElement;
+
   const listItem = document.createElement("li");
+    listItem.id = "project-creation-form";
+
   const input = document.createElement("input");
+    input.id = "project-form-input";
+    input.type = "text";
+
   const addBtn = document.createElement("button");
+    addBtn.id = "project-form-add-btn";
+    addBtn.type = "button";
+    addBtn.textContent = "Add";
 
-  listItem.id = "project-creation-form";
-  input.type = "text";
-  addBtn.type = "button";
-  addBtn.textContent = "Add";
+  const cancelBtn = document.createElement("button");
+    cancelBtn.id = "project-form-cancel-btn";
+    cancelBtn.type = "button";
+    cancelBtn.textContent = "Cancel";
 
-  listItem.append(input, addBtn);
+  listItem.append(input, addBtn, cancelBtn);
   btnParent.after(listItem);
 };
 
 // TODO: Make alert user friendly
-const handleFormAddBtn = (list, btnText) => {
+const handleFormAddBtn = (list) => {
   const projectCreationForm = document.querySelector("#project-creation-form");
-  const addBtn = document.querySelector("#project-creation-form button");
-  const input = document.querySelector("#project-creation-form input");
+  const addBtn = document.querySelector("#project-form-add-btn");
+  const input = document.querySelector("#project-form-input");
   
   addBtn.addEventListener("click", () => {
     const inputValue = input.value.trim().toLowerCase();
@@ -113,26 +113,33 @@ const handleFormAddBtn = (list, btnText) => {
     list.addProject(inputValue);
     renderNavProjectBtns(inputValue);
     projectCreationForm.remove();
-    toggleProjectCreationText(btnText);
+  });
+};
+
+const handleFormCancelBtn = () => {
+  const projectCreationForm = document.querySelector("#project-creation-form");
+  const cancelBtn = document.querySelector("#project-form-cancel-btn");
+
+  cancelBtn.addEventListener("click", () => {
+    projectCreationForm.remove();
   });
 };
 
 // FIX: Add and close button not removing window event listener
-const closeFormOnOutsideClick = (btnText) => {
+const closeFormOnOutsideClick = () => {
   const projectCreationForm = document.querySelector("#project-creation-form");
 
   const windowHandler = (e) => {
     if (!projectCreationForm.contains(e.target) && !e.target.matches("#new-project-btn")) {
       projectCreationForm.remove();
       window.removeEventListener("click", windowHandler);
-      toggleProjectCreationText(btnText);
       console.log("REMOVED");
     }
   };
   window.addEventListener("click", windowHandler), {once: true};
 };
 
-const handleProjectCreationBtn = (list, btnText) => {
+const handleProjectCreationBtn = (list) => {
   const newProjectBtn = document.querySelector("#new-project-btn");
 
   newProjectBtn.addEventListener("click", () => {
@@ -142,11 +149,10 @@ const handleProjectCreationBtn = (list, btnText) => {
       projectCreationForm.remove();
     } else {
       renderProjectCreationForm();
-      handleFormAddBtn(list, btnText);
-      closeFormOnOutsideClick(btnText);
+      handleFormAddBtn(list);
+      handleFormCancelBtn();
+      closeFormOnOutsideClick();
     }
-
-    toggleProjectCreationText(btnText);
   });
 };
 
@@ -226,11 +232,11 @@ const handleProjectEditBtns = () => {
 // ---- INITIALIZATION ---------------------------------------------------------
 
 export const handleSidenav = () => {
-  renderProjectCreationBtn(projectCreationBtnText);
+  renderProjectCreationBtn();
   renderBtnsForEachProject(currentList);
 
   handleNavFilterBtns(currentList);
-  handleProjectCreationBtn(currentList, projectCreationBtnText);
+  handleProjectCreationBtn(currentList);
 
   handleProjectEditBtns();
 };
