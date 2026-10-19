@@ -44,9 +44,7 @@ class TodosList {
   deleteProject(projectName) {
     const projectIndex = this.#projects.indexOf(projectName);
 
-    console.log(this.#projects)
     this.#projects.splice(projectIndex, 1);
-    console.log(this.#projects)
 
     for(let i = this.#todos.length - 1; i >= 0; i--) {
       if (this.#todos[i].project === projectName) {

@@ -2,9 +2,11 @@ import { currentList } from "./todos.js";
 import { getCurrentFilter, updateCurrentFilter, updateMainHeader } from "./ui-controller.js";
 import { updateTodoCards } from "./todo-cards.js";
 
-const renderNavProjectBtns = (projectName) => {
-  const navBtnsList = document.querySelector("#nav-projects-btns");
+const body = document.querySelector("body");
+const navProjectsBtns = document.querySelector("#nav-projects-btns");
+const navBtns = document.querySelector("#nav-btns");
 
+const renderNavProjectBtns = (projectName) => {
   const projectListItem = document.createElement("li");
   const projectBtn = document.createElement("button");
     projectBtn.dataset.filter = projectName;
@@ -18,7 +20,7 @@ const renderNavProjectBtns = (projectName) => {
     editBtn.textContent = "edit";
 
   projectListItem.append(projectBtn, editBtn);
-  navBtnsList.appendChild(projectListItem);
+  navProjectsBtns.appendChild(projectListItem);
 };
 
 const updateProjectBtn = (projectBtn, newName) => {
@@ -36,9 +38,7 @@ const renderBtnsForEachProject = (list) => {
 };
 
 const handleNavFilterBtns = (list) => {
-  const nav = document.querySelector("#nav-btns");
-
-  nav.addEventListener("click", (e) => {
+  navBtns.addEventListener("click", (e) => {
     const filterBtn = e.target.closest(".filter-btn");
     
     if (!filterBtn) return;
@@ -54,7 +54,6 @@ const handleNavFilterBtns = (list) => {
 // ---- PROJECT CREATION -------------------------------------------------------
 
 const renderProjectCreationBtn = () => {
-  const navProjectsBtns = document.querySelector("#nav-projects-btns");
   const listItem = document.createElement("li");
   const button = document.createElement("button");
 
@@ -174,6 +173,24 @@ const createProjectEditionForm = (nextElement, projectName) => {
   nextElement.before(editionForm);
 };
 
+const renderDeleteConfirmationModal = () => {
+  const confirmationModal = document.createElement("dialog");
+    confirmationModal.id = "delete-project-confirmation";
+  const message = document.createElement("div");
+    message.textContent = "This will remove the project and all it's todos, are you sure?";
+  const confirmBtn = document.createElement("button");
+    confirmBtn.type = "button";
+    confirmBtn.textContent = "Confirm"
+    confirmBtn.dataset.action = "confirm";
+  const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.textContent = "Cancel"
+    cancelBtn.dataset.action = "cancel";
+
+  confirmationModal.append(message, confirmBtn, cancelBtn);
+  body.append(confirmationModal);
+}; 
+
 const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   const inputValue = document.querySelector("#project-edition-form > input").value;
   const newName = inputValue.trim().toLowerCase();
@@ -191,10 +208,7 @@ const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   }
 };
 
-// TODO: change the confirm for a nice user friendly modal or something
-const handleProjectDelete = (projectName, projectBtn, list) => {
-  if(!confirm("THIS WILL REMOVE THE PROJECT AND ALL IT'S TODOS, ARE YOU SURE?")) return;
-
+const handleProjectDeletion = (projectName, projectBtn, list) => {
   projectBtn.parentElement.remove();
   list.deleteProject(projectName);
 
@@ -206,6 +220,28 @@ const handleProjectDelete = (projectName, projectBtn, list) => {
     updateTodoCards(list, getCurrentFilter());
   }
 };
+
+const handleDeleteConfirmationModal = (modal, projectName, projectBtn) => {
+  modal.addEventListener("click", (e) => {
+    switch (e.target.dataset.action) {
+      case "confirm":
+        handleProjectDeletion(projectName, projectBtn, currentList);
+        modal.remove();
+        break;
+      case "cancel":
+        modal.remove();
+        break;
+    }
+  });
+};
+
+const showDeleteConfirmationModal = (projectName, projectBtn) => {
+  renderDeleteConfirmationModal();
+
+  const modal = document.querySelector("#delete-project-confirmation");
+  modal.showModal();
+  handleDeleteConfirmationModal(modal, projectName, projectBtn);
+}
 
 const handleEditionForm = (projectBtn, projectName) => {
   const handler = (e) => {
@@ -225,7 +261,7 @@ const handleEditionForm = (projectBtn, projectName) => {
         window.removeEventListener("click", handler);
         break;
       case "delete":
-        handleProjectDelete(projectName, projectBtn, currentList);
+        showDeleteConfirmationModal(projectName, projectBtn);
         editionForm.remove();
         window.removeEventListener("click", handler);
         break;
@@ -237,8 +273,6 @@ const handleEditionForm = (projectBtn, projectName) => {
 
 // TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
 const handleEditBtns = () => {
-  const navProjectsBtns = document.querySelector("#nav-projects-btns");
-
   navProjectsBtns.addEventListener("click", (e) => {
     const editBtn = e.target.closest(".project-edit-btn");
     if (!editBtn) return;
