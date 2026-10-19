@@ -15,6 +15,9 @@ const renderTodoCard = (todo) => {
   const title = document.createElement("div");
   title.textContent = todo.title;
 
+  const description = document.createElement("div");
+  description.textContent = todo.description;
+
   const project = document.createElement("div");
   project.textContent = todo.project;
 
@@ -22,7 +25,7 @@ const renderTodoCard = (todo) => {
   const relativeDate = formatToRelativeDate(todo.dueDate);
   dueDate.textContent = relativeDate;
 
-  card.append(statusCheckbox, title, project, dueDate);
+  card.append(statusCheckbox, title, description, project, dueDate);
   cardsContainer.appendChild(card);
 }
 
