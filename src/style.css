@@ -196,12 +196,29 @@ main {
 
 .todo-card {
   display: flex;
-  flex-wrap: wrap;
+}
+
+div:has( > .todo-card-checkbox) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .todo-card-checkbox {
-  width: 40px;
-  height: 40px;
+  appearance: none;
+  border: 1px solid var(--bgcolor-1);
+  width: 25px;
+  height: 25px;
+  margin-right: 20px;
+}
+
+.todo-card-checkbox:checked {
+  background-color: var(--bgcolor-1);
+}
+
+.todo-card:has(.todo-card-checkbox:checked) {
+  opacity: 70%;
+  text-decoration: line-through;
 }
 
 .todo-card-title  {
