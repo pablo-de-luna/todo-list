@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url(./assets/fonts/jetbrains-mono/JetBrainsMono-Regular.woff) format("woff"),
+  url(./assets/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2) format("woff2");
+}
+
+:root {
+  --color-1: #e3deda;
+  --bgcolor-1: #888375;
+  --bgcolor-2: #7b766a;
+  --bgcolor-3: #1b1b1b;
+  --fontstack-1: 'JetBrains Mono', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
@@ -52,11 +66,10 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px dashed yellow;
 } */
 
-/* PROVISIONAL */
 body {
-  background-color: #888375;
-  color: #e3deda;
-  font-family: 'Helvetica Neue', sans-serif, system-ui, -apple-system;
+  background-color: var(--bgcolor-1);
+  color: var(--color-1);
+  font-family: var(--fontstack-1);
   display: flex;
   justify-content: center;
 }
@@ -85,18 +98,23 @@ header {
   grid-area: 1 / 1 / 2 / 3;
 }
 
+header > div {
+  font-size: 2rem;
+}
+
 nav {
   grid-area: 2 / 1 / 3 / 2;
-  background-color: #7b766a;
-  border-radius: 10px;
+  background-color: var(--bgcolor-2);
+  padding: 50px 10px 50px;
 }
 
-nav * {
-  border: 1px dotted yellow;
-}
-
-nav button {
-  background-color: inherit;
+#new-project-btn,
+.filter-btn {
+  background-color: var(--bgcolor-3);
+  color: var(--color-1);
+  padding: 10px 20px;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
 main {
@@ -107,23 +125,20 @@ main {
   margin-left: 10px;
 }
 
-/* CARDS PROVISIONAL */
 .todo-card,
 #new-todo-card {
-  background-color: #1b1b1b;
-  margin: 10px 10px 0;
+  background-color: var(--bgcolor-3);
+  margin: 0 10px 5px;
   padding: 10px;
-  border-radius: 10px;
 }
 
 
-/* PRIORITY COLOR PROVISIONAL */
 .todo-card.priority-important {
   background-color: #2f373b;
 }
 
 #todo-form {
-  background-color: #1b1b1b;
+  background-color: var(--bgcolor-3);
   margin: 0 10px;
   padding: 10px;
 }
