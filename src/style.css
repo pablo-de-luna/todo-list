@@ -216,8 +216,17 @@ div:has( > .todo-card-checkbox) {
   background-color: var(--bgcolor-1);
 }
 
+.todo-card-checkbox:checked:after {
+  content: "✓️";
+  font-weight: bolder;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
 .todo-card:has(.todo-card-checkbox:checked) {
   opacity: 70%;
+}
+
+.todo-card:has(.todo-card-checkbox:checked) .todo-card-info {
   text-decoration: line-through;
 }
 

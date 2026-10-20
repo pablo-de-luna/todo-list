@@ -16,6 +16,7 @@ const renderTodoCard = (todo) => {
     statusCheckbox.setAttribute("type", "checkbox");
 
   const todoInfoContainer = document.createElement("div");
+  todoInfoContainer.className = "todo-card-info";
 
   const title = document.createElement("div");
   title.className = "todo-card-title";
