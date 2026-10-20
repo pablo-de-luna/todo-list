@@ -71,8 +71,11 @@ body {
   background-color: var(--bgcolor-1);
   color: var(--color-1);
   font-family: var(--fontstack-1);
-  display: flex;
-  justify-content: center;
+  margin-left: 5vw;
+}
+
+.hidden {
+  display: none;
 }
 
 ul {
@@ -189,4 +192,23 @@ main {
 #todo-form {
   background-color: var(--bgcolor-3);
   padding: 10px;
+}
+
+.todo-card {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.todo-card-checkbox {
+  width: 40px;
+  height: 40px;
+}
+
+.todo-card-title  {
+  font-weight: bolder;
+}
+
+.todo-card-description {
+  font-size: 0.8rem;
+  opacity: 80%;
 }

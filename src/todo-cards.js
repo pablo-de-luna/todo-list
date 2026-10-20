@@ -9,23 +9,39 @@ const renderTodoCard = (todo) => {
   card.classList.add(`priority-${todo.priority}`);
   card.dataset.id = todo.id;
 
-  const statusCheckbox = document.createElement("input");
-  statusCheckbox.setAttribute("type", "checkbox");
+  const checkboxContainer = document.createElement("div");
+
+    const statusCheckbox = document.createElement("input");
+    statusCheckbox.className = "todo-card-checkbox";
+    statusCheckbox.setAttribute("type", "checkbox");
+
+  const todoInfoContainer = document.createElement("div");
 
   const title = document.createElement("div");
+  title.className = "todo-card-title";
   title.textContent = todo.title;
 
   const description = document.createElement("div");
+  description.className = "todo-card-description"; 
   description.textContent = todo.description;
+  if (todo.description === "No description") {
+    description.classList.add("hidden");
+  }
 
   const project = document.createElement("div");
-  project.textContent = todo.project;
+  const nameCapitalized = todo.project[0].toUpperCase() + todo.project.slice(1).toLowerCase();
+  project.textContent = nameCapitalized;
+  if (todo.project === "default") {
+    project.classList.add("hidden");
+  }
 
   const dueDate = document.createElement("div");
   const relativeDate = formatToRelativeDate(todo.dueDate);
   dueDate.textContent = relativeDate;
 
-  card.append(statusCheckbox, title, description, project, dueDate);
+  checkboxContainer.append(statusCheckbox);
+  todoInfoContainer.append(title, description, project, dueDate);
+  card.append(checkboxContainer, todoInfoContainer);
   cardsContainer.appendChild(card);
 }
 
@@ -33,7 +49,7 @@ const handleStatusCheckbox = (list) => {
   const todoCards = document.querySelectorAll(".todo-card");
 
   todoCards.forEach(todoCard => {
-    const checkbox = todoCard.querySelector("input");
+    const checkbox = todoCard.querySelector(".todo-card-checkbox");
     const todo = list.todos.find(todo => todo.id === todoCard.dataset.id);
 
     checkbox.checked = todo.status;
