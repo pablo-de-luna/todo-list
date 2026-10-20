@@ -180,8 +180,8 @@ const renderDeleteConfirmationModal = () => {
     message.textContent = "This will remove the project and all it's todos, are you sure?";
   const confirmBtn = document.createElement("button");
     confirmBtn.type = "button";
-    confirmBtn.textContent = "Confirm"
-    confirmBtn.dataset.action = "confirm";
+    confirmBtn.textContent = "Delete"
+    confirmBtn.dataset.action = "delete";
   const cancelBtn = document.createElement("button");
     cancelBtn.type = "button";
     cancelBtn.textContent = "Cancel"
@@ -224,7 +224,7 @@ const handleProjectDeletion = (projectName, projectBtn, list) => {
 const handleDeleteConfirmationModal = (modal, projectName, projectBtn) => {
   modal.addEventListener("click", (e) => {
     switch (e.target.dataset.action) {
-      case "confirm":
+      case "delete":
         handleProjectDeletion(projectName, projectBtn, currentList);
         modal.remove();
         break;
