@@ -17,7 +17,6 @@ const renderNavProjectBtns = (projectName) => {
   const editBtn = document.createElement("button");
     editBtn.type = "button";
     editBtn.className = "project-edit-btn";
-    editBtn.textContent = "edit";
 
   projectListItem.append(projectBtn, editBtn);
   navProjectsBtns.appendChild(projectListItem);

@@ -131,15 +131,24 @@ nav {
 }
 
 #nav-projects-btns .filter-btn {
-  flex: 1;
+  flex: 6;
   margin-right: 5px;
 }
 
 #nav-projects-btns .project-edit-btn {
-  flex: 0;
+  flex: 1;
   background-color: var(--bgcolor-3);
   color: var(--color-1);
   margin-bottom: 5px;
+}
+
+#nav-projects-btns .project-edit-btn::before {
+  content: url("./assets/icons/pencil.svg");
+  display: inline-block;
+  padding-top: 5px;
+  width: 20px;
+  height: 20px;
+  filter: invert(70%);
 }
 
 main {
