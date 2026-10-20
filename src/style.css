@@ -5,10 +5,11 @@
 }
 
 :root {
-  --color-1: #e3deda;
+  --color-1: #cfccc9;
   --bgcolor-1: #888375;
-  --bgcolor-2: #7b766a;
+  --bgcolor-2: #3a3e31;
   --bgcolor-3: #1b1b1b;
+  --bgcolor-4: #5a533b;
   --fontstack-1: 'JetBrains Mono', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
@@ -95,17 +96,23 @@ button {
 }
 
 header {
-  grid-area: 1 / 1 / 2 / 3;
+  grid-area: 1 / 1 / 2 / 2;
+  background-color: var(--bgcolor-2);
+  color: var(--color-1);
+  padding: 10px;
+  margin: 0 10px;
 }
 
 header > div {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  justify-content: center;
+  text-align: center;
 }
 
 nav {
   grid-area: 2 / 1 / 3 / 2;
   /* background-color: var(--bgcolor-2); */
-  padding: 50px 10px 50px;
+  padding: 40px 10px 50px;
 }
 
 #new-project-btn,
@@ -116,13 +123,13 @@ nav {
   margin-bottom: 5px;
 }
 
+#nav-projects-btns {
+  margin-top: 20px;
+}
+
 #new-project-btn,
 .filter-btn {
   width: 100%;
-}
-
-#nav-projects-title {
-  font-size: 2rem;
 }
 
 #nav-projects-btns > li {
@@ -152,20 +159,28 @@ nav {
 }
 
 main {
-  grid-area: 2 / 2 / 3 / 3;
+  grid-area: 1 / 2 / 3 / 3;
+  margin-top: 25px;
+  margin-left: 15px;
 }
 
 #main-header {
-  margin-left: 10px;
+  font-size: 2.5rem;
+  color: var(--bgcolor-3);
+  background-color: var(--bgcolor-1);
+  margin-left: 20px;
 }
 
 .todo-card,
 #new-todo-card {
   background-color: var(--bgcolor-3);
-  margin: 0 10px 5px;
+  margin: 5px 0 0;
   padding: 10px;
 }
 
+#new-todo-card {
+  background-color: var(--bgcolor-4);
+}
 
 .todo-card.priority-important {
   background-color: #2f373b;
@@ -173,6 +188,5 @@ main {
 
 #todo-form {
   background-color: var(--bgcolor-3);
-  margin: 0 10px;
   padding: 10px;
 }
