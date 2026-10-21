@@ -240,6 +240,10 @@ div:has( > .todo-card-checkbox) {
   padding: 10px;
 }
 
+#todo-form[data-type="creation"] {
+  background-color: var(--bgcolor-4);
+}
+
 #cards-container #todo-form {
   margin-top: 5px;
 }
@@ -249,7 +253,8 @@ select,
 #todo-form button,
 input {
   appearance: none;
-  background-color: #333030;
+  font-size: 0.8rem;
+  background-color: inherit;
   color: var(--color-1);
-  border: none;
+  border: 1px solid var(--bgcolor-1);
 }

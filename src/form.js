@@ -172,6 +172,10 @@ const handleTodoEditionFormSubmission = (list, todoID) => {
 
 export const createTodoEditionForm = (elementBefore, list, todoID) => {
   createTodoForm(elementBefore);
+
+  const form = document.querySelector("#todo-form");
+  form.dataset.type = "edition";
+
   createTodoEditionFormBtns();
   addTodoDataToFormValues(list, todoID);
   handleTodoEditionFormSubmission(list, todoID);
@@ -199,6 +203,9 @@ const handleTodoCreationFormSubmission = (list) => {
 
 export const createTodoCreationForm = (elementBefore, list) => {
   createTodoForm(elementBefore);
+
+  const form = document.querySelector("#todo-form");
+  form.dataset.type = "creation";
 
   const submitBtn = document.querySelector(`#todo-form > button[type="submit"]`);
   submitBtn.textContent = "Create Todo";
