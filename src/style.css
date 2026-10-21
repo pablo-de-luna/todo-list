@@ -10,6 +10,7 @@
   --bgcolor-2: #3a3e31;
   --bgcolor-3: #1b1b1b;
   --bgcolor-4: #5a533b;
+  --bgcolor-5: #2f373b;
   --fontstack-1: 'JetBrains Mono', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
@@ -61,11 +62,6 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 /* End of custom reset */
-
-/* JUST FOR VISUALIZATION, TO BE DELETED */
-/* body * {
-  border: 1px dashed yellow;
-} */
 
 body {
   background-color: var(--bgcolor-1);
@@ -142,7 +138,6 @@ nav {
 
 #nav-projects-btns .filter-btn {
   flex: 6;
-  margin-right: 5px;
 }
 
 #nav-projects-btns .project-edit-btn {
@@ -150,6 +145,7 @@ nav {
   background-color: var(--bgcolor-3);
   color: var(--color-1);
   margin-bottom: 5px;
+  margin-left: 5px;
 }
 
 #nav-projects-btns .project-edit-btn::before {
@@ -186,7 +182,7 @@ main {
 }
 
 .todo-card.priority-important {
-  background-color: #2f373b;
+  background-color: var(--bgcolor-5);
 }
 
 .todo-card {
@@ -242,6 +238,10 @@ div:has( > .todo-card-checkbox) {
 
 #todo-form[data-type="creation"] {
   background-color: var(--bgcolor-4);
+}
+
+#todo-form[data-type="edition-important"] {
+  background-color: var(--bgcolor-5);
 }
 
 #cards-container #todo-form {

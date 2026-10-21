@@ -18,30 +18,6 @@ export const updateMainHeader = (filter) => {
   mainHeader.textContent = nameCapitalized;
 };
 
-const removeHiddenSelectorFromAllCards = () => { 
-  const todoCards = document.querySelectorAll(".todo-card");
-
-  todoCards.forEach(card => {
-    if (card.classList.contains("hidden")) {
-      card.classList.remove("hidden");
-    }
-  })
-};
-
-const toggleHiddenSelector = (todoCard) => {
-  const form = document.querySelector("#todo-form");
-
-  if (todoCard.classList.contains("hidden")) {
-    todoCard.classList.remove("hidden");
-  } else {
-    todoCard.classList.add("hidden");
-  }
-
-  form.addEventListener("submit", () => {
-      todoCard.classList.remove("hidden");
-  });
-};
-
 const closeTodoFormIfOpen = () => {
   const main = document.querySelector("main");
   const form = document.querySelector("#todo-form");
@@ -79,6 +55,38 @@ const handleTodoCreationCard = (list) => {
   })
 };
 
+const removeHiddenSelectorFromAllCards = () => { 
+  const todoCards = document.querySelectorAll(".todo-card");
+
+  todoCards.forEach(card => {
+    if (card.classList.contains("hidden")) {
+      card.classList.remove("hidden");
+    }
+  })
+};
+
+const toggleHiddenSelector = (todoCard) => {
+  const form = document.querySelector("#todo-form");
+
+  if (todoCard.classList.contains("hidden")) {
+    todoCard.classList.remove("hidden");
+  } else {
+    todoCard.classList.add("hidden");
+  }
+
+  form.addEventListener("submit", () => {
+      todoCard.classList.remove("hidden");
+  });
+};
+
+const togglePrioritySelector = (todoCard) => {
+  const form = document.querySelector("#todo-form");
+
+  if (todoCard.classList.contains("priority-important")) {
+    form.dataset.type = "edition-important";
+  }
+}
+
 const handleTodoEdition = (list) => {
   const cardsContainer = document.querySelector("#cards-container");
 
@@ -92,6 +100,7 @@ const handleTodoEdition = (list) => {
     const todoID = card.dataset.id;
 
     createTodoEditionForm(card, list, todoID);
+    togglePrioritySelector(card);
     toggleHiddenSelector(card);
   });
 };

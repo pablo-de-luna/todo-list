@@ -174,7 +174,6 @@ export const createTodoEditionForm = (elementBefore, list, todoID) => {
   createTodoForm(elementBefore);
 
   const form = document.querySelector("#todo-form");
-  form.dataset.type = "edition";
 
   createTodoEditionFormBtns();
   addTodoDataToFormValues(list, todoID);
