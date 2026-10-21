@@ -59,6 +59,10 @@ const closeFormOnOutsideClick = () => {
   
   const handler = (e) => {
 
+    if (!form.contains(e.target) && !e.target.closest("#new-todo-card")) {
+      form.remove();
+      window.removeEventListener("click", handler);
+    }
   };
 
   window.addEventListener("click", handler);
@@ -88,7 +92,6 @@ const handleTodoEdition = (list) => {
     const todoID = card.dataset.id;
 
     createTodoEditionForm(card, list, todoID);
-    closeFormOnOutsideClick(card);
     toggleHiddenSelector(card);
   });
 };
