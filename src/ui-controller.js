@@ -18,6 +18,30 @@ export const updateMainHeader = (filter) => {
   mainHeader.textContent = nameCapitalized;
 };
 
+const removeHiddenSelectorFromAllCards = () => { 
+  const todoCards = document.querySelectorAll(".todo-card");
+
+  todoCards.forEach(card => {
+    if (card.classList.contains("hidden")) {
+      card.classList.remove("hidden");
+    }
+  })
+};
+
+const toggleHiddenSelector = (todoCard) => {
+  const form = document.querySelector("#todo-form");
+
+  if (todoCard.classList.contains("hidden")) {
+    todoCard.classList.remove("hidden");
+  } else {
+    todoCard.classList.add("hidden");
+  }
+
+  form.addEventListener("submit", () => {
+      todoCard.classList.remove("hidden");
+  });
+};
+
 const closeTodoFormIfOpen = () => {
   const main = document.querySelector("main");
   const form = document.querySelector("#todo-form");
@@ -34,21 +58,7 @@ const closeFormOnOutsideClick = () => {
   const form = document.querySelector("#todo-form");
   
   const handler = (e) => {
-    if (!form) {
-      window.removeEventListener("click", handler);
-      return;
-    }
 
-    if (!form.contains(e.target) &&
-      !e.target.closest(".todo-card") &&
-      !e.target.closest("#new-todo-card")) {
-      form.remove();
-      window.removeEventListener("click", handler);
-    }
-
-    form.addEventListener("submit", () => {
-      window.removeEventListener("click", handler);
-    }, {once: true});
   };
 
   window.addEventListener("click", handler);
@@ -58,8 +68,8 @@ const handleTodoCreationCard = (list) => {
   const newCardBtn = document.querySelector("#new-todo-card");
 
   newCardBtn.addEventListener("click", (e) => {
+    removeHiddenSelectorFromAllCards();
     if (closeTodoFormIfOpen()) return;
-
     createTodoCreationForm(newCardBtn, list);
     closeFormOnOutsideClick();
   })
@@ -72,12 +82,14 @@ const handleTodoEdition = (list) => {
     const card = e.target.closest(".todo-card");
 
     if (!card) return;
+    removeHiddenSelectorFromAllCards();
     if (closeTodoFormIfOpen()) return;
 
     const todoID = card.dataset.id;
 
     createTodoEditionForm(card, list, todoID);
-    closeFormOnOutsideClick();
+    closeFormOnOutsideClick(card);
+    toggleHiddenSelector(card);
   });
 };
 

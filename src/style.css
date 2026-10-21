@@ -75,7 +75,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 ul {
@@ -185,16 +185,6 @@ main {
   background-color: var(--bgcolor-4);
 }
 
-#todo-form {
-  background-color: var(--bgcolor-3);
-  padding: 10px;
-}
-
-#cards-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .todo-card.priority-important {
   background-color: #2f373b;
 }
@@ -202,7 +192,6 @@ main {
 .todo-card {
   display: flex;
   flex: 100%;
-  order: 1;
 }
 
 div:has( > .todo-card-checkbox) {
@@ -231,7 +220,6 @@ div:has( > .todo-card-checkbox) {
 }
 .todo-card:has(.todo-card-checkbox:checked) {
   opacity: 70%;
-  order: 2;
 }
 
 .todo-card:has(.todo-card-checkbox:checked) .todo-card-info {
@@ -245,4 +233,23 @@ div:has( > .todo-card-checkbox) {
 .todo-card-description {
   font-size: 0.8rem;
   opacity: 80%;
+}
+
+#todo-form {
+  background-color: var(--bgcolor-3);
+  padding: 10px;
+}
+
+#cards-container #todo-form {
+  margin-top: 5px;
+}
+
+textarea,
+select,
+#todo-form button,
+input {
+  appearance: none;
+  background-color: #333030;
+  color: var(--color-1);
+  border: none;
 }

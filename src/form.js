@@ -112,12 +112,12 @@ const getFormData = (form) => Object.fromEntries(new FormData(form));
 const createTodoEditionFormBtns = () => {
   const form = document.querySelector("#todo-form");
   const submitBtn = document.querySelector(`#todo-form > button[type="submit"]`);
-    submitBtn.textContent = "Update todo";
+    submitBtn.textContent = "Done";
 
   const deleteTodoBtn = document.createElement("button");
     deleteTodoBtn.type = "button";
     deleteTodoBtn.id = "delete-todo-btn";
-    deleteTodoBtn.textContent = "Delete todo";
+    deleteTodoBtn.textContent = "Delete";
     
   form.append(deleteTodoBtn);
 };
