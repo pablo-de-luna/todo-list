@@ -148,6 +148,11 @@ nav {
   margin-left: 5px;
 }
 
+#nav-projects-btns > li:has(> #project-edition-form) > .filter-btn,
+#nav-projects-btns > li:has(> #project-edition-form) > .project-edit-btn {
+  display: none;
+}
+
 #nav-projects-btns .project-edit-btn::before {
   content: url("./assets/icons/pencil.svg");
   display: inline-block;
@@ -155,6 +160,54 @@ nav {
   width: 20px;
   height: 20px;
   filter: invert(70%);
+}
+
+#project-creation-form,
+#project-edition-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  font-size: 0.8rem;
+}
+
+#project-creation-form {
+  background-color: var(--bgcolor-3);
+  margin: -5px 0 5px;
+}
+
+#project-edition-form {
+  flex: 1 1 100%;
+  background-color: var(--bgcolor-3);
+  margin-bottom: 5px;
+}
+
+#project-creation-form input,
+#project-edition-form input {
+  flex: 1 1 100%;
+  min-width: 0;
+  width: 100%;
+  border: 1px solid hsl(44 7.5% 49.6% / 60%);
+  border-radius: 0;
+  background-color: hsl(0 0% 10.6% / 60%);
+  color: var(--color-1);
+  padding: 5px 8px;
+}
+
+#project-creation-form button,
+#project-edition-form button {
+  flex: 1 1 calc(50% - 3px);
+  border: 1px solid hsl(30 2.4% 80% / 60%);
+  background-color: hsl(0 0% 10.6% / 60%);
+  color: var(--color-1);
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+#project-creation-form input:focus,
+#project-edition-form input:focus {
+  outline: 1px solid hsl(30 2.4% 80% / 60%);
+  outline-offset: 1px;
 }
 
 main {
@@ -198,6 +251,7 @@ div:has( > .todo-card-checkbox) {
 
 .todo-card-checkbox {
   appearance: none;
+  position: relative;
   border: 1px solid var(--bgcolor-1);
   width: 25px;
   height: 25px;
@@ -209,10 +263,15 @@ div:has( > .todo-card-checkbox) {
 }
 
 .todo-card-checkbox:checked:after {
-  content: "✓️";
-  font-weight: bolder;
-  font-size: 1.5rem;
-  line-height: 1.5rem;
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6.5px;
+  width: 10px;
+  height: 16px;
+  border: solid var(--bgcolor-3);
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
 }
 .todo-card:has(.todo-card-checkbox:checked) {
   opacity: 70%;
@@ -233,14 +292,15 @@ div:has( > .todo-card-checkbox) {
 
 #todo-form {
   background-color: var(--bgcolor-3);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px 12px;
   padding: 10px;
   font-size: 0.8rem;
 }
 
 #todo-form > div {
+  flex: 1 1 calc(50% - 6px);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -249,25 +309,23 @@ div:has( > .todo-card-checkbox) {
 
 #todo-form > div:has(> #title-input),
 #todo-form > div:has(> #description-input) {
-  grid-column: 1 / -1;
+  flex-basis: 100%;
 }
 
 #todo-form > div:has(> #date-input) {
-  grid-column: 2;
-  grid-row: 3;
+  order: 4;
 }
 
 #todo-form > div:has(> #priority-input) {
-  grid-column: 1 / -1;
-  grid-row: 4;
+  flex-basis: 100%;
+  order: 5;
   flex-direction: row;
   align-items: center;
   gap: 8px;
 }
 
 #todo-form > div:has(> #project-select) {
-  grid-column: 1;
-  grid-row: 3;
+  order: 3;
 }
 
 #todo-form[data-type="creation"] {
@@ -308,6 +366,19 @@ div:has( > .todo-card-checkbox) {
   line-height: 1.3;
 }
 
+#todo-form input[type="date"] {
+  position: relative;
+}
+
+#todo-form input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
 #todo-form input[type="checkbox"] {
   width: 16px;
   height: 16px;
@@ -323,20 +394,13 @@ div:has( > .todo-card-checkbox) {
 }
 
 #todo-form > button {
-  grid-row: 5;
+  flex: 1 1 calc(50% - 6px);
+  order: 6;
   border: 1px solid hsl(30 2.4% 80% / 60%);
   background-color: hsl(0 0% 10.6% / 60%);
   color: var(--color-1);
   padding: 5px 8px;
   cursor: pointer;
-}
-
-#todo-form > button[type="submit"] {
-  grid-column: 1;
-}
-
-#todo-form > #delete-todo-btn {
-  grid-column: 2;
 }
 
 div:has(> #description-input) {
