@@ -445,3 +445,34 @@ div:has( > .todo-card-checkbox) {
 div:has(> #description-input) {
   min-width: 0;
 }
+
+#new-todo-card,
+#new-project-btn,
+.project-edit-btn,
+.filter-btn,
+.todo-card {
+  position: relative;
+}
+
+#new-todo-card:hover,
+#new-project-btn:hover,
+.project-edit-btn:hover,
+.filter-btn:hover,
+.todo-card:hover {
+  box-shadow: inset 0px 0px 0px 2px var(--color-1);
+} 
+
+#new-todo-card:hover:after,
+#new-project-btn:hover:after,
+.project-edit-btn:hover:after,
+.filter-btn:hover:after,
+.todo-card:hover:after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 15px;
+  width: 15px;
+  background-color: var(--color-1);
+  clip-path: polygon(0 0, 100% 100%, 100% 0);
+} 
