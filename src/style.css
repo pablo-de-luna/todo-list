@@ -83,6 +83,16 @@ li {
   list-style: none;
 }
 
+header,
+.filter-btn,
+.todo-card,
+#new-project-btn,
+#main-header,
+#new-todo-card,
+#todo-form label {
+  user-select: none;
+}
+
 button {
   appearance: none;
   border: none;
@@ -208,6 +218,35 @@ nav {
 #project-edition-form input:focus {
   outline: 1px solid hsl(30 2.4% 80% / 60%);
   outline-offset: 1px;
+}
+
+#delete-project-confirmation[open] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: min(360px, calc(100% - 32px));
+  padding: 20px;
+  border: 1px solid hsl(30 2.4% 80% / 60%);
+  background-color: var(--bgcolor-3);
+  color: var(--color-1);
+  font-size: 0.9rem;
+}
+
+#delete-project-confirmation::backdrop {
+  background-color: hsl(0 0% 0% / 50%);
+}
+
+#delete-project-confirmation > div {
+  flex: 1 1 100%;
+}
+
+#delete-project-confirmation > button {
+  flex: 1;
+  border: 1px solid hsl(30 2.4% 80% / 60%);
+  background-color: hsl(0 0% 10.6% / 60%);
+  color: var(--color-1);
+  padding: 6px 10px;
+  cursor: pointer;
 }
 
 main {
