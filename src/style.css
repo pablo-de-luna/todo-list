@@ -233,7 +233,41 @@ div:has( > .todo-card-checkbox) {
 
 #todo-form {
   background-color: var(--bgcolor-3);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
   padding: 10px;
+  font-size: 0.8rem;
+}
+
+#todo-form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+#todo-form > div:has(> #title-input),
+#todo-form > div:has(> #description-input) {
+  grid-column: 1 / -1;
+}
+
+#todo-form > div:has(> #date-input) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+#todo-form > div:has(> #priority-input) {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+#todo-form > div:has(> #project-select) {
+  grid-column: 1;
+  grid-row: 3;
 }
 
 #todo-form[data-type="creation"] {
@@ -248,13 +282,63 @@ div:has( > .todo-card-checkbox) {
   margin-top: 5px;
 }
 
-textarea,
-select,
-#todo-form button,
-input {
+#todo-form label {
+  opacity: 80%;
+}
+
+#todo-form > div:has(> #priority-input) label {
+  font-weight: bold;
+}
+
+#todo-form input:not([type="checkbox"]),
+#todo-form textarea,
+#todo-form select {
   appearance: none;
-  font-size: 0.8rem;
-  background-color: inherit;
+  min-width: 0;
+  width: 100%;
+  border: 1px solid hsl(44 7.5% 49.6% / 60%);
+  border-radius: 0;
+  background-color: hsl(0 0% 10.6% / 60%);
   color: var(--color-1);
-  border: 1px solid var(--bgcolor-1);
+  padding: 5px 8px;
+}
+
+#todo-form textarea {
+  resize: vertical;
+  line-height: 1.3;
+}
+
+#todo-form input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--bgcolor-1);
+}
+
+#todo-form input:focus,
+#todo-form textarea:focus,
+#todo-form select:focus {
+  outline: 1px solid hsl(30 2.4% 80% / 60%);
+  outline-offset: 1px;
+}
+
+#todo-form > button {
+  grid-row: 5;
+  border: 1px solid hsl(30 2.4% 80% / 60%);
+  background-color: hsl(0 0% 10.6% / 60%);
+  color: var(--color-1);
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+#todo-form > button[type="submit"] {
+  grid-column: 1;
+}
+
+#todo-form > #delete-todo-btn {
+  grid-column: 2;
+}
+
+div:has(> #description-input) {
+  min-width: 0;
 }
