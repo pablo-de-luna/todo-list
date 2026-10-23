@@ -73,6 +73,7 @@ const renderProjectCreationForm = () => {
   const input = document.createElement("input");
     input.id = "project-form-input";
     input.type = "text";
+    input.maxLength = "15";
 
   const addBtn = document.createElement("button");
     addBtn.id = "project-form-add-btn";
@@ -150,18 +151,21 @@ const handleProjectCreationBtn = (list) => {
 
 // ---- EDIT/DELETE PROJECT ----------------------------------------------------
 
-const createProjectEditionForm = (nextElement, projectName) => {
+const renderProjectEditionForm = (nextElement, projectName) => {
   const editionForm = document.createElement("div");
     editionForm.id = "project-edition-form";
 
   const input = document.createElement("input");
     input.type = "text";
     input.value = projectName;
+    input.maxLength = "15";
+
   const doneBtn = document.createElement("button");
     doneBtn.className = "editform-action-btn"
     doneBtn.dataset.action = "done";
     doneBtn.type = "button";
     doneBtn.textContent = "Done";
+
   const deleteBtn = document.createElement("button");
     deleteBtn.className = "editform-action-btn"
     deleteBtn.dataset.action = "delete";
@@ -190,12 +194,17 @@ const renderDeleteConfirmationModal = () => {
   body.append(confirmationModal);
 }; 
 
+// TODO: Make alert user friendly
 const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   const inputValue = document.querySelector("#project-edition-form > input").value;
   const newName = inputValue.trim().toLowerCase();
   const filter = (getCurrentFilter() === previousName) ? newName : getCurrentFilter();
 
   if (newName === "") return;
+  if (list.projectNames.includes(inputValue)) {
+    alert("PROJECT NAME ALREADY EXISTS");
+    return;
+  }
 
   updateProjectBtn(projectBtn, newName);
   list.updateProject(previousName, newName);
@@ -270,7 +279,6 @@ const handleEditionForm = (projectBtn, projectName) => {
   window.addEventListener("click", handler);
 };
 
-// TODO: toggle a "visible/hidden" class for project, edit and delete buttons when the form open
 const handleEditBtns = () => {
   navProjectsBtns.addEventListener("click", (e) => {
     const editBtn = e.target.closest(".project-edit-btn");
@@ -282,7 +290,7 @@ const handleEditBtns = () => {
     const projectBtn = e.target.parentElement.querySelector(".filter-btn");
     const projectName = projectBtn.dataset.filter;
 
-    createProjectEditionForm(projectBtn, projectName);
+    renderProjectEditionForm(projectBtn, projectName);
     handleEditionForm(projectBtn, projectName);
   });
 };

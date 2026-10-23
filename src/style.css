@@ -67,6 +67,7 @@ body {
   background-color: var(--bgcolor-1);
   color: var(--color-1);
   font-family: var(--fontstack-1);
+  font-size: 15px;
   margin-left: 5vw;
 }
 
@@ -148,6 +149,9 @@ nav {
 
 #nav-projects-btns .filter-btn {
   flex: 6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #nav-projects-btns .project-edit-btn {
