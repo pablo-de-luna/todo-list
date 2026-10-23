@@ -201,7 +201,7 @@ const updateProjectWhenEditionDone = (previousName, projectBtn, list) => {
   const filter = (getCurrentFilter() === previousName) ? newName : getCurrentFilter();
 
   if (newName === "") return;
-  if (list.projectNames.includes(inputValue)) {
+  if (list.projectNames.includes(inputValue) && inputValue !== previousName) {
     alert("PROJECT NAME ALREADY EXISTS");
     return;
   }

@@ -68,7 +68,7 @@ body {
   color: var(--color-1);
   font-family: var(--fontstack-1);
   font-size: 15px;
-  margin-left: 5vw;
+  display: flex;
 }
 
 .hidden {
@@ -102,7 +102,8 @@ button {
 #content-grid {
   display: grid;
   grid-template-rows: 50px 1fr;
-  grid-template-columns: 200px 600px;
+  grid-template-columns: 200px minmax(200px, 600px);
+  margin: auto;
 }
 
 header {
@@ -121,7 +122,6 @@ header > div {
 
 nav {
   grid-area: 2 / 1 / 3 / 2;
-  /* background-color: var(--bgcolor-2); */
   padding: 40px 10px 50px;
 }
 
@@ -255,8 +255,7 @@ nav {
 
 main {
   grid-area: 1 / 2 / 3 / 3;
-  margin-top: 25px;
-  margin-left: 15px;
+  margin: 25px 15px;
 }
 
 #main-header {
@@ -480,3 +479,24 @@ div:has(> #description-input) {
   background-color: var(--color-1);
   clip-path: polygon(0 0, 100% 100%, 100% 0);
 } 
+
+/* MOBILE SCREEN */
+@media (max-width: 550px) {
+  header {
+    margin: 0 5px;
+  }
+  #content-grid {
+    grid-template-columns: 150px minmax(200px, 600px);
+    margin: auto;
+  }
+  nav {
+    padding: 20px 5px 20px;
+    font-size: 0.8rem
+  }
+  main {
+    margin: 29px 5px; 
+  }
+  #main-header {
+    font-size: 1.5rem;
+  }
+}
