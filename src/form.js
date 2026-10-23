@@ -35,8 +35,9 @@ const createTodoForm = (elementBefore) => {
       titleInput.id = "title-input"; 
       titleInput.name = "title";
       titleInput.setAttribute("required", "");
+      titleInput.maxLength = "30";
 
-    titleContainer.append(titleLabel, titleInput);
+    titleContainer.append(titleLabel, titleInput); 
 
   const descriptionContainer = document.createElement("div");
     const descriptionLabel = document.createElement("label");
@@ -48,6 +49,7 @@ const createTodoForm = (elementBefore) => {
       descriptionInput.name = "description";
       descriptionInput.cols = "30";
       descriptionInput.rows = "3";
+      descriptionInput.maxLength = "400";
 
     descriptionContainer.append(descriptionLabel, descriptionInput);
 
