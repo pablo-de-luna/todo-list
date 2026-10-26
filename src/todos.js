@@ -2,13 +2,23 @@ import { addExampleTodos, projectExamples } from "./examples.js";
 
 class TodosList {
   #todos = [];
-  #projects = ["default"]
+  #projects = ["default"];
 
   get todos() {
     return this.#todos;
   }
   addTodo(todo) {
     return this.#todos.push(todo);
+  }
+  updateTodo(todoID, newValuesObj) {
+    const todo = this.#todos.find(todo => todo.id === todoID);
+
+    for (const property in newValuesObj) {
+      if (todo[property] === newValuesObj[property]) continue;
+      console.log(todo[property] + " changed to " + newValuesObj[property]);
+
+      todo[property] = newValuesObj[property];
+    }
   }
   deleteTodo(todoId) {
     const todoIndex = this.#todos.indexOf(this.#todos.find(todo => todo.id === todoId));

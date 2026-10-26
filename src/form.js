@@ -142,13 +142,12 @@ const addTodoDataToFormValues = (list, todoID) => {
 
 const updateTodoOnFormSubmission = (form, list, todoID) => {
     const formData = getFormData(form);
-    const todo = list.todos.find(todo => todo.id === todoID);
+    
+    if (!Object.hasOwn(formData, "priority")) {
+      formData.priority = false;
+    } 
 
-    todo.title = formData.title;
-    todo.description = formData.description;
-    todo.dueDate = formData.dueDate;
-    todo.priority = formData.priority;
-    todo.project = formData.project;
+    list.updateTodo(todoID, formData);
 };
 
 const handleTodoEditionFormDeleteBtn = (list, todoID) => {
