@@ -1,4 +1,3 @@
-import { addExampleTodos, projectExamples } from "./examples.js";
 
 class TodosList {
   #todos = [];
@@ -87,6 +86,7 @@ export class Todo {
   #status = false;
   #id = crypto.randomUUID();
 
+  // TODO: MAKE CONSTRUCTOR TAKE ID, STATUS...
   constructor({title, description, dueDate, priority, project}) {
     this.title = title;
     this.description = description;
@@ -128,4 +128,6 @@ export class Todo {
 }
 
 const defaultList = new TodosList();
+
+// Maybe add a private password protected todo list later
 export const currentList = defaultList;
