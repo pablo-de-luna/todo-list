@@ -15,7 +15,6 @@ class TodosList {
 
     for (const property in newValuesObj) {
       if (todo[property] === newValuesObj[property]) continue;
-      console.log(todo[property] + " changed to " + newValuesObj[property]);
 
       todo[property] = newValuesObj[property];
     }
