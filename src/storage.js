@@ -1,9 +1,7 @@
 import { currentList } from "./todos.js";
 
-const checkIfStorageIsEmpty = () => localStorage.length === 0;
+const todosList = JSON.stringify(currentList.todosToJSON());
+const projects = JSON.stringify(currentList.projectNames);
 
-console.log(checkIfStorageIsEmpty());
+const isLocalStoragePopulated = () => Object.keys(localStorage).length !== 0;
 
-console.log(currentList.todos);
-
-localStorage.setItem("todosList", JSON.stringify(currentList.todos));

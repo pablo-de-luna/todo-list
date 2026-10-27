@@ -61,6 +61,23 @@ class TodosList {
       }
     }
   }
+  todosToJSON() {
+    const todoList = [];
+
+    this.#todos.forEach(todo => {
+      todoList.push({
+        title: todo.title,
+        description: todo.description,
+        dueDate: todo.dueDate,
+        priority: todo.priority,
+        project: todo.project,
+        status: todo.status,
+        id: todo.id,
+      });
+    });
+
+    return todoList;
+  }
 }
 
 export class Todo {
@@ -79,13 +96,13 @@ export class Todo {
   }
 
   get title() {
-    return this.#title
+    return this.#title;
   }
   set title(val) {
     this.#title = (!val || val.trim() === "") ? "Untitled" : val;
   }
   get description() {
-    return this.#description
+    return this.#description;
   }
   set description(val) {
     this.#description = (!val || val.trim() === "") ? "No description" : val;
