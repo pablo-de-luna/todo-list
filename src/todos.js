@@ -127,13 +127,5 @@ export class Todo {
   }
 }
 
-const setDefaultListWithExamples = () => {
-  const defaultList = new TodosList();
-
-  addExampleTodos(defaultList);
-  projectExamples.forEach(project => defaultList.addProject(project));
-
-  return defaultList;
-};
-
-export const currentList = setDefaultListWithExamples();
+const defaultList = new TodosList();
+export const currentList = defaultList;

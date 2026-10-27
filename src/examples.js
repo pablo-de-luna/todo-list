@@ -1,9 +1,8 @@
-import { Todo } from "./todos.js";
 import { getCurrentDate, getRandomUpcomingDate } from "./dates.js";
 
 export const projectExamples = ["work", "home"];
 
-const todoExamples = [
+export const todoExamples = [
   {
     title: "Buy groceries",
     description: "pick up fruit and coffee",
@@ -62,7 +61,3 @@ const todoExamples = [
     project: "home",
   },
 ];
-
-export const addExampleTodos = (list) => {
-  todoExamples.forEach(todo => list.addTodo(new Todo(todo)))
-}
