@@ -1,13 +1,18 @@
+import { updateLocalStorage } from "./storage.js";
 
 class TodosList {
   #todos = [];
   #projects = ["default"];
 
+  #onChange() {
+    updateLocalStorage(this);
+  }
   get todos() {
     return this.#todos;
   }
   addTodo(todo) {
-    return this.#todos.push(todo);
+    this.#todos.push(todo);
+    this.#onChange();
   }
   updateTodo(todoID, newValuesObj) {
     const todo = this.#todos.find(todo => todo.id === todoID);
@@ -17,11 +22,12 @@ class TodosList {
 
       todo[property] = newValuesObj[property];
     }
+    this.#onChange();
   }
   deleteTodo(todoId) {
     const todoIndex = this.#todos.indexOf(this.#todos.find(todo => todo.id === todoId));
-
     this.#todos.splice(todoIndex, 1);
+    this.#onChange();
   }
   getFilteredTodosByProperty(key, val) {
     return this.#todos.filter(todo => todo[key] === val);
@@ -35,8 +41,8 @@ class TodosList {
   addProject(project) {
     if (project === "default") return;
     const projectLowCase = project.toLowerCase();
-
     this.#projects.push(projectLowCase);
+    this.#onChange();
   }
   updateProject(previousName, newName) {
     const newNameLowCase = newName.toLowerCase();
@@ -49,6 +55,7 @@ class TodosList {
         todo.project = newNameLowCase;
       }
     });
+    this.#onChange();
   }
   deleteProject(projectName) {
     const projectIndex = this.#projects.indexOf(projectName);
@@ -60,6 +67,7 @@ class TodosList {
         this.#todos.splice(i, 1);
       }
     }
+    this.#onChange();
   }
   todosToJSON() {
     const todoList = [];

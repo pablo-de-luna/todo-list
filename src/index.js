@@ -32,8 +32,7 @@ const loadData = (list) => {
   }
 }
 
+// ---- INITIALIZATION ---------------------------------------------------------
+
 loadData(currentList);
 initUI();
-
-// TEST
-document.addEventListener("click", () => updateLocalStorage(currentList))

@@ -1,5 +1,6 @@
 import { isAfter } from "date-fns";
 import { getCurrentDate, formatToRelativeDate } from "./dates.js";
+import { updateLocalStorage } from "./storage.js";
 
 const cardsContainer = document.querySelector("#cards-container");
 
@@ -59,6 +60,7 @@ const handleStatusCheckbox = (list) => {
       e.stopPropagation();
 
       todo.toggleStatus();
+      updateLocalStorage(list);
     });
   });
 };
