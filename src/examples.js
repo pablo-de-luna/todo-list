@@ -4,34 +4,46 @@ export const projectExamples = ["work", "home"];
 
 export const todoExamples = [
   {
-    title: "Buy groceries",
-    description: "pick up fruit and coffee",
+    title: "Walk dog",
     dueDate: getCurrentDate(),
     project: "home",
   },
   {
-    title: "Read book",
+    title: "Buy groceries",
+    description: "Cheese, coffee and whiskey",
+    dueDate: getCurrentDate(),
+    project: "home",
+  },
+  {
+    title: 'Read "Of mice and men"',
     description: " ",
   },
   {
-    title: "Plan trip",
+    title: "Plan trip to Stockholm",
     description: "compare travel options",
     dueDate: getRandomUpcomingDate(),
   },
   {
     title: "Meeting",
-    description: "team sync",
+    description: "team sync to review progress and next steps",
     dueDate: getRandomUpcomingDate(),
     priority: "important",
     project: "work",
   },
   {
-    title: "Walk dog",
+    title: "Review pull requests",
+    description: "Share feedback on the API update.",
     dueDate: getCurrentDate(),
+    project: "work",
+  },
+  {
+    title: "Build a responsive portfolio",
+    description: "Design and develop a polished web developer portfolio with responsive layouts, accessible navigation, project case studies, optimized images, and clear contact links, then test it across browsers and screen sizes.",
+    project: "work",
   },
   {
     title: "Laundry",
-    description: "only reds",
+    description: "Red clothes only",
     dueDate: getCurrentDate(),
     project: "home",
     status: true,
