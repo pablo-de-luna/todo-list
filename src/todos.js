@@ -33,6 +33,7 @@ class TodosList {
     return this.#projects;
   }
   addProject(project) {
+    if (project === "default") return;
     const projectLowCase = project.toLowerCase();
 
     this.#projects.push(projectLowCase);
@@ -83,16 +84,17 @@ export class Todo {
   #title;
   #description;
   #priority;
-  #status = false;
-  #id = crypto.randomUUID();
+  #status;
+  #id;
 
-  // TODO: MAKE CONSTRUCTOR TAKE ID, STATUS...
-  constructor({title, description, dueDate, priority, project}) {
+  constructor({title, description, dueDate, priority, project, status, id}) {
     this.title = title;
     this.description = description;
-    this.dueDate = dueDate;
+    this.dueDate = dueDate || false;
     this.priority = priority;
     this.project = project || "default";
+    this.status = status;
+    this.id = id;
   }
 
   get title() {
@@ -110,8 +112,14 @@ export class Todo {
   get id() {
     return this.#id;
   }
+  set id(val) {
+    this.#id = val || crypto.randomUUID();
+  }
   get status() {
     return this.#status;
+  }
+  set status(val) {
+    this.#status = (val) ? true : false;
   }
   toggleStatus() {
     this.#status = !this.#status;
@@ -120,10 +128,7 @@ export class Todo {
     return this.#priority;
   }
   set priority(val) {
-    this.#priority = (val) ? "important" : "normal";
-  }
-  togglePriority() {
-    this.#priority = (this.#priority === "normal") ? "important" : "normal";
+    this.#priority = (val && val !== "normal") ? "important" : "normal";
   }
 }
 

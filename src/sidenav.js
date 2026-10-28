@@ -126,7 +126,6 @@ const closeFormOnOutsideClick = () => {
     if (!projectCreationForm.contains(e.target) && !e.target.matches("#new-project-btn")) {
       projectCreationForm.remove();
       window.removeEventListener("click", windowHandler);
-      console.log("REMOVED");
     }
   };
   window.addEventListener("click", windowHandler), {once: true};

@@ -7,6 +7,7 @@ export const updateLocalStorage = (list) => {
 
   localStorage.setItem("todos", todos);
   localStorage.setItem("projects", projects);
+  console.log("LOCAL STORAGE UPDATED");
 };
 
 export const getTodosFromLocalStorage = () => JSON.parse(localStorage.getItem("todos"));

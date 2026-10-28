@@ -16,14 +16,9 @@ const loadExamples = (list) => {
   updateLocalStorage(list);
 } 
 
-// FIX: problem in todo class;
-
 const loadLocalStorage = (list) => {
   const todos = getTodosFromLocalStorage();
   const projects = getProjectsFromLocalStorage();
-
-  console.log(todos);
-  console.log(projects);
 
   todos.forEach(todo => list.addTodo(new Todo(todo)))
   projects.forEach(project => list.addProject(project));
@@ -39,3 +34,6 @@ const loadData = (list) => {
 
 loadData(currentList);
 initUI();
+
+// TEST
+document.addEventListener("click", () => updateLocalStorage(currentList))

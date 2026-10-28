@@ -34,6 +34,7 @@ export const todoExamples = [
     description: "only reds",
     dueDate: getCurrentDate(),
     project: "home",
+    status: true,
   },
   {
     title: "Plan son's birthday party",
@@ -46,12 +47,14 @@ export const todoExamples = [
     title: "Buy lego",
     description: "Lego technic Liebherr R 9800",
     dueDate: "2026-08-12",
+    status: true,
   },
   {
     title: "Send project",
     dueDate: getCurrentDate(),
     priority: "important",
     project: "work",
+    status: true,
   },
   {
     title: " ",
