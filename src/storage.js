@@ -1,5 +1,5 @@
-
-export const isLocalStoragePopulated = () => Object.keys(localStorage).length !== 0;
+export const isLocalStoragePopulated = () =>
+  Object.keys(localStorage).length !== 0;
 
 export const updateLocalStorage = (list) => {
   const todos = JSON.stringify(list.todosToJSON());
@@ -9,6 +9,8 @@ export const updateLocalStorage = (list) => {
   localStorage.setItem("projects", projects);
 };
 
-export const getTodosFromLocalStorage = () => JSON.parse(localStorage.getItem("todos"));
+export const getTodosFromLocalStorage = () =>
+  JSON.parse(localStorage.getItem("todos"));
 
-export const getProjectsFromLocalStorage = () => JSON.parse(localStorage.getItem("projects"));
+export const getProjectsFromLocalStorage = () =>
+  JSON.parse(localStorage.getItem("projects"));

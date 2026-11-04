@@ -8,9 +8,7 @@ export default {
     path: path.resolve(import.meta.dirname, "dist"),
     clean: true,
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: "./src/template.html" }),
-  ],
+  plugins: [new HtmlWebpackPlugin({ template: "./src/template.html" })],
   module: {
     rules: [
       {
@@ -19,11 +17,11 @@ export default {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
       },
     ],
   },

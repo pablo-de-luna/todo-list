@@ -15,7 +15,7 @@ class TodosList {
     this.#onChange();
   }
   updateTodo(todoID, newValuesObj) {
-    const todo = this.#todos.find(todo => todo.id === todoID);
+    const todo = this.#todos.find((todo) => todo.id === todoID);
 
     for (const property in newValuesObj) {
       if (todo[property] === newValuesObj[property]) continue;
@@ -25,15 +25,17 @@ class TodosList {
     this.#onChange();
   }
   deleteTodo(todoId) {
-    const todoIndex = this.#todos.indexOf(this.#todos.find(todo => todo.id === todoId));
+    const todoIndex = this.#todos.indexOf(
+      this.#todos.find((todo) => todo.id === todoId),
+    );
     this.#todos.splice(todoIndex, 1);
     this.#onChange();
   }
   getFilteredTodosByProperty(key, val) {
-    return this.#todos.filter(todo => todo[key] === val);
+    return this.#todos.filter((todo) => todo[key] === val);
   }
   getTodoById(id) {
-    return this.#todos.find(todo => todo.id === id);
+    return this.#todos.find((todo) => todo.id === id);
   }
   get projectNames() {
     return this.#projects;
@@ -50,7 +52,7 @@ class TodosList {
 
     this.#projects.splice(projectIndex, 1, newNameLowCase);
 
-    this.#todos.forEach(todo => {
+    this.#todos.forEach((todo) => {
       if (todo.project === previousName) {
         todo.project = newNameLowCase;
       }
@@ -62,7 +64,7 @@ class TodosList {
 
     this.#projects.splice(projectIndex, 1);
 
-    for(let i = this.#todos.length - 1; i >= 0; i--) {
+    for (let i = this.#todos.length - 1; i >= 0; i--) {
       if (this.#todos[i].project === projectName) {
         this.#todos.splice(i, 1);
       }
@@ -72,7 +74,7 @@ class TodosList {
   todosToJSON() {
     const todoList = [];
 
-    this.#todos.forEach(todo => {
+    this.#todos.forEach((todo) => {
       todoList.push({
         title: todo.title,
         description: todo.description,
@@ -95,7 +97,7 @@ export class Todo {
   #status;
   #id;
 
-  constructor({title, description, dueDate, priority, project, status, id}) {
+  constructor({ title, description, dueDate, priority, project, status, id }) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate || false;
@@ -109,13 +111,13 @@ export class Todo {
     return this.#title;
   }
   set title(val) {
-    this.#title = (!val || val.trim() === "") ? "Untitled" : val;
+    this.#title = !val || val.trim() === "" ? "Untitled" : val;
   }
   get description() {
     return this.#description;
   }
   set description(val) {
-    this.#description = (!val || val.trim() === "") ? "No description" : val;
+    this.#description = !val || val.trim() === "" ? "No description" : val;
   }
   get id() {
     return this.#id;
@@ -127,7 +129,7 @@ export class Todo {
     return this.#status;
   }
   set status(val) {
-    this.#status = (val) ? true : false;
+    this.#status = val ? true : false;
   }
   toggleStatus() {
     this.#status = !this.#status;
@@ -136,7 +138,7 @@ export class Todo {
     return this.#priority;
   }
   set priority(val) {
-    this.#priority = (val && val !== "normal") ? "important" : "normal";
+    this.#priority = val && val !== "normal" ? "important" : "normal";
   }
 }
 

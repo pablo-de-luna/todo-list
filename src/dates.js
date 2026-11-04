@@ -11,7 +11,7 @@ export const getRandomUpcomingDate = () => {
 
 const dateStrToDateInstance = (dateStr) => {
   const dateArr = dateStr.split("-");
-  const year = dateArr[0]
+  const year = dateArr[0];
   const month = parseInt(dateArr[1]) - 1;
   const day = parseInt(dateArr[2]);
 
@@ -25,7 +25,7 @@ export const formatToRelativeDate = (dateStr) => {
 
   if (isToday(date)) return "Today";
   if (isTomorrow(date)) return "Tomorrow";
-  if (isPast(date)) return "Overdue"
+  if (isPast(date)) return "Overdue";
 
   return format(date, "PP");
 };

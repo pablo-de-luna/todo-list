@@ -38,7 +38,8 @@ export const todoExamples = [
   },
   {
     title: "Build a responsive portfolio",
-    description: "Design and develop a polished web developer portfolio with responsive layouts, accessible navigation, project case studies, optimized images, and clear contact links, then test it across browsers and screen sizes.",
+    description:
+      "Design and develop a polished web developer portfolio with responsive layouts, accessible navigation, project case studies, optimized images, and clear contact links, then test it across browsers and screen sizes.",
     project: "work",
   },
   {
@@ -50,7 +51,8 @@ export const todoExamples = [
   },
   {
     title: "Plan son's birthday party",
-    description: "buy a cake, candles, some balloons, and send invitations to friends and family",
+    description:
+      "buy a cake, candles, some balloons, and send invitations to friends and family",
     dueDate: getRandomUpcomingDate(),
     priority: "important",
     project: "home",

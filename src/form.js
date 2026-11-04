@@ -5,12 +5,12 @@ import { getCurrentFilter } from "./ui-controller.js";
 const createSelectProjectOptions = (selectParent) => {
   const projects = currentList.projectNames;
 
-  projects.forEach(project => {
+  projects.forEach((project) => {
     const option = document.createElement("option");
     option.value = project.toLowerCase();
 
-    if (project === "default") { 
-      option.textContent = "No Project"
+    if (project === "default") {
+      option.textContent = "No Project";
     } else {
       option.textContent = project;
     }
@@ -26,106 +26,108 @@ const createTodoForm = (elementBefore) => {
   form.method = "post";
 
   const titleContainer = document.createElement("div");
-    const titleLabel = document.createElement("label");
-      titleLabel.setAttribute("for", "title-input");
-      titleLabel.textContent = "Title";
+  const titleLabel = document.createElement("label");
+  titleLabel.setAttribute("for", "title-input");
+  titleLabel.textContent = "Title";
 
-    const titleInput = document.createElement("input"); 
-      titleInput.type = "text";
-      titleInput.id = "title-input"; 
-      titleInput.name = "title";
-      titleInput.setAttribute("required", "");
-      titleInput.maxLength = "30";
+  const titleInput = document.createElement("input");
+  titleInput.type = "text";
+  titleInput.id = "title-input";
+  titleInput.name = "title";
+  titleInput.setAttribute("required", "");
+  titleInput.maxLength = "30";
 
-    titleContainer.append(titleLabel, titleInput); 
+  titleContainer.append(titleLabel, titleInput);
 
   const descriptionContainer = document.createElement("div");
-    const descriptionLabel = document.createElement("label");
-      descriptionLabel.setAttribute("for", "description-input");
-      descriptionLabel.textContent = "Description";
+  const descriptionLabel = document.createElement("label");
+  descriptionLabel.setAttribute("for", "description-input");
+  descriptionLabel.textContent = "Description";
 
-    const descriptionInput = document.createElement("textarea");
-      descriptionInput.id = "description-input"; 
-      descriptionInput.name = "description";
-      descriptionInput.cols = "30";
-      descriptionInput.rows = "3";
-      descriptionInput.maxLength = "400";
+  const descriptionInput = document.createElement("textarea");
+  descriptionInput.id = "description-input";
+  descriptionInput.name = "description";
+  descriptionInput.cols = "30";
+  descriptionInput.rows = "3";
+  descriptionInput.maxLength = "400";
 
-    descriptionContainer.append(descriptionLabel, descriptionInput);
+  descriptionContainer.append(descriptionLabel, descriptionInput);
 
   const dueDateContainer = document.createElement("div");
-    const dueDateLabel = document.createElement("label");
-      dueDateLabel.setAttribute("for", "date-input");
-      dueDateLabel.textContent = "due Date";
+  const dueDateLabel = document.createElement("label");
+  dueDateLabel.setAttribute("for", "date-input");
+  dueDateLabel.textContent = "due Date";
 
-    const dueDateInput = document.createElement("input");
-      dueDateInput.type = "date";
-      dueDateInput.id = "date-input";
-      dueDateInput.name = "dueDate";
+  const dueDateInput = document.createElement("input");
+  dueDateInput.type = "date";
+  dueDateInput.id = "date-input";
+  dueDateInput.name = "dueDate";
 
-    dueDateContainer.append(dueDateLabel, dueDateInput);
+  dueDateContainer.append(dueDateLabel, dueDateInput);
 
   const priorityContainer = document.createElement("div");
-    const priorityLabel = document.createElement("label");
-      priorityLabel.setAttribute("for", "priority-input");
-      priorityLabel.textContent = "Mark as important";
+  const priorityLabel = document.createElement("label");
+  priorityLabel.setAttribute("for", "priority-input");
+  priorityLabel.textContent = "Mark as important";
 
-    const priorityCheckbox = document.createElement("input");
-      priorityCheckbox.type = "checkbox";
-      priorityCheckbox.id = "priority-input";
-      priorityCheckbox.name = "priority";
+  const priorityCheckbox = document.createElement("input");
+  priorityCheckbox.type = "checkbox";
+  priorityCheckbox.id = "priority-input";
+  priorityCheckbox.name = "priority";
 
-    priorityContainer.append(priorityLabel, priorityCheckbox);
+  priorityContainer.append(priorityLabel, priorityCheckbox);
 
   const projectContainer = document.createElement("div");
-    const projectLabel = document.createElement("label");
-      projectLabel.setAttribute("for", "project-select");
-      projectLabel.textContent = "Project";
+  const projectLabel = document.createElement("label");
+  projectLabel.setAttribute("for", "project-select");
+  projectLabel.textContent = "Project";
 
-    const projectSelect = document.createElement("select");
-      projectSelect.id = "project-select";
-      projectSelect.name = "project";
-      createSelectProjectOptions(projectSelect); 
+  const projectSelect = document.createElement("select");
+  projectSelect.id = "project-select";
+  projectSelect.name = "project";
+  createSelectProjectOptions(projectSelect);
 
-    projectContainer.append(projectLabel, projectSelect);
+  projectContainer.append(projectLabel, projectSelect);
 
   const submitBtn = document.createElement("button");
-    submitBtn.type = "submit";
-    submitBtn.textContent = "Submit";
+  submitBtn.type = "submit";
+  submitBtn.textContent = "Submit";
 
-    form.append(
-      titleContainer,
-      descriptionContainer,
-      dueDateContainer,
-      priorityContainer,
-      projectContainer,
-      submitBtn
-    );
+  form.append(
+    titleContainer,
+    descriptionContainer,
+    dueDateContainer,
+    priorityContainer,
+    projectContainer,
+    submitBtn,
+  );
 
   elementBefore.after(form);
 };
 
 // Use the FormData API to get all input names and values at once
-// fromEntries method of Object get and object with that data as keys/values 
+// fromEntries method of Object get and object with that data as keys/values
 const getFormData = (form) => Object.fromEntries(new FormData(form));
 
 // ---- TODO EDITION FORM ------------------------------------------------------
 
 const createTodoEditionFormBtns = () => {
   const form = document.querySelector("#todo-form");
-  const submitBtn = document.querySelector(`#todo-form > button[type="submit"]`);
-    submitBtn.textContent = "Done";
+  const submitBtn = document.querySelector(
+    `#todo-form > button[type="submit"]`,
+  );
+  submitBtn.textContent = "Done";
 
   const deleteTodoBtn = document.createElement("button");
-    deleteTodoBtn.type = "button";
-    deleteTodoBtn.id = "delete-todo-btn";
-    deleteTodoBtn.textContent = "Delete";
-    
+  deleteTodoBtn.type = "button";
+  deleteTodoBtn.id = "delete-todo-btn";
+  deleteTodoBtn.textContent = "Delete";
+
   form.append(deleteTodoBtn);
 };
 
 const addTodoDataToFormValues = (list, todoID) => {
-  const todo = list.todos.find(todo => todo.id === todoID);
+  const todo = list.todos.find((todo) => todo.id === todoID);
 
   const titleInput = document.querySelector("#title-input");
   const descriptionInput = document.querySelector("#description-input");
@@ -141,13 +143,13 @@ const addTodoDataToFormValues = (list, todoID) => {
 };
 
 const updateTodoOnFormSubmission = (form, list, todoID) => {
-    const formData = getFormData(form);
-    
-    if (!Object.hasOwn(formData, "priority")) {
-      formData.priority = false;
-    } 
+  const formData = getFormData(form);
 
-    list.updateTodo(todoID, formData);
+  if (!Object.hasOwn(formData, "priority")) {
+    formData.priority = false;
+  }
+
+  list.updateTodo(todoID, formData);
 };
 
 const handleTodoEditionFormDeleteBtn = (list, todoID) => {
@@ -161,7 +163,7 @@ const handleTodoEditionFormDeleteBtn = (list, todoID) => {
 
 const handleTodoEditionFormSubmission = (list, todoID) => {
   const form = document.querySelector("#todo-form");
-  
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -169,13 +171,10 @@ const handleTodoEditionFormSubmission = (list, todoID) => {
     updateTodoCards(list, getCurrentFilter());
     form.remove();
   });
-}; 
+};
 
 export const createTodoEditionForm = (elementBefore, list, todoID) => {
   createTodoForm(elementBefore);
-
-  const form = document.querySelector("#todo-form");
-
   createTodoEditionFormBtns();
   addTodoDataToFormValues(list, todoID);
   handleTodoEditionFormSubmission(list, todoID);
@@ -185,17 +184,17 @@ export const createTodoEditionForm = (elementBefore, list, todoID) => {
 // ---- TODO CREATION FORM -----------------------------------------------------
 
 const createTodoWithFormData = (form, list) => {
-    const formData = getFormData(form);
-    list.addTodo(new Todo(formData))
+  const formData = getFormData(form);
+  list.addTodo(new Todo(formData));
 };
 
 const handleTodoCreationFormSubmission = (list) => {
   const form = document.querySelector("#todo-form");
-  
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    createTodoWithFormData(form, list)
+    createTodoWithFormData(form, list);
     updateTodoCards(list, getCurrentFilter());
     form.remove();
   });
@@ -207,7 +206,9 @@ export const createTodoCreationForm = (elementBefore, list) => {
   const form = document.querySelector("#todo-form");
   form.dataset.type = "creation";
 
-  const submitBtn = document.querySelector(`#todo-form > button[type="submit"]`);
+  const submitBtn = document.querySelector(
+    `#todo-form > button[type="submit"]`,
+  );
   submitBtn.textContent = "Create Todo";
 
   handleTodoCreationFormSubmission(list);

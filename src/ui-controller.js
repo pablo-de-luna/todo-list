@@ -1,5 +1,5 @@
 import { currentList } from "./todos.js";
-import { createTodoCreationForm, createTodoEditionForm} from "./form.js";
+import { createTodoCreationForm, createTodoEditionForm } from "./form.js";
 import { renderTodoCardsByFilter } from "./todo-cards.js";
 import { handleSidenav } from "./sidenav.js";
 
@@ -7,13 +7,14 @@ let currentFilter = "today";
 
 export const getCurrentFilter = () => currentFilter;
 
-export const updateCurrentFilter = (filter) => { 
+export const updateCurrentFilter = (filter) => {
   currentFilter = filter;
 };
 
 export const updateMainHeader = (filter) => {
   const mainHeader = document.querySelector("#main-header");
-  const nameCapitalized = filter[0].toUpperCase() + filter.slice(1).toLowerCase();
+  const nameCapitalized =
+    filter[0].toUpperCase() + filter.slice(1).toLowerCase();
 
   mainHeader.textContent = nameCapitalized;
 };
@@ -26,15 +27,14 @@ const closeTodoFormIfOpen = () => {
     form.remove();
     return true;
   } else {
-    return false; 
+    return false;
   }
 };
 
 const closeFormOnOutsideClick = () => {
   const form = document.querySelector("#todo-form");
-  
-  const handler = (e) => {
 
+  const handler = (e) => {
     if (!form.contains(e.target) && !e.target.closest("#new-todo-card")) {
       form.remove();
       window.removeEventListener("click", handler);
@@ -47,22 +47,22 @@ const closeFormOnOutsideClick = () => {
 const handleTodoCreationCard = (list) => {
   const newCardBtn = document.querySelector("#new-todo-card");
 
-  newCardBtn.addEventListener("click", (e) => {
+  newCardBtn.addEventListener("click", () => {
     removeHiddenSelectorFromAllCards();
     if (closeTodoFormIfOpen()) return;
     createTodoCreationForm(newCardBtn, list);
     closeFormOnOutsideClick();
-  })
+  });
 };
 
-const removeHiddenSelectorFromAllCards = () => { 
+const removeHiddenSelectorFromAllCards = () => {
   const todoCards = document.querySelectorAll(".todo-card");
 
-  todoCards.forEach(card => {
+  todoCards.forEach((card) => {
     if (card.classList.contains("hidden")) {
       card.classList.remove("hidden");
     }
-  })
+  });
 };
 
 const toggleHiddenSelector = (todoCard) => {
@@ -75,7 +75,7 @@ const toggleHiddenSelector = (todoCard) => {
   }
 
   form.addEventListener("submit", () => {
-      todoCard.classList.remove("hidden");
+    todoCard.classList.remove("hidden");
   });
 };
 
@@ -85,7 +85,7 @@ const togglePrioritySelector = (todoCard) => {
   if (todoCard.classList.contains("priority-important")) {
     form.dataset.type = "edition-important";
   }
-}
+};
 
 const handleTodoEdition = (list) => {
   const cardsContainer = document.querySelector("#cards-container");
@@ -108,7 +108,7 @@ const handleTodoEdition = (list) => {
 export const initUI = () => {
   // Set "today" todo cards when page is loaded
   renderTodoCardsByFilter(currentList, currentFilter);
-  
+
   handleSidenav();
 
   handleTodoCreationCard(currentList);
